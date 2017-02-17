@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-{#% include 'pattern/top-nav.html' %#}
+{% include 'pattern/top-nav.html' %}
 
 {# Load the tag library #}
 {% load bootstrap3 %}
@@ -14,25 +13,23 @@
 
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>{% block title %}Django Simple Logine{% endblock %}</title>
+    <meta charset="utf-8">
+    <title>{% block title %}Django Simple Login{% endblock %}</title>
 </head>
 <body>
-  <header>
+<header>
+    <div class="page-header">
+        <h1>{% block h1 %}Django Simple Login{% endblock %}</h1>
+    </div>
+    {% block nav %}{% endblock nav %}
 
-    <h1>Django Simple Login</h1>
-    {% if user.is_authenticated %}
-      Hi {{ user.username }}!
-      <a href="{% url 'logout' %}">logout</a>
-    {% else %}
-      <a href="{% url 'login' %}">login</a>
-    {% endif %}
-  </header>
-  <hr>
-  <main>
+</header>
+<hr>
+<main>
     {% block content %}
     {% endblock %}
-  </main>
+</main>
 </body>
+    {% include 'pattern/footer.html' %}
 </html>
 
