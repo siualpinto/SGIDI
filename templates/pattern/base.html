@@ -1,20 +1,25 @@
 <!DOCTYPE html>
-{% include 'pattern/top-nav.html' %}
-
+<html lang="pt">
+<head>
+    {% include 'pattern/top-nav.html' %}
+    <title>{% block title %}SGIDI{% endblock %}</title>
+</head>
 <body>
 <header>
     <div class="page-header">
         <h1>{% block h1 %}SGIDI{% endblock %}</h1>
     </div>
-    {% block nav %}{% endblock nav %}
+    {% block nav %}Bem vindo{% endblock nav %}
 
 </header>
 <hr>
 <main>
     {% block content %}
+        Content
     {% endblock %}
 </main>
-</body>
+<hr>
 {% include 'pattern/footer.html' %}
-
+</body>
+</html>
 
