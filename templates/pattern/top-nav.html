@@ -1,11 +1,13 @@
-<!DOCTYPE html>
+
 {% load static %}
 <!-- Bootstrap Core CSS -->
-    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+<link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
 
 
-<html lang="en">
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
-    <title>SGIDI</title>
+    <title>{% block title %}SGIDI{% endblock %}</title>
+    <link rel="icon" href="{% static "img/icon.ico" %}">
+    <link rel="apple-touch-icon" href="{% static "img/apple-touch-icon.png" %}">
 </head>
