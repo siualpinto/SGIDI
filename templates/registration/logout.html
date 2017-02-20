@@ -2,14 +2,16 @@
 
 {% block title %}See you!{% endblock %}
 
-{% block nav %}
+
+
+{% block content %}
+    <h2>Logged out</h2>
+    <p>You have been successfully logged out.</p>
+
     {% if user.is_authenticated %}
         Hi {{ user.username }}!
         <a href="{% url 'logout' %}">logout</a>
     {% else %}
         <a href="{% url 'login' %}">login</a>
-    {% endif %} {% endblock %}
-{% block content %}
-  <h2>Logged out</h2>
-  <p>You have been successfully logged out.</p>
+    {% endif %}
 {% endblock %}
