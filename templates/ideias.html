@@ -1,0 +1,22 @@
+{% extends 'pattern/base.html' %}
+{% load static %}
+{% block title %}Ideias{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div clas="row">
+            <div class="col-sm-12 col-md-6">
+                <div class="input-group">
+                    <div class="row"><span class="label" >Proponente</span></div>
+                    <span class="input-group-addon" >Sigla</span>
+                    <input type="text" class="form-control" placeholder="{{ user.username }}"disabled>
+                </div>
+                <div class="input-group">
+                    <div class="row"><label>Nome da ideia</label></div>
+                    <span class="input-group-addon" >Nome da ideia</span>
+                    <input type="text" class="form-control" >
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

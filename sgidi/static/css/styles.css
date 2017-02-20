@@ -2,7 +2,9 @@ a:link
 {
     text-decoration: none;
 }
-
+.label{
+    color: #0f0f0f;
+}
 .thumbnail {
     height: 300px;
 }
@@ -16,3 +18,9 @@ a:link
 h3 {
     text-align: center;
 }
+
+.badge {
+    background-color: #d43f3a;
+    color: #985f0d;
+}
+

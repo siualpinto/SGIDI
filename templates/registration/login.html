@@ -6,16 +6,15 @@
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 {% endblock %}
 {% block title %}Login{% endblock %}
-{% block h1 %} Login {% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="row">
-            <div class="col-md-5 col-md-3">
+            <div class="col-md-offset-6 col-md-3">
                 <form method="post">
                     {% csrf_token %}
                     <div class="form-login">
-                        <h4>Welcome back.</h4>
+                        <h4>Bem vindo</h4>
                         <input type="text" id="id_username" class="form-control input-sm chat-input" maxlength="254" name="username" placeholder="username" />
                         </br>
                         <input type="password" id="id_password" class="form-control input-sm chat-input"  name="password" placeholder="password" />

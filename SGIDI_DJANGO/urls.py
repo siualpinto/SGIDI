@@ -23,3 +23,4 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^sgidi/', include('sgidi.urls')),
 ]
+admin.site.site_header = 'Nibble - SGIDI - administration'
