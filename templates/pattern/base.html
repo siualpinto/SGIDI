@@ -3,7 +3,7 @@
 <head>
     {% include 'pattern/top-nav.html' %}
     {% load static %}
-    {% block includes %}{% endblock %}
+    {% block includes_top %}{% endblock %}
     <title>{% block title %}SGIDI{% endblock %}</title>
 </head>
 
@@ -67,7 +67,11 @@
         Content
     {% endblock %}
 </main>
-{% include 'pattern/footer.html' %}
+
+    {% include 'pattern/footer.html' %}
+    {% block include_footer %}{% endblock %}
+
+
 </body>
 </html>
 
