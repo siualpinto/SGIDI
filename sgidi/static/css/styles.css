@@ -5,6 +5,11 @@ a:link
 .label{
     color: #0f0f0f;
 }
+
+.blink_me{
+    color: #ffff00;
+}
+
 .thumbnail {
     height: 300px;
 }
