@@ -9,10 +9,11 @@ class Ideias(models.Model):
     nome = models.CharField(max_length=110)
     tipo = models.IntegerField(validators=[MaxValueValidator(5)])
     tipo_nome = models.CharField(max_length=110)
+    estado = models.IntegerField(validators=[MaxValueValidator(4)])
+    estado_nome = models.CharField(max_length=20)
     problema = models.TextField(max_length=1700)
     solucao = models.TextField(max_length=1700)
     data = models.DateTimeField(auto_now_add=True)
-
 
     def __str__(self):
         return self.nome

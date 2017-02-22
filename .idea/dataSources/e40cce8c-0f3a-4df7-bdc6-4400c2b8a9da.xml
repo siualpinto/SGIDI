@@ -447,34 +447,44 @@ model</ColNames>
       <DataType>varchar(110)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="106" parent="18" name="problema">
+    <column id="106" parent="18" name="estado">
       <Position>5</Position>
-      <DataType>longtext|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="107" parent="18" name="solucao">
-      <Position>6</Position>
-      <DataType>longtext|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="108" parent="18" name="data">
-      <Position>7</Position>
-      <DataType>datetime(6)|0</DataType>
-      <NotNull>1</NotNull>
-    </column>
-    <column id="109" parent="18" name="autor_id">
-      <Position>8</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="110" parent="18" name="sgidi_ideias_autor_id_9a9e1b8a_fk_auth_user_id">
+    <column id="107" parent="18" name="estado_nome">
+      <Position>6</Position>
+      <DataType>varchar(20)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="108" parent="18" name="problema">
+      <Position>7</Position>
+      <DataType>longtext|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="109" parent="18" name="solucao">
+      <Position>8</Position>
+      <DataType>longtext|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="110" parent="18" name="data">
+      <Position>9</Position>
+      <DataType>datetime(6)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="111" parent="18" name="autor_id">
+      <Position>10</Position>
+      <DataType>int(11)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="112" parent="18" name="sgidi_ideias_autor_id_9a9e1b8a_fk_auth_user_id">
       <ColNames>autor_id</ColNames>
     </index>
-    <key id="111" parent="18" name="PRIMARY">
+    <key id="113" parent="18" name="PRIMARY">
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="112" parent="18" name="sgidi_ideias_autor_id_9a9e1b8a_fk_auth_user_id">
+    <foreign-key id="114" parent="18" name="sgidi_ideias_autor_id_9a9e1b8a_fk_auth_user_id">
       <ColNames>autor_id</ColNames>
       <RefSchemaName>sgidi</RefSchemaName>
       <RefTableName>auth_user</RefTableName>

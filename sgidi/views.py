@@ -2,7 +2,7 @@
 
 from django.db.transaction import commit
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
 from django.views import View
 from django.views.decorators.csrf import csrf_protect
 
@@ -10,44 +10,51 @@ from sgidi.forms import IdeiasForm
 
 # Create your views here.
 
-# TODO Verificar a autenticação do user, em cada função automaticamente (ATUALIDADE: sem repetição de code )
 def index_view(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         return render(request, 'index.html')
     else:
-        return HttpResponseRedirect('/login/')
+        return render(request, 'registration/login.html')
 
 
-def ideias_view(request):
-    if request.user.is_authenticated():
-        return render(request, 'ideias.html')
-    else:
-        return HttpResponseRedirect('/login/')
+# def ideias_view(request):
+#     if request.user.is_authenticated:
+#         return render(request, 'ideias.html')
+#     else:
+#         return render(request, 'registration/login.html')
+
 
 
 
 class IdeiasView(View):
-    print("asdasd")
+    template_name = "ideias.html"
+    form_class = IdeiasForm
+
+    def get(self, request):
+        if request.user.is_authenticated:
+            return render(request, self.template_name)
+        else:
+            return render(request, 'registration/login.html')
+
     def post(self,request):
         print("ideias")
-        if request.user.is_authenticated():
-            form = IdeiasForm(request.POST)
+        if request.user.is_authenticated:
+            form = self.form_class(request.POST)
             if form.is_valid():
-                commit = form.save(commit=False) #TODO comentar para k serve este commit
+                commit = form.save(commit=False) #Pára o auto-commit do django para introduzir campos que não estão no form mas no modelo.
                 commit.autor = request.user
-                teste = "asd"
-                teste = form.data['outra_text']
-                commit.tipo_nome = self.tipos_ideia(form.cleaned_data['tipo'], teste)
-                commit.tipo_nome = self.tipos_ideia(0, form)
+                if form.cleaned_data['tipo'] == 4:
+                    commit.tipo_nome = form.data['outra_text']
+                else:
+                    commit.tipo_nome = self.tipos_ideia(form.cleaned_data['tipo'], form)
+                commit.estado = 0
+                commit.estado_nome = "Em análise"
                 commit.save()
                 return HttpResponseRedirect('/sgidi/ideias')
             else:
-                print("Não é válido")
-                # form = IdeiasForm(initial={'key': 'value'})
-                return render(request, 'ideias.html', {'form': form})
-
+                return render(request,'ideias.html', {'form': form})
         else:
-            return HttpResponseRedirect('/login/')
+            return render(request, 'registration/login.html')
 
     @staticmethod
     def tipos_ideia(__x,form):
@@ -56,26 +63,7 @@ class IdeiasView(View):
             1: "Novo processo",
             2: "Melhoria de produto existente",
             3: "Melhoria de processo existente",
-            4: form,
         }.get(__x,"erro")
 
-# def post_ideias(request):
-#     print("ideias")
-#     if request.user.is_authenticated():
-#         form = IdeiasForm(request.POST)
-#         if form.is_valid():
-#             nome = form.cleaned_data['nome']
-#             print("Teste "+str(nome))
-#             commit = form.save(commit=False)
-#             commit.autor = request.user
-#             commit.save()
-#             return HttpResponseRedirect('/ideias/')
-#         else:
-#             print("Não é válido")
-#             #form = IdeiasForm(initial={'key': 'value'})
-#             return render(request, 'ideias.html', {'form': form})
-#
-#     else:
-#         return  HttpResponseRedirect('/login/')
 
 
