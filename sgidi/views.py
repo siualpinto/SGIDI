@@ -1,5 +1,5 @@
 #from __future__ import unicode_literals #TODO VERIFICAR PARA QUE SERVE ISTO http://python-future.org/unicode_literals.html
-
+from django.contrib.auth.models import User
 from django.db.transaction import commit
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, render_to_response
@@ -7,6 +7,7 @@ from django.views import View
 from django.views.decorators.csrf import csrf_protect
 
 from sgidi.forms import IdeiasForm
+from sgidi.models import Ideias
 
 # Create your views here.
 
@@ -57,7 +58,7 @@ class IdeiasView(View):
             return render(request, 'registration/login.html')
 
     @staticmethod
-    def tipos_ideia(__x,form):
+    def tipos_ideia(__x,tipo):
         return{
             0: "Novo produto",
             1: "Novo processo",
@@ -66,4 +67,24 @@ class IdeiasView(View):
         }.get(__x,"erro")
 
 
+
+class IdeiasAvaliacaoView(View):
+    template_name = "ideias_avaliacao.html"
+    estados_ideia = {0: "Em análise", 1: "Projeto", 2: "Arquivada", 3: "Reprovada"}
+
+    def get(self, request,ideia_id):
+        if request.user.is_authenticated:
+            ideia = Ideias.objects.get(id=ideia_id)
+            autor = User.objects.get(id=ideia.autor_id)
+            estados = []
+            estados_nome = []
+            estados_nome.append(ideia.estado_nome)
+            estados.append(ideia.estado)
+            for key, value in self.estados_ideia.items():
+                if key != ideia.estado:
+                    estados_nome.append(value)
+                    estados.append(key)
+            return render(request, self.template_name,{'ideia':ideia,'autor':autor,'estados_nome':estados_nome,'estados':estados})
+        else:
+            return render(request, 'registration/login.html')
 

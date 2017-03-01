@@ -17,3 +17,10 @@ class Ideias(models.Model):
 
     def __str__(self):
         return self.nome
+
+
+# class Ideias(models.Model):
+#
+#
+#     def __str__(self):
+#         return self.avaliacao

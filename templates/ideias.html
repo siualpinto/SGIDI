@@ -5,7 +5,7 @@
 
 {% block content %}
     <div class="container">
-        <div clas="row">
+        <div class="row">
             <div class="col-md-12">
                 <div class="well well-sm">
                     <form class="form-horizontal" action="/sgidi/ideias/postIdeia/" method="post">
@@ -30,10 +30,9 @@
                             <div class="form-group">
                                 <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-user bigicon"></i></span>
                                 <div class="col-md-1">
-                                    <input id="sigla" name="name" type="text" class="form-control" placeholder="{{ user.username }}"disabled>
+                                    <input id="sigla" name="name" type="text" class="form-control" placeholder="{{ user.username }}" disabled>
                                 </div>
                             </div>
-                            {#                            TODO VERIFICAR OS ATRIBUTOS DE CADA TAG#}
                             <div class="form-group">
                                 <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-lightbulb-o bigicon" ></i></span>
                                 <div class="col-md-8">
@@ -43,7 +42,7 @@
                             <div class="form-group">
                                 <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-pencil-square-o bigicon" ></i></span>
                                 <div class="col-md-8">
-                                    <label class="radio-inline"><input type="radio" aria-label="tipo de ideias" name="tipo" value="0"checked>Novo produto</label>
+                                    <label class="radio-inline"><input type="radio" aria-label="tipo de ideias" name="tipo" value="0" checked>Novo produto</label>
                                 </div>
                                 <div class="col-md-8">
                                     <label class="radio-inline"><input type="radio" aria-label="tipo de ideias" name="tipo" value="1">Novo processo</label>
@@ -69,7 +68,7 @@
                                 <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-check-circle bigicon"></i></span>
                                 <div class="col-md-8">
                                     <label for="solucao">Descrição da solução</label>
-                                    <textarea class="form-control" rows="5" maxlength="1600" name="solucao" id="solucao" placeholder="Faça uma descrição de modo a perceber como a ideia pode ser aplicada e qual o seu funcionamento."required></textarea>
+                                    <textarea class="form-control" rows="5" maxlength="1600" name="solucao" id="solucao" placeholder="Faça uma descrição de modo a perceber como a ideia pode ser aplicada e qual o seu funcionamento." required></textarea>
                                 </div>
                             </div>
                             <div class="form-group">

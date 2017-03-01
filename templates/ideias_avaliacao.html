@@ -1,0 +1,192 @@
+{% extends 'pattern/base.html' %}
+{% load static %}
+{% block includes_top %}<link rel="stylesheet" href="{% static "css/ideias.css" %}" >{% endblock %}
+{% block title %}Ideias{% endblock %}
+
+
+{% block content %}
+    <div class="container">
+        <div clas="row">
+            <div class="col-md-12">
+                <div class="well well-sm">
+                    <form class="form-horizontal" action="" method="post">
+                        {% csrf_token %}
+                        {% if form.errors %}
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <div class="alert alert-danger">
+                                        <strong>{{ error|escape }}</strong>
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}
+                            {% for error in form.non_field_errors %}
+                                <div class="alert alert-danger">
+                                    <strong>{{ error|escape }}</strong>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        <fieldset>
+                            <legend class="text-center header" id="avaliacao">Análise de ideias</legend>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <p class="lead text-left text-capitalize">{{ ideia.nome }}</p>
+                                    <p><strong>Data de criação: </strong><span class="text-uppercase">{{ ideia.data }}</span></p>
+                                    <p><strong>Autor da Ideia: </strong><span class="text-uppercase">{{ autor.username }}</span></p>
+                                    <p><strong>Estado Atual: </strong>
+                                        <label class="selector" for="options">
+                                            <select id="options">
+                                                <option value="{{ estados.0 }}">{{ estados_nome.0 }}</option>
+                                                <option value="{{ estados.1 }}">{{ estados_nome.1 }}</option>
+                                                <option value="{{ estados.2 }}">{{ estados_nome.2 }}</option>
+                                                <option value="{{ estados.3 }}">{{ estados_nome.3 }}</option>
+                                            </select>
+                                        </label>
+                                        <button>Atualizar estado</button>
+                                    </p>
+                                    <p><strong>Tipo de ideia: </strong><span class="text-justify">{{ ideia.tipo_nome }}</span></p>
+                                    <p><strong>Problema: </strong><br><span class="text-justify">{{ ideia.problema }}</span></p>
+                                    <p><strong>Solução: </strong><br><span class="text-justify">{{ ideia.solucao }}</span></p>
+
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <p class="lead text-left">Pré-Análise</p>
+                                    <p><strong>Data de criação: </strong><span class="text-uppercase">{% now "DATETIME_FORMAT" %}</span></p>
+                                    <p><strong>Autor da Pré-Análise: </strong><span class="text-uppercase">{{ user.username }}</span></p>
+                                    <p><strong>Conclusão: </strong>
+                                        <textarea class="form-control" rows="5" maxlength="1600" name="pre_analise" id="pre_analise" placeholder="pre analise" required></textarea>
+                                    </p>
+                                    <div class="btn-group btn-group-xs">
+                                        <button type="submit" class="btn btn-danger">Inserir Pré-Análise</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <form class="form-horizontal" action="" method="post">
+                        {% csrf_token %}
+                        {% if form.errors %}
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <div class="alert alert-danger">
+                                        <strong>{{ error|escape }}</strong>
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}
+                            {% for error in form.non_field_errors %}
+                                <div class="alert alert-danger">
+                                    <strong>{{ error|escape }}</strong>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        <fieldset>
+                            <div class="col-md-12 disabledbutton">
+                                <div class="form-group">
+                                    <p class="lead text-left">Tabela de Análise</p>
+                                    <p><strong>Data de criação: </strong><span class="text-uppercase">{% now "DATETIME_FORMAT" %}</span></p>
+                                    <p><strong>Autor da Pré-Análise: </strong><span class="text-uppercase">{{ user.username }}</span></p>
+                                    <table id="tabela_avaliacao">
+                                        <tr>
+                                            <th></th>
+                                            <th>Muito fraco</th>
+                                            <th>Fraco</th>
+                                            <th>Médio</th>
+                                            <th>Bom</th>
+                                            <th>Muito bom</th>
+                                            <th>Peso</th>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Duração e custo do projeto</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>12.5%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Impacto no cliente e impacto no volume de vendas</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>12.5%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Grau de inovação</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>12.5%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Fatores de risco</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>12.5%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Requisitos legais, sociais, tecnológicos e financeiros</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>12.5%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Estabelecimento de parcerias com entidades do SCTN</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>12.5%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Coerência com os objetivos de IDI</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>12.5%</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Aprovação da Gestão de Topo</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>12.5%</td>
+                                        </tr>
+                                    </table>
+                                    <a class="btn add_line"><i class="fa fa-plus-square mediumicon"></i></a>
+                                    <div >
+                                        <p><strong>Conclusão: </strong>
+                                            <textarea class="form-control" rows="5" maxlength="1600" name="pre_analise" id="pre_analise" placeholder="analise" required></textarea>
+                                        </p>
+                                    </div>
+                                    <div class="btn-group btn-group-xs">
+                                        <button type="submit" class="btn btn-danger">Inserir Análise</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block include_footer %}<script src="{% static "js/ideias.js" %}"></script> {% endblock %}

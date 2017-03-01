@@ -4,6 +4,10 @@
     padding: 10px;
 }
 
+#avaliacao {
+    color: #ac2925;
+}
+
 .bigicon {
     font-size: 35px;
     color: #36A0FF;
@@ -22,11 +26,62 @@ textarea {
 }
 
 
-
 input[type=radio]:not(old):checked {
-  display          : block;
+    display          : block;
 
-  border           : 0.0625em solid rgb(115,153,77);
-  border-radius    : 0.125em;
-  background       : rgb(153,204,102);
+    border           : 0.0625em solid rgb(115,153,77);
+    border-radius    : 0.125em;
+    background       : rgb(153,204,102);
+}
+
+.lead{
+    text-align: center;
+    padding-left: 1%;
+    color: white;
+    background-color: #ac2925;
+}
+
+.form-group{
+    padding-left: 2%;
+    padding-right: 2%;
+}
+
+p {
+    word-wrap: break-word;
+}
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 8px;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+.add_line {
+    padding: 0;
+    margin-top: 0;
+}
+
+.mediumicon {
+    font-size: 25px;
+    color: #d58512;
+}
+
+.smallicon {
+    font-size: 17px;
+    color: #d58512;
+}
+
+
+.disabledbutton {
+    pointer-events: none;
+    opacity: 0.4;
 }
