@@ -19,7 +19,7 @@ class Ideias(models.Model):
         return self.nome
 
 
-# class Ideias(models.Model):
+# class Avaliacao(models.Model):
 #
 #
 #     def __str__(self):
