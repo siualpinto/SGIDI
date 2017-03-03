@@ -80,7 +80,8 @@
                         {% endif %}
                         <fieldset>
                             <legend class="text-center header avaliacao">Tabela de Análise</legend>
-                            <div class="form-group disabledbutton" id="form2">
+                            <div class="form-group" id="form2">
+{#                            <div class="form-group disabledform" id="form2"> TODO DESCOMENTAR ESTA LINHA E APAGAR A ANTERIOR#}
                                 <p><strong>Data de criação: </strong><span class="text-uppercase">{% now "DATETIME_FORMAT" %}</span></p>
                                 <p><strong>Autor da Pré-Análise: </strong><span class="text-uppercase">{{ user.username }}</span></p>
                                 <table id="tabela_avaliacao">
@@ -93,7 +94,6 @@
                                         <th>Muito bom</th>
                                         <th>Peso</th>
                                     </tr>
-
                                     <tr>
                                         <td>Duração e custo do projeto</td>
                                         <td></td>
@@ -166,8 +166,18 @@
                                         <td></td>
                                         <td>12.5%</td>
                                     </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>Total: 100%</td>
+                                    </tr>
                                 </table>
                                 <a class="btn add_line"><i class="fa fa-plus-square mediumicon"></i></a>
+                                <a class="btn delete_line"><i class="fa fa-minus-square mediumicon"></i></a>
                                 <div >
                                     <p><strong>Conclusão: </strong>
                                         <textarea class="form-control" rows="5" maxlength="1600" name="pre_analise" id="pre_analise" placeholder="analise" required></textarea>
