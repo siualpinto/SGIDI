@@ -31,7 +31,6 @@ def index_view(request):
 class IdeiasView(View):
     template_name = "ideias.html"
     form_class = IdeiasForm
-    print("##############""############")
     def get(self, request):
         if request.user.is_authenticated:
             return render(request, self.template_name)
@@ -53,7 +52,7 @@ class IdeiasView(View):
                 commit.save()
                 return HttpResponseRedirect('/sgidi/ideias')
             else:
-                return render(request,'ideias.html', {'form': form})
+                return render(request, 'ideias.html', {'form': form})
         else:
             return render(request, 'registration/login.html')
 
@@ -64,7 +63,7 @@ class IdeiasView(View):
             1: "Novo processo",
             2: "Melhoria de produto existente",
             3: "Melhoria de processo existente",
-        }.get(__x,"erro")
+        }.get(__x, "erro")
 
 
 
@@ -76,6 +75,20 @@ class IdeiasAvaliacaoView(View):
         if request.user.is_authenticated:
             ideia = Ideias.objects.get(id=ideia_id)
             autor = User.objects.get(id=ideia.autor_id)
+            print("###################"+ideia.autor_pre_analise_id.__str__()+"##################")
+
+            if ideia.autor_pre_analise_id is None:
+                avaliador_pre_analise = ideia.autor_pre_analise_id
+                print("É NULL")
+            else:
+                avaliador_pre_analise = User.objects.get(id=ideia.autor_pre_analise_id)
+                print("Não É NULL")
+
+            if ideia.autor_analise_id is not None:
+                avaliador_analise = User.objects.get(id=ideia.autor_analise_id)
+            else:
+                avaliador_analise = ideia.autor_analise_id
+
             estados = []
             estados_nome = []
             estados_nome.append(ideia.estado_nome)
@@ -84,9 +97,33 @@ class IdeiasAvaliacaoView(View):
                 if key != ideia.estado:
                     estados_nome.append(value)
                     estados.append(key)
-            return render(request, self.template_name,{'ideia':ideia,'autor':autor,'estados_nome':estados_nome,'estados':estados})
+            return render(request, self.template_name, {'ideia': ideia, 'autor': autor, 'avaliador1': avaliador_pre_analise, 'avaliador2': avaliador_analise, 'estados_nome': estados_nome, 'estados': estados})
         else:
             return render(request, 'registration/login.html')
+
+    def post(self, request):
+        if request.user.is_authenticated:
+
+
+
+            form = self.form_class(request.POST)
+            if form.is_valid():
+                commit = form.save(
+                    commit=False)  # Pára o auto-commit do django para introduzir campos que não estão no form mas no modelo.
+                commit.autor = request.user
+                if form.cleaned_data['tipo'] == 4:
+                    commit.tipo_nome = form.data['outra_text']
+                else:
+                    commit.tipo_nome = self.tipos_ideia(form.cleaned_data['tipo'], form)
+                commit.estado = 0
+                commit.estado_nome = "Em análise"
+                commit.save()
+                return HttpResponseRedirect('/sgidi/ideias')
+            else:
+                return render(request, 'ideias.html', {'form': form})
+        else:
+            return render(request, 'registration/login.html')
+
 
 @csrf_protect
 def post_atualizar_estado(request):
@@ -98,27 +135,8 @@ def post_atualizar_estado(request):
             ideia_id = request.GET.get('ideia_id',None)
 
             data = {
-                "ideia":Ideias.objects.filter(id=ideia_id).update(estado_nome=estado_nome,estado=estado),
+                "ideia" : Ideias.objects.filter(id=ideia_id).update(estado_nome=estado_nome, estado=estado),
             }
             return JsonResponse(data)
         else:
             return render(request, 'registration/login.html')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

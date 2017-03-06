@@ -62,7 +62,7 @@ $("#atualizar_estado").click(function () {
 
     $.ajax({
         type:"POST",
-        url: '/ajax/change_estado/',
+        url: 'ajax/change_estado/',
         data: {
             'ideia_id':ideia_id,
             'estado': estado,
