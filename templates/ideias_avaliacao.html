@@ -14,7 +14,7 @@
                         <div class="col-md-12">
                             <p class="lead text-left text-capitalize">{{ ideia.nome }}</p>
                             <p><strong>Data de criação: </strong><span class="text-uppercase">{{ ideia.data }}</span></p>
-                            <p><strong>Autor da Ideia: </strong><span class="text-uppercase">{{ avaliador_pre_analise.username }}</span></p>
+                            <p><strong>Autor da Ideia: </strong><span class="text-uppercase">{{ autor.username }}</span></p>
                             <p><strong>Estado Atual: </strong>
                                 <label class="selector" for="options">
                                     <select id="options">
@@ -31,7 +31,7 @@
                             <p><strong>Solução: </strong><br><span class="text-justify">{{ ideia.solucao }}</span></p>
                         </div>
                     </fieldset>
-                    <form class="form-horizontal" action="" method="post" >
+                    <form class="form-horizontal" action="{% url "post_pre_analise" %}" method="post" >
                         {% csrf_token %}
                         {% if form.errors %}
                             {% for field in form %}
@@ -49,21 +49,27 @@
                         {% endif %}
                         <fieldset>
                             <legend class="text-center header avaliacao">Pré-Análise</legend>
-                            <div class="form-group" id="form1">
+                            <div class="form-group" id="form1" >
+                                <input type="hidden" name="id" value="{{ ideia.id }}">
                                 {% if avaliador1 is not none %}
-                                    <p><strong>Data da Pré-Análise: </strong><span class="text-uppercase">{% now "DATETIME_FORMAT" %}</span></p>
+                                    <p><strong>Data da Pré-Análise: </strong><span class="text-uppercase">{{ ideia.data_pre_analise }}</span></p>
                                     <p><strong>Autor da Pré-Análise: </strong><span class="text-uppercase">{{ avaliador1.username  }}</span></p>
                                 {% endif %}
                                 <p><strong>Conclusão: </strong>
-                                    <textarea class="form-control" rows="5" maxlength="1600" name="pre_analise" id="pre_analise" placeholder="pre analise" required>{{ ideia.pre_analise }}</textarea>
+                                    <textarea class="form-control" rows="5" maxlength="1600" name="pre_analise" id="pre_analise_text" placeholder="Pré Análise" required{% if avaliador1 is not none %} disabled{% endif %}>{{ ideia.pre_analise }}</textarea>
                                 </p>
                                 <div class="btn-group btn-group-xs">
-                                    <button type="submit" name="form1" class="btn btn-danger">Inserir Pré-Análise</button>
+                                    {% if avaliador1 is not none %}
+                                        <button type="button" class="btn btn-warning" id="editar_pre_analise">Editar Pré-Análise</button>
+                                        <button type="submit" name="form1" class="btn btn-success" id="inserir_pre_analise" disabled>Inserir Pré-Análise</button>
+                                    {% else %}
+                                        <button type="submit" name="form1" class="btn btn-success" id="inserir_pre_analise">Inserir Pré-Análise</button>
+                                    {% endif %}
                                 </div>
                             </div>
                         </fieldset>
                     </form>
-                    <form class="form-horizontal" action="" method="post">
+                    <form class="form-horizontal" action="{% url "post_analise" %}" method="post">
                         {% csrf_token %}
                         {% if form.errors %}
                             {% for field in form %}
@@ -86,9 +92,10 @@
                         {% endif %}
                         <legend class="text-center header avaliacao">Tabela de Análise</legend>
                         <div class="form-group" id="form2">
+                            <input type="hidden" name="id" value="{{ ideia.id }}">
                             {% if avaliador2 is not null %}
-                            <p><strong>Data da Análise: </strong><span class="text-uppercase">{% now "DATETIME_FORMAT" %}</span></p>
-                            <p><strong>Autor da Análise: </strong><span class="text-uppercase">{{ user.username }}</span></p>
+                                <p><strong>Data da Análise: </strong><span class="text-uppercase">{{ ideia.data_analise }}</span></p>
+                                <p><strong>Autor da Análise: </strong><span class="text-uppercase">{{ avaliador2.username }}</span></p>
                             {% endif %}
                             <table id="tabela_avaliacao">
                                 <tr>
@@ -186,11 +193,16 @@
                             <a class="btn delete_line"><i class="fa fa-minus-square mediumicon"></i></a>
                             <div >
                                 <p><strong>Conclusão: </strong>
-                                    <textarea class="form-control" rows="5" maxlength="1600" name="pre_analise" id="pre_analise" placeholder="analise" required></textarea>
+                                    <textarea class="form-control" rows="5" maxlength="1600" name="analise" id="analise_text" placeholder="Análise" required{% if avaliador2 is not none %} disabled{% endif %}>{{ ideia.analise }}</textarea>
                                 </p>
                             </div>
                             <div class="btn-group btn-group-xs">
-                                <button type="submit" name="form2" class="btn btn-danger">Inserir Análise</button>
+                                {% if avaliador2 is not none %}
+                                    <button type="button" class="btn btn-warning" id="editar_analise">Editar Análise</button>
+                                    <button type="submit" name="form2" class="btn btn-success" id="inserir_analise" disabled>Inserir Análise</button>
+                                {% else %}
+                                    <button type="submit" name="form2" class="btn btn-success" id="inserir_analise">Inserir Análise</button>
+                                {% endif %}
                             </div>
                         </div>
                         </fieldset>

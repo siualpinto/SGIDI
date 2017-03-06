@@ -76,3 +76,22 @@ $("#atualizar_estado").click(function () {
         }
     });
 });
+
+
+$("#editar_pre_analise").click(function () {
+    $("#pre_analise_text").prop('disabled',false);
+    this.remove();
+});
+
+$("#pre_analise_text").change(function() {
+  $("#inserir_pre_analise").prop('disabled',false);
+});
+
+$("#editar_analise").click(function () {
+    $("#analise_text").prop('disabled',false);
+    this.remove();
+});
+
+$("#analise_text").change(function() {
+  $("#inserir_analise").prop('disabled',false);
+});
