@@ -116,10 +116,9 @@ class IdeiasAvaliacaoView(View):
                     return render(request, 'ideias_avaliacao.html', {'form': form})
 
             elif "form2" in request.POST:
-                instance = get_object_or_404(Ideias, id=request.POST.get("id"))
+                instance = get_object_or_404(Ideias, id=request.POST.get("id", ""))
                 form = self.second_form_class(request.POST, instance=instance)
                 if form.is_valid():
-                    print("########## FORMULARIO 2 #############" + str(request.POST))
                     commit = form.save(commit=False)
                     commit.autor_analise = request.user
                     print(str(commit))
@@ -127,23 +126,35 @@ class IdeiasAvaliacaoView(View):
                     return HttpResponseRedirect('/sgidi/ideias/avaliacao/' + request.POST.get("id", ""))
                 else:
                     return render(request, 'ideias_avaliacao.html', {'form': form})
+
+            elif request.is_ajax():
+                estado = request.POST.get('estado', "error_estado")
+                estado_nome = request.POST.get('estado_nome', "error_estado_nome")
+                ideia_id = request.POST.get('ideia_id', "error_ideia_id")
+                data = {
+                    "ideia": Ideias.objects.filter(id=ideia_id).update(estado_nome=estado_nome, estado=estado),
+                }
+                return JsonResponse(data)
+
         else:
             return render(request, 'registration/login.html')
 
 
 
-@csrf_protect
-def post_atualizar_estado(request):
-    print("asdasopdkqkweopqwkddpo213890217591208301283")
-    if request.is_ajax():
-        if request.user.is_authenticated:
-            estado = request.GET.get('estado',None)
-            estado_nome = request.GET.get('estado_nome',None)
-            ideia_id = request.GET.get('ideia_id',None)
 
-            data = {
-                "ideia" : Ideias.objects.filter(id=ideia_id).update(estado_nome=estado_nome, estado=estado),
-            }
-            return JsonResponse(data)
-        else:
-            return render(request, 'registration/login.html')
+#@csrf_exempt TODO Descomentar para funcionar sem token
+# @csrf_protect
+# def post_atualizar_estado(request):
+#     print("asdasopdkqkweopqwkddpo213890217591208301283")
+#     if request.is_ajax():
+#         if request.user.is_authenticated:
+#             estado = request.GET.get('estado',None)
+#             estado_nome = request.GET.get('estado_nome',None)
+#             ideia_id = request.GET.get('ideia_id',None)
+#
+#             data = {
+#                 "ideia" : Ideias.objects.filter(id=ideia_id).update(estado_nome=estado_nome, estado=estado),
+#             }
+#             return JsonResponse(data)
+#         else:
+#             return render(request, 'registration/login.html')

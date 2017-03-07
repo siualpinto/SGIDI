@@ -24,6 +24,7 @@
                                         <option value="{{ estados.3 }}">{{ estados_nome.3 }}</option>
                                     </select>
                                 </label>
+                                {% csrf_token %}
                                 <button id="atualizar_estado">Atualizar estado</button>
                             </p>
                             <p><strong>Tipo de ideia: </strong><span class="text-justify">{{ ideia.tipo_nome }}</span></p>

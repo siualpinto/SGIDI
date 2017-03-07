@@ -53,13 +53,37 @@ $("#tabela_avaliacao").on("click", "td:not(:first-child, :last-child)", function
     }
 });
 
+$.ajaxSetup({//TODO POR NUM JS GLOBAL
+     beforeSend: function(xhr, settings) {
+         function getCookie(name) {
+             var cookieValue = null;
+             if (document.cookie && document.cookie != '') {
+                 var cookies = document.cookie.split(';');
+                 for (var i = 0; i < cookies.length; i++) {
+                     var cookie = jQuery.trim(cookies[i]);
+                     // Does this cookie string begin with the name we want?
+                     if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                         break;
+                     }
+                 }
+             }
+             return cookieValue;
+         }
+         if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+             // Only send the token to relative URLs i.e. locally.
+             xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken'));
+         }
+     }
+});
+
+
 $("#atualizar_estado").click(function () {
     var estados = $('#options');
     var estado_nome = estados.find(":selected").text();
     var estado = estados.find(":selected").val();
     var path = window.location.pathname.split("/");
     ideia_id = path[4];
-
     $.ajax({
         type:"POST",
         url: 'ajax/change_estado/',
@@ -71,7 +95,7 @@ $("#atualizar_estado").click(function () {
         dataType: 'json',
         success: function (data) {
             if (data) {
-                alert("Estado atualizado"+data.ideia);
+                alert("Estado atualizado: "+data.ideia ? "Sucesso" : "Falhou");
             }
         }
     });
@@ -84,7 +108,7 @@ $("#editar_pre_analise").click(function () {
 });
 
 $("#pre_analise_text").change(function() {
-  $("#inserir_pre_analise").prop('disabled',false);
+    $("#inserir_pre_analise").prop('disabled',false);
 });
 
 $("#editar_analise").click(function () {
@@ -93,5 +117,6 @@ $("#editar_analise").click(function () {
 });
 
 $("#analise_text").change(function() {
-  $("#inserir_analise").prop('disabled',false);
+    $("#inserir_analise").prop('disabled',false);
 });
+
