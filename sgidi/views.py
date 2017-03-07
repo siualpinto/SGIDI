@@ -1,14 +1,14 @@
 #from __future__ import unicode_literals #TODO VERIFICAR PARA QUE SERVE ISTO http://python-future.org/unicode_literals.html
 from django.contrib.auth.models import User
-from django.db.transaction import commit
 from django.http import HttpResponseRedirect
 from django.http import JsonResponse
-from django.shortcuts import render, render_to_response, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.views import View
-from django.views.decorators.csrf import csrf_protect
+from datetime import datetime
+
 
 from sgidi.forms import IdeiasForm, PreAnaliseForm, AnaliseForm
-from sgidi.models import Ideias
+from sgidi.models import Ideias, Analise
 
 # Create your views here.
 
@@ -18,19 +18,10 @@ def index_view(request):
     else:
         return render(request, 'registration/login.html')
 
-
-# def ideias_view(request):
-#     if request.user.is_authenticated:
-#         return render(request, 'ideias.html')
-#     else:
-#         return render(request, 'registration/login.html')
-
-
-
-
 class IdeiasView(View):
     template_name = "ideias.html"
     form_class = IdeiasForm
+
     def get(self, request):
         if request.user.is_authenticated:
             return render(request, self.template_name)
@@ -50,6 +41,8 @@ class IdeiasView(View):
                 commit.estado = 0
                 commit.estado_nome = "Em análise"
                 commit.save()
+                for x in range(8):
+                    Analise.objects.create(ideia=commit, ordem=x, peso=12.5)
                 return HttpResponseRedirect('/sgidi/ideias')
             else:
                 return render(request, 'ideias.html', {'form': form})
@@ -57,21 +50,32 @@ class IdeiasView(View):
             return render(request, 'registration/login.html')
 
     @staticmethod
-    def tipos_ideia(__x,tipo):
+    def tipos_ideia(__x, tipo):
         return{
             0: "Novo produto",
             1: "Novo processo",
             2: "Melhoria de produto existente",
             3: "Melhoria de processo existente",
-        }.get(__x, "erro")
-
-
+        }.get(__x, "erro_tipos_ideia")
 
 class IdeiasAvaliacaoView(View):
     form_class = PreAnaliseForm
     second_form_class = AnaliseForm
     template_name = "ideias_avaliacao.html"
-    estados_ideia = {0: "Em análise", 1: "Projeto", 2: "Arquivada", 3: "Reprovada"}
+    estados_ideia = {
+        0: "Em análise",
+        1: "Projeto",
+        2: "Arquivada",
+        3: "Reprovada"}
+    tipos_avaliacao = {
+        0: "Duração e custo do projeto",
+        1: "Impacto no cliente e impacto no volume de vendas",
+        2: "Grau de inovação",
+        3: "Fatores de risco",
+        4: "Requisitos legais, sociais, tecnológicos e financeiros",
+        5: "Estabelecimento de parcerias com entidades do SCTN",
+        6: "Coerência com os objetivos de IDI",
+        7: "Aprovação da Gestão de Topo",}
 
     def get(self, request, ideia_id):
         if request.user.is_authenticated:
@@ -86,7 +90,6 @@ class IdeiasAvaliacaoView(View):
                 avaliador_analise = User.objects.get(id=ideia.autor_analise_id)
             else:
                 avaliador_analise = ideia.autor_analise_id
-
             estados = []
             estados_nome = []
             estados_nome.append(ideia.estado_nome)
@@ -95,21 +98,20 @@ class IdeiasAvaliacaoView(View):
                 if key != ideia.estado:
                     estados_nome.append(value)
                     estados.append(key)
-            return render(request, self.template_name, {'ideia': ideia, 'autor': autor, 'avaliador1': avaliador_pre_analise, 'avaliador2': avaliador_analise, 'estados_nome': estados_nome, 'estados': estados})
+            return render(request, self.template_name, {'ideia': ideia, 'autor': autor, 'avaliador1': avaliador_pre_analise, 'avaliador2': avaliador_analise,
+                                                        'estados_nome': estados_nome, 'estados': estados, 'tipos_avalicao': sorted(self.tipos_avaliacao.items())})
         else:
             return render(request, 'registration/login.html')
 
     def post(self, request):
         if request.user.is_authenticated:
-
             if "form1" in request.POST:
                 instance = get_object_or_404(Ideias, id=request.POST.get("id", ""))
                 form = self.form_class(request.POST, instance=instance)
                 if form.is_valid():
-                    print("########## FORMULARIO 1 #############"+str(request.POST))
                     commit = form.save(commit=False)
                     commit.autor_pre_analise = request.user
-                    print(str(commit))
+                    commit.data_pre_analise = datetime.now()
                     commit.save()
                     return HttpResponseRedirect('/sgidi/ideias/avaliacao/'+request.POST.get("id", ""))
                 else:
@@ -121,7 +123,7 @@ class IdeiasAvaliacaoView(View):
                 if form.is_valid():
                     commit = form.save(commit=False)
                     commit.autor_analise = request.user
-                    print(str(commit))
+                    commit.data_analise = datetime.now()
                     commit.save()
                     return HttpResponseRedirect('/sgidi/ideias/avaliacao/' + request.POST.get("id", ""))
                 else:
@@ -135,26 +137,5 @@ class IdeiasAvaliacaoView(View):
                     "ideia": Ideias.objects.filter(id=ideia_id).update(estado_nome=estado_nome, estado=estado),
                 }
                 return JsonResponse(data)
-
         else:
             return render(request, 'registration/login.html')
-
-
-
-
-#@csrf_exempt TODO Descomentar para funcionar sem token
-# @csrf_protect
-# def post_atualizar_estado(request):
-#     print("asdasopdkqkweopqwkddpo213890217591208301283")
-#     if request.is_ajax():
-#         if request.user.is_authenticated:
-#             estado = request.GET.get('estado',None)
-#             estado_nome = request.GET.get('estado_nome',None)
-#             ideia_id = request.GET.get('ideia_id',None)
-#
-#             data = {
-#                 "ideia" : Ideias.objects.filter(id=ideia_id).update(estado_nome=estado_nome, estado=estado),
-#             }
-#             return JsonResponse(data)
-#         else:
-#             return render(request, 'registration/login.html')

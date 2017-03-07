@@ -108,78 +108,17 @@
                                     <th>Muito bom</th>
                                     <th>Peso</th>
                                 </tr>
-                                <tr>
-                                    <td>Duração e custo do projeto</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>12.5%</td>
-                                </tr>
-                                <tr>
-                                    <td>Impacto no cliente e impacto no volume de vendas</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>12.5%</td>
-                                </tr>
-                                <tr>
-                                    <td>Grau de inovação</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>12.5%</td>
-                                </tr>
-                                <tr>
-                                    <td>Fatores de risco</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>12.5%</td>
-                                </tr>
-                                <tr>
-                                    <td>Requisitos legais, sociais, tecnológicos e financeiros</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>12.5%</td>
-                                </tr>
-                                <tr>
-                                    <td>Estabelecimento de parcerias com entidades do SCTN</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>12.5%</td>
-                                </tr>
-                                <tr>
-                                    <td>Coerência com os objetivos de IDI</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>12.5%</td>
-                                </tr>
-                                <tr>
-                                    <td>Aprovação da Gestão de Topo</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>12.5%</td>
-                                </tr>
+                                {% for key, value in tipos_avalicao %}
+                                    <tr>
+                                        <td> {{ value }} </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td aria-required="true"></td>
+                                        <td><input type="text" class="pesos" id="peso{{ key }}" value="12.5" size="2" maxlength="6"></td>
+                                    </tr>
+                                {% endfor %}
                                 <tr>
                                     <td></td>
                                     <td></td>

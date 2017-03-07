@@ -83,3 +83,7 @@ tr:nth-child(even) {
     pointer-events: none;
     opacity: 0.4;
 }
+
+input.pesos{
+    text-align: center;
+}
