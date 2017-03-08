@@ -4,11 +4,11 @@ from django.http import HttpResponseRedirect
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.views import View
-from datetime import datetime
+from django.utils import timezone
 
 
 from sgidi.forms import IdeiasForm, PreAnaliseForm, AnaliseForm
-from sgidi.models import Ideias, Analise
+from sgidi.models import Ideias, Analises
 
 # Create your views here.
 
@@ -42,7 +42,7 @@ class IdeiasView(View):
                 commit.estado_nome = "Em análise"
                 commit.save()
                 for x in range(8):
-                    Analise.objects.create(ideia=commit, ordem=x, peso=12.5)
+                    Analises.objects.create(ideia=commit, ordem=x, peso=1, tipo=1)
                 return HttpResponseRedirect('/sgidi/ideias')
             else:
                 return render(request, 'ideias.html', {'form': form})
@@ -62,12 +62,12 @@ class IdeiasAvaliacaoView(View):
     form_class = PreAnaliseForm
     second_form_class = AnaliseForm
     template_name = "ideias_avaliacao.html"
-    estados_ideia = {
+    estados_ideia_dic = {
         0: "Em análise",
         1: "Projeto",
         2: "Arquivada",
         3: "Reprovada"}
-    tipos_avaliacao = {
+    tipos_avaliacao_dic = {
         0: "Duração e custo do projeto",
         1: "Impacto no cliente e impacto no volume de vendas",
         2: "Grau de inovação",
@@ -75,7 +75,7 @@ class IdeiasAvaliacaoView(View):
         4: "Requisitos legais, sociais, tecnológicos e financeiros",
         5: "Estabelecimento de parcerias com entidades do SCTN",
         6: "Coerência com os objetivos de IDI",
-        7: "Aprovação da Gestão de Topo",}
+        7: "Aprovação da Gestão de Topo"}
 
     def get(self, request, ideia_id):
         if request.user.is_authenticated:
@@ -90,16 +90,19 @@ class IdeiasAvaliacaoView(View):
                 avaliador_analise = User.objects.get(id=ideia.autor_analise_id)
             else:
                 avaliador_analise = ideia.autor_analise_id
-            estados = []
-            estados_nome = []
-            estados_nome.append(ideia.estado_nome)
-            estados.append(ideia.estado)
-            for key, value in self.estados_ideia.items():
+            estados = {}
+            estados.update({ideia.estado: ideia.estado_nome})
+            for key, value in self.estados_ideia_dic.items():
                 if key != ideia.estado:
-                    estados_nome.append(value)
-                    estados.append(key)
+                    estados.update({key: value})
+            tipos_avaliacao = {}
+            for key, value in self.tipos_avaliacao_dic.items():
+                tipos_avaliacao.setdefault(key, [])
+                tipos_avaliacao[key].append(value)
+                tipos_avaliacao[key].append(Analises.objects.values_list('tipo', flat=True).get(ideia=ideia_id, ordem=key))
+                tipos_avaliacao[key].append(Analises.objects.values_list('peso', flat=True).get(ideia=ideia_id, ordem=key))
             return render(request, self.template_name, {'ideia': ideia, 'autor': autor, 'avaliador1': avaliador_pre_analise, 'avaliador2': avaliador_analise,
-                                                        'estados_nome': estados_nome, 'estados': estados, 'tipos_avalicao': sorted(self.tipos_avaliacao.items())})
+                                                        'estados': estados.items(), 'tipos_avalicao': sorted(tipos_avaliacao.items())})
         else:
             return render(request, 'registration/login.html')
 
@@ -111,7 +114,7 @@ class IdeiasAvaliacaoView(View):
                 if form.is_valid():
                     commit = form.save(commit=False)
                     commit.autor_pre_analise = request.user
-                    commit.data_pre_analise = datetime.now()
+                    commit.data_pre_analise = timezone.now()
                     commit.save()
                     return HttpResponseRedirect('/sgidi/ideias/avaliacao/'+request.POST.get("id", ""))
                 else:
@@ -123,7 +126,7 @@ class IdeiasAvaliacaoView(View):
                 if form.is_valid():
                     commit = form.save(commit=False)
                     commit.autor_analise = request.user
-                    commit.data_analise = datetime.now()
+                    commit.data_analise = timezone.now()
                     commit.save()
                     return HttpResponseRedirect('/sgidi/ideias/avaliacao/' + request.POST.get("id", ""))
                 else:

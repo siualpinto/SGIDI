@@ -18,3 +18,4 @@ class AnaliseForm(forms.ModelForm):
         model = Ideias
         fields = ['analise']
         exclude = ['autor_analise', 'data_analise']
+

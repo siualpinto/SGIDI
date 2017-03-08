@@ -18,10 +18,9 @@
                             <p><strong>Estado Atual: </strong>
                                 <label class="selector" for="options">
                                     <select id="options">
-                                        <option value="{{ estados.0 }}">{{ estados_nome.0 }}</option>
-                                        <option value="{{ estados.1 }}">{{ estados_nome.1 }}</option>
-                                        <option value="{{ estados.2 }}">{{ estados_nome.2 }}</option>
-                                        <option value="{{ estados.3 }}">{{ estados_nome.3 }}</option>
+                                        {% for key, value in estados %}
+                                            <option value="{{ key }}">{{ value }}</option>
+                                        {% endfor %}
                                     </select>
                                 </label>
                                 {% csrf_token %}
@@ -70,7 +69,7 @@
                             </div>
                         </fieldset>
                     </form>
-                    <form class="form-horizontal" action="{% url "post_analise" %}" method="post">
+                    <form class="form-horizontal {% if avaliador1 is null %}disabledform{% endif %}" action="{% url "post_analise" %}" method="post">
                         {% csrf_token %}
                         {% if form.errors %}
                             {% for field in form %}
@@ -86,65 +85,61 @@
                                 </div>
                             {% endfor %}
                         {% endif %}
-                        {% if avaliador1 is not null %}
-                            <fieldset>
-                        {% else %}
-                            <fieldset class="disabledform">
-                        {% endif %}
-                        <legend class="text-center header avaliacao">Tabela de Análise</legend>
-                        <div class="form-group" id="form2">
-                            <input type="hidden" name="id" value="{{ ideia.id }}">
-                            {% if avaliador2 is not null %}
-                                <p><strong>Data da Análise: </strong><span class="text-uppercase">{{ ideia.data_analise }}</span></p>
-                                <p><strong>Autor da Análise: </strong><span class="text-uppercase">{{ avaliador2.username }}</span></p>
-                            {% endif %}
-                            <table id="tabela_avaliacao">
-                                <tr>
-                                    <th></th>
-                                    <th>Muito fraco</th>
-                                    <th>Fraco</th>
-                                    <th>Médio</th>
-                                    <th>Bom</th>
-                                    <th>Muito bom</th>
-                                    <th>Peso</th>
-                                </tr>
-                                {% for key, value in tipos_avalicao %}
-                                    <tr>
-                                        <td> {{ value }} </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td aria-required="true"></td>
-                                        <td><input type="text" class="pesos" id="peso{{ key }}" value="12.5" size="2" maxlength="6"></td>
-                                    </tr>
-                                {% endfor %}
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td>Total: 100%</td>
-                                </tr>
-                            </table>
-                            <a class="btn add_line"><i class="fa fa-plus-square mediumicon"></i></a>
-                            <a class="btn delete_line"><i class="fa fa-minus-square mediumicon"></i></a>
-                            <div >
-                                <p><strong>Conclusão: </strong>
-                                    <textarea class="form-control" rows="5" maxlength="1600" name="analise" id="analise_text" placeholder="Análise" required{% if avaliador2 is not none %} disabled{% endif %}>{{ ideia.analise }}</textarea>
-                                </p>
-                            </div>
-                            <div class="btn-group btn-group-xs">
-                                {% if avaliador2 is not none %}
-                                    <button type="button" class="btn btn-warning" id="editar_analise">Editar Análise</button>
-                                    <button type="submit" name="form2" class="btn btn-success" id="inserir_analise" disabled>Inserir Análise</button>
-                                {% else %}
-                                    <button type="submit" name="form2" class="btn btn-success" id="inserir_analise">Inserir Análise</button>
+                        <fieldset>
+                            <legend class="text-center header avaliacao">Tabela de Análise</legend>
+                            <div class="form-group" id="form2">
+                                <input type="hidden" name="id" value="{{ ideia.id }}">
+                                {% if avaliador2 is not null %}
+                                    <p><strong>Data da Análise: </strong><span class="text-uppercase">{{ ideia.data_analise }}</span></p>
+                                    <p><strong>Autor da Análise: </strong><span class="text-uppercase">{{ avaliador2.username }}</span></p>
                                 {% endif %}
+                                <table id="tabela_avaliacao">
+                                    <tr>
+                                        <th></th>
+                                        <th>Muito fraco</th>
+                                        <th>Fraco</th>
+                                        <th>Médio</th>
+                                        <th>Bom</th>
+                                        <th>Muito bom</th>
+                                        <th>Peso</th>
+                                    </tr>
+                                    {% for key, value in tipos_avalicao %}
+                                        <tr>
+                                            <td> {{ value.0 }} </td>
+                                            <td><i class='fa fa-times smallicon'><input type='hidden' name="tipo{{ key }}" value="{{ value.1 }}" ></i></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td><input type="text" class="pesos" id="peso{{ key }}" value="{{ value.2 }}" size="2" maxlength="2"></td>
+                                        </tr>
+                                    {% endfor %}
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>Total: 100%</td>
+                                    </tr>
+                                </table>
+                                <a class="btn add_line"><i class="fa fa-plus-square mediumicon"></i></a>
+                                <a class="btn delete_line"><i class="fa fa-minus-square mediumicon"></i></a>
+                                <div >
+                                    <p><strong>Conclusão: </strong>
+                                        <textarea class="form-control" rows="5" maxlength="1600" name="analise" id="analise_text" placeholder="Análise" required{% if avaliador2 is not none %} disabled{% endif %}>{{ ideia.analise }}</textarea>
+                                    </p>
+                                </div>
+                                <div class="btn-group btn-group-xs">
+                                    {% if avaliador2 is not none %}
+                                        <button type="button" class="btn btn-warning" id="editar_analise">Editar Análise</button>
+                                        <button type="submit" name="form2" class="btn btn-success" id="inserir_analise" disabled>Inserir Análise</button>
+                                    {% else %}
+                                        <button type="submit" name="form2" class="btn btn-success" id="inserir_analise">Inserir Análise</button>
+                                    {% endif %}
+                                </div>
                             </div>
-                        </div>
                         </fieldset>
                     </form>
                 </div>
@@ -152,5 +147,6 @@
         </div>
     </div>
 {% endblock %}
-
-{% block include_footer %}<script src="{% static "js/ideias.js" %}"></script> {% endblock %}
+{% block include_footer %}
+    <script src="{% static "js/ideias.js" %}"></script>
+{% endblock %}

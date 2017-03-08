@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="b6967d17-7b2f-494c-a0f3-94d58749fc71" name="Default" comment="">
+    <list default="true" id="b6967d17-7b2f-494c-a0f3-94d58749fc71" name="Default" comment="Ideias template v1.11&#10;falta a tabela e lista de ideias- done ✔&#10;">
       <change type="DELETED" beforePath="$PROJECT_DIR$/sgidi/migrations/0001_initial.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/sgidi/migrations/__init__.py" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources/e40cce8c-0f3a-4df7-bdc6-4400c2b8a9da.xml" afterPath="$PROJECT_DIR$/.idea/dataSources/e40cce8c-0f3a-4df7-bdc6-4400c2b8a9da.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sgidi/forms.py" afterPath="$PROJECT_DIR$/sgidi/forms.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sgidi/models.py" afterPath="$PROJECT_DIR$/sgidi/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sgidi/static/css/ideias.css" afterPath="$PROJECT_DIR$/sgidi/static/css/ideias.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sgidi/static/js/ideias.js" afterPath="$PROJECT_DIR$/sgidi/static/js/ideias.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sgidi/views.py" afterPath="$PROJECT_DIR$/sgidi/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/ideias.html" afterPath="$PROJECT_DIR$/templates/ideias.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/ideias_avaliacao.html" afterPath="$PROJECT_DIR$/templates/ideias_avaliacao.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/pattern/base.html" afterPath="$PROJECT_DIR$/templates/pattern/base.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/pattern/footer.html" afterPath="$PROJECT_DIR$/templates/pattern/footer.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -40,20 +41,6 @@
         <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
       </PATH_ELEMENT>
     </PATH>
-    <PATH>
-      <PATH_ELEMENT>
-        <option name="myItemId" />
-        <option name="myItemType" value="com.intellij.database.view.DatabaseStructure$Root" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="sgidi@127.0.0.1" />
-        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
-      </PATH_ELEMENT>
-      <PATH_ELEMENT>
-        <option name="myItemId" value="sgidi_analise" />
-        <option name="myItemType" value="com.intellij.database.view.DbNodeDescriptor" />
-      </PATH_ELEMENT>
-    </PATH>
   </component>
   <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
     <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
@@ -67,10 +54,22 @@
       <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sgidi/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="10" column="11" lean-forward="false" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="28" />
+            <state relative-caret-position="176">
+              <caret line="8" column="71" lean-forward="false" selection-start-line="8" selection-start-column="60" selection-end-line="8" selection-end-column="71" />
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="forms.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sgidi/forms.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="44">
+              <caret line="2" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#24#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -79,21 +78,22 @@
       <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sgidi/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="792">
-              <caret line="37" column="29" lean-forward="true" selection-start-line="37" selection-start-column="29" selection-end-line="37" selection-end-column="29" />
+            <state relative-caret-position="334">
+              <caret line="22" column="39" lean-forward="false" selection-start-line="22" selection-start-column="26" selection-end-line="22" selection-end-column="39" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
-                <element signature="e#1194#1210#0" expanded="false" />
+                <element signature="e#1229#1245#0" expanded="false" />
+                <element signature="e#1783#1804#0" expanded="false" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="console.sql" pinned="false" current-in-tab="false">
-        <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/e40cce8c-0f3a-4df7-bdc6-4400c2b8a9da/console.sql">
+      <file leaf-file-name="ideias_avaliacao.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/ideias_avaliacao.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="14" lean-forward="false" selection-start-line="0" selection-start-column="14" selection-end-line="0" selection-end-column="14" />
+            <state relative-caret-position="154">
+              <caret line="70" column="27" lean-forward="true" selection-start-line="70" selection-start-column="27" selection-end-line="70" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -103,30 +103,18 @@
         <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/e40cce8c-0f3a-4df7-bdc6-4400c2b8a9da/console_3.sql">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
-              <caret line="0" column="27" lean-forward="false" selection-start-line="0" selection-start-column="27" selection-end-line="0" selection-end-column="27" />
+              <caret line="0" column="27" lean-forward="true" selection-start-line="0" selection-start-column="27" selection-end-line="0" selection-end-column="27" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ideias_avaliacao.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/ideias_avaliacao.html">
+      <file leaf-file-name="console_4.sql" pinned="false" current-in-tab="false">
+        <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/e40cce8c-0f3a-4df7-bdc6-4400c2b8a9da/console_4.sql">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="88">
-              <caret line="112" column="53" lean-forward="false" selection-start-line="112" selection-start-column="48" selection-end-line="112" selection-end-column="53" />
+            <state relative-caret-position="0">
+              <caret line="0" column="28" lean-forward="false" selection-start-line="0" selection-start-column="28" selection-end-line="0" selection-end-column="28" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="forms.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sgidi/forms.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="390">
-              <caret line="19" column="49" lean-forward="false" selection-start-line="19" selection-start-column="49" selection-end-line="19" selection-end-column="49" />
-              <folding>
-                <element signature="e#0#24#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -134,11 +122,9 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sgidi/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="326">
-              <caret line="101" column="84" lean-forward="false" selection-start-line="101" selection-start-column="84" selection-end-line="101" selection-end-column="84" />
-              <folding>
-                <element signature="e#124#167#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="154">
+              <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -146,18 +132,28 @@
       <file leaf-file-name="ideias.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sgidi/static/css/ideias.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="279">
+            <state relative-caret-position="246">
               <caret line="86" column="12" lean-forward="false" selection-start-line="86" selection-start-column="12" selection-end-line="86" selection-end-column="12" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ideias.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ideias.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sgidi/static/js/ideias.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="192">
-              <caret line="26" column="89" lean-forward="false" selection-start-line="26" selection-start-column="89" selection-end-line="26" selection-end-column="89" />
+            <state relative-caret-position="22">
+              <caret line="18" column="26" lean-forward="false" selection-start-line="18" selection-start-column="26" selection-end-line="18" selection-end-column="26" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ideias.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/ideias.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-242">
+              <caret line="10" column="77" lean-forward="false" selection-start-line="10" selection-start-column="77" selection-end-line="10" selection-end-column="77" />
               <folding />
             </state>
           </provider>
@@ -177,18 +173,8 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>place</find>
-      <find>te</find>
-      <find>&lt;tr&gt;</find>
-      <find>&lt;/tr&gt;</find>
-      <find>label</find>
-      <find>md</find>
-      <find>top</find>
-      <find>legend</find>
-      <find>lead</find>
       <find>avali</find>
       <find>form-g</find>
-      <find>avaliacao</find>
       <find>plus</find>
       <find>post</find>
       <find>data</find>
@@ -196,7 +182,6 @@
       <find>if</find>
       <find>save</find>
       <find>form1</find>
-      <find>id</find>
       <find>ideia</find>
       <find>analise_text</find>
       <find>debug</find>
@@ -207,6 +192,17 @@
       <find>&lt;div contenteditable&gt;12.5&lt;/div&gt;</find>
       <find>AnaliseForm</find>
       <find>peso</find>
+      <find>maxlength=&quot;6&quot;</find>
+      <find>filter</find>
+      <find>avaliacao</find>
+      <find>id</find>
+      <find>id=</find>
+      <find>con</find>
+      <find>log</find>
+      <find>'</find>
+      <find>$.</find>
+      <find>tabela</find>
+      <find>console</find>
     </findStrings>
     <replaceStrings>
       <replace>tr</replace>
@@ -214,6 +210,7 @@
       <replace>&lt;/td&gt;&lt;/tr&gt;</replace>
       <replace>inout</replace>
       <replace>&lt;input type=&quot;text&quot; class=&quot;pesos&quot; id=&quot;peso2&quot; value=&quot;12.5&quot; size=&quot;2&quot; maxlength=&quot;6&quot;&gt;</replace>
+      <replace>&quot;</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -242,25 +239,26 @@
         <option value="$PROJECT_DIR$/sgidi/static/css/styles.css" />
         <option value="$PROJECT_DIR$/templates/pattern/top-nav.html" />
         <option value="$PROJECT_DIR$/templates/registration/login.html" />
-        <option value="$PROJECT_DIR$/templates/pattern/footer.html" />
         <option value="$PROJECT_DIR$/templates/error.html" />
         <option value="$PROJECT_DIR$/sgidi/migrations/0003_auto_20170222_1700.py" />
-        <option value="$PROJECT_DIR$/sgidi/migrations/0001_initial.py" />
         <option value="$APPLICATION_CONFIG_DIR$/consoles/db/e40cce8c-0f3a-4df7-bdc6-4400c2b8a9da/console_1.sql" />
-        <option value="$PROJECT_DIR$/templates/pattern/base.html" />
-        <option value="$PROJECT_DIR$/templates/ideias.html" />
         <option value="$PROJECT_DIR$/templates/ideias_avaliacao.css" />
         <option value="$PROJECT_DIR$/sgidi/static/js/base/base.js" />
         <option value="$PROJECT_DIR$/SGIDI_DJANGO/settings.py" />
-        <option value="$PROJECT_DIR$/sgidi/urls.py" />
         <option value="$PROJECT_DIR$/sgidi/static/css/ideias.css" />
+        <option value="$APPLICATION_CONFIG_DIR$/consoles/db/e40cce8c-0f3a-4df7-bdc6-4400c2b8a9da/console_3.sql" />
+        <option value="$APPLICATION_CONFIG_DIR$/consoles/db/e40cce8c-0f3a-4df7-bdc6-4400c2b8a9da/console.sql" />
+        <option value="$PROJECT_DIR$/sgidi/migrations/0001_initial.py" />
+        <option value="$PROJECT_DIR$/sgidi/urls.py" />
         <option value="$PROJECT_DIR$/sgidi/forms.py" />
         <option value="$PROJECT_DIR$/sgidi/models.py" />
-        <option value="$APPLICATION_CONFIG_DIR$/consoles/db/e40cce8c-0f3a-4df7-bdc6-4400c2b8a9da/console.sql" />
-        <option value="$APPLICATION_CONFIG_DIR$/consoles/db/e40cce8c-0f3a-4df7-bdc6-4400c2b8a9da/console_3.sql" />
+        <option value="$APPLICATION_CONFIG_DIR$/consoles/db/e40cce8c-0f3a-4df7-bdc6-4400c2b8a9da/console_4.sql" />
+        <option value="$PROJECT_DIR$/templates/pattern/footer.html" />
+        <option value="$PROJECT_DIR$/templates/pattern/base.html" />
+        <option value="$PROJECT_DIR$/templates/ideias.html" />
         <option value="$PROJECT_DIR$/sgidi/views.py" />
-        <option value="$PROJECT_DIR$/templates/ideias_avaliacao.html" />
         <option value="$PROJECT_DIR$/sgidi/static/js/ideias.js" />
+        <option value="$PROJECT_DIR$/templates/ideias_avaliacao.html" />
       </list>
     </option>
   </component>
@@ -271,10 +269,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1961" />
-    <option name="y" value="23" />
-    <option name="width" value="1823" />
-    <option name="height" value="1024" />
+    <option name="x" value="1980" />
+    <option name="y" value="12" />
+    <option name="width" value="1852" />
+    <option name="height" value="1051" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -294,7 +292,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -369,12 +366,13 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="Errors" />
+    <property name="settings.editor.selected.configurable" value="database.main" />
     <property name="com.intellij.database.dataSource.DataSourceTemplate" value="MySQL" />
     <property name="nodejs_interpreter_path" value="C:/Program Files/nodejs/node" />
     <property name="js.eslint.eslintPackage" value="" />
@@ -848,7 +846,14 @@
       <option name="project" value="LOCAL" />
       <updated>1488883707136</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Ideias template v1.11&#10;falta a tabela e lista de ideias- done ✔&#10;">
+      <created>1488908718342</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1488908718342</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TodoView">
@@ -861,20 +866,20 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="1961" y="23" width="1823" height="1024" extended-state="0" />
+    <frame x="1980" y="12" width="1852" height="1051" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3273743" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32712457" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32363212" sideWeight="0.5117344" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.32849163" sideWeight="0.4914071" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32906976" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3282887" sideWeight="0.4978355" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="manage.py@SGIDI_DJANGO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32363212" sideWeight="0.4882656" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4330617" sideWeight="0.48073605" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4540163" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.13852318" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.3282887" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22266743" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32731378" sideWeight="0.4978355" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="manage.py@SGIDI_DJANGO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4503386" sideWeight="0.4882656" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41986457" sideWeight="0.48073605" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26523703" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13795045" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32731378" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2224099" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.32768363" sideWeight="0.49570355" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24943438" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -937,7 +942,8 @@
     <MESSAGE value="Ideias template v1.8&#10; avaliação de ideias - falta pedido ajax para o estado e backend da avaliação de ideias ✔&#10;100% frontend done ✔&#10;" />
     <MESSAGE value="Ideias template v1.9&#10; avaliação de ideias - falta pedido ajax para o estado  ✔&#10;75% backend, falta a tabela - done ✔&#10;" />
     <MESSAGE value="Ideias template v1.10&#10; avaliação de ideias - pedido ajax done  ✔&#10;85% backend, falta a tabela - done ✔&#10;" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ideias template v1.10&#10; avaliação de ideias - pedido ajax done  ✔&#10;85% backend, falta a tabela - done ✔&#10;" />
+    <MESSAGE value="Ideias template v1.11&#10;falta a tabela e lista de ideias- done ✔&#10;" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ideias template v1.11&#10;falta a tabela e lista de ideias- done ✔&#10;" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -946,20 +952,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/templates/registration/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="7" column="20" lean-forward="false" selection-start-line="7" selection-start-column="20" selection-end-line="7" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/pattern/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sgidi/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1077,13 +1069,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/pattern/footer.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages/django/db/models/fields/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="143">
@@ -1118,14 +1103,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="110">
           <caret line="5" column="0" lean-forward="false" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/pattern/base.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="3" column="40" lean-forward="false" selection-start-line="3" selection-start-column="40" selection-end-line="3" selection-end-column="40" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1166,27 +1143,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sgidi/migrations/0001_initial.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-68">
-          <caret line="16" column="5" lean-forward="false" selection-start-line="16" selection-start-column="5" selection-end-line="16" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages/django/http/request.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="213" column="8" lean-forward="false" selection-start-line="213" selection-start-column="8" selection-end-line="213" selection-end-column="8" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/SGIDI_DJANGO/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="30" column="24" lean-forward="false" selection-start-line="30" selection-start-column="24" selection-end-line="30" selection-end-column="24" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1206,22 +1166,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sgidi/static/css/ideias.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="86" column="12" lean-forward="false" selection-start-line="86" selection-start-column="12" selection-end-line="86" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/ideias.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="8" column="35" lean-forward="false" selection-start-line="8" selection-start-column="35" selection-end-line="8" selection-end-column="35" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36-32/Lib/site-packages/django/db/models/base.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="167">
@@ -1230,44 +1174,85 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sgidi/migrations/0002_auto_20170307_1544.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/sgidi/migrations/0002_auto_20170307_1544.py" />
     <entry file="file://$PROJECT_DIR$/sgidi/forms.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="390">
-          <caret line="19" column="49" lean-forward="false" selection-start-line="19" selection-start-column="49" selection-end-line="19" selection-end-column="49" />
+        <state relative-caret-position="44">
+          <caret line="2" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
           <folding>
             <element signature="e#0#24#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/e40cce8c-0f3a-4df7-bdc6-4400c2b8a9da/console_3.sql">
+    <entry file="file://$PROJECT_DIR$/sgidi/migrations/0001_initial.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="27" lean-forward="false" selection-start-line="0" selection-start-column="27" selection-end-line="0" selection-end-column="27" />
+        <state relative-caret-position="88">
+          <caret line="20" column="26" lean-forward="false" selection-start-line="20" selection-start-column="26" selection-end-line="20" selection-end-column="26" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/e40cce8c-0f3a-4df7-bdc6-4400c2b8a9da/console.sql">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="14" lean-forward="false" selection-start-line="0" selection-start-column="14" selection-end-line="0" selection-end-column="14" />
+        <state relative-caret-position="22">
+          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sgidi/static/css/ideias.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="246">
+          <caret line="86" column="12" lean-forward="false" selection-start-line="86" selection-start-column="12" selection-end-line="86" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/pattern/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="141">
+          <caret line="60" column="18" lean-forward="true" selection-start-line="60" selection-start-column="18" selection-end-line="60" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/pattern/footer.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="9" column="54" lean-forward="false" selection-start-line="9" selection-start-column="54" selection-end-line="9" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/SGIDI_DJANGO/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-977">
+          <caret line="25" column="14" lean-forward="false" selection-start-line="25" selection-start-column="14" selection-end-line="25" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/ideias.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-242">
+          <caret line="10" column="77" lean-forward="false" selection-start-line="10" selection-start-column="77" selection-end-line="10" selection-end-column="77" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/lib/JavaScriptLanguage.jar!/com/intellij/lang/javascript/index/predefined/DHTML.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="232">
+          <caret line="1020" column="14" lean-forward="true" selection-start-line="1020" selection-start-column="14" selection-end-line="1020" selection-end-column="14" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sgidi/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="10" column="11" lean-forward="false" selection-start-line="10" selection-start-column="11" selection-end-line="10" selection-end-column="28" />
+        <state relative-caret-position="176">
+          <caret line="8" column="71" lean-forward="false" selection-start-line="8" selection-start-column="60" selection-end-line="8" selection-end-column="71" />
           <folding>
             <element signature="e#0#32#0" expanded="true" />
           </folding>
@@ -1276,37 +1261,52 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sgidi/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="792">
-          <caret line="37" column="29" lean-forward="true" selection-start-line="37" selection-start-column="29" selection-end-line="37" selection-end-column="29" />
+        <state relative-caret-position="334">
+          <caret line="22" column="39" lean-forward="false" selection-start-line="22" selection-start-column="26" selection-end-line="22" selection-end-column="39" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
-            <element signature="e#1194#1210#0" expanded="false" />
+            <element signature="e#1229#1245#0" expanded="false" />
+            <element signature="e#1783#1804#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sgidi/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="326">
-          <caret line="101" column="84" lean-forward="false" selection-start-line="101" selection-start-column="84" selection-end-line="101" selection-end-column="84" />
-          <folding>
-            <element signature="e#124#167#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/ideias_avaliacao.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="112" column="53" lean-forward="false" selection-start-line="112" selection-start-column="48" selection-end-line="112" selection-end-column="53" />
+        <state relative-caret-position="154">
+          <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sgidi/static/js/ideias.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="26" column="89" lean-forward="false" selection-start-line="26" selection-start-column="89" selection-end-line="26" selection-end-column="89" />
+        <state relative-caret-position="22">
+          <caret line="18" column="26" lean-forward="false" selection-start-line="18" selection-start-column="26" selection-end-line="18" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/e40cce8c-0f3a-4df7-bdc6-4400c2b8a9da/console_4.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="28" lean-forward="false" selection-start-line="0" selection-start-column="28" selection-end-line="0" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/e40cce8c-0f3a-4df7-bdc6-4400c2b8a9da/console_3.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="27" lean-forward="true" selection-start-line="0" selection-start-column="27" selection-end-line="0" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/ideias_avaliacao.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="70" column="27" lean-forward="true" selection-start-line="70" selection-start-column="27" selection-end-line="70" selection-end-column="27" />
           <folding />
         </state>
       </provider>
