@@ -1,5 +1,5 @@
 from django import forms
-from .models import Ideias
+from .models import Ideias, Analises
 
 class IdeiasForm(forms.ModelForm):
    class Meta:
@@ -18,4 +18,5 @@ class AnaliseForm(forms.ModelForm):
         model = Ideias
         fields = ['analise']
         exclude = ['autor_analise', 'data_analise']
+
 

@@ -36,8 +36,8 @@ input[type=radio]:not(old):checked {
 .lead{
     text-align: center;
     padding-left: 1%;
-    color: white;
-    background-color: #ac2925;
+    color: #d58512;
+    font-size: 32px;
 }
 
 #form1, #form2 {
@@ -84,6 +84,42 @@ tr:nth-child(even) {
     opacity: 0.4;
 }
 
-input.pesos{
+input.pesos {
     text-align: center;
 }
+
+
+#lista_ideias li {
+    padding: 0;
+    list-style-type: none;
+}
+#lista_ideias li a {
+    margin: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.nome_ideia {
+    font-size: medium;
+    font-family: "Roboto", "Lucida Grande", "DejaVu Sans", "Bitstream Vera Sans", Verdana, Arial, sans-serif;
+}
+
+#nova_ideia {
+    background-color: white;
+    color: #337ab7;
+    border: 2px solid #337ab7;
+    margin-bottom: 1%;
+}
+
+#nova_ideia:hover {
+    background-color: #337ab7;
+    color: white;
+}
+
+.panel-title{
+    text-align: center;
+    color: #337ab7;
+    font-size: 26px;
+}
+

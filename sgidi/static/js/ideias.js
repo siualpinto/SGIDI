@@ -47,7 +47,7 @@ $(".add_line").click(function () {
         penultimate_tr.after("<tr><td><input type='text' class='tabela_avaliacao' maxlength='110' size='50'></td>" +
             "<td><i class='fa fa-times smallicon'><input type='hidden' name='tipo" + penultimate_tr.index() + "' value='1'></i></td>" +
             "<td></td><td></td><td></td><td></td>" +
-            "<td><input type='text' class='pesos' id='peso" + (rows - 2) + "' value='1' size='2' maxlength='2'></td></tr>");
+            "<td><input type='text' class='pesos' name='peso"+ (rows - 2) +"' id='peso" + (rows - 2) + "' value='1' size='2' maxlength='2'></td></tr>");
         calcularTotal();
     }
 });
@@ -126,7 +126,7 @@ $("#atualizar_estado").click(function () {
         dataType: "json",
         success: function (data) {
             if (data) {
-                alert("Estado atualizado: "+ data.ideia ? "Sucesso" : "Falhou");
+                alert("Estado atualizado: "+ (data.ideia ? "Sucesso" : "Falhou"));
             }
         }
     });

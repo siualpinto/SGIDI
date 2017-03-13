@@ -1,86 +1,74 @@
 {% extends 'pattern/base.html' %}
 {% load static %}
 {% block includes_top %}<link rel="stylesheet" href="{% static "css/ideias.css" %}" >{% endblock %}
-{% block title %}Ideias{% endblock %}
+{% block title %}Lista de Ideias{% endblock %}
+
+
+
 
 {% block content %}
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <div class="well well-sm">
-                    <form class="form-horizontal" action="{% url "ideias_post" %}" method="post">
-                        {% csrf_token %}
-                        {% if form.errors %}
-                            {% for field in form %}
-                                {% for error in field.errors %}
-                                    <div class="alert alert-danger">
-                                        <strong>{{ error|escape }}</strong>
-                                    </div>
+                <a class="btn" id="nova_ideia" href="{% url 'ideias_nova' %}">Criar nova Ideia</a>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Gestão de Ideias</h3>
+                    </div>
+                    <div class="panel-body">
+                        <ul class="list-group" id="lista_ideias">
+                            {% for ideia in ideias_list %}
+                                <li> <a href="{% url "ideias_avaliacao" ideia.id %}" class="list-group-item col-md-12
+                                {% if ideia.estado == 0 %}
+                                list-group-item-warning
+                                {% elif ideia.estado == 1%}
+                                list-group-item-success
+                                {% elif ideia.estado == 2%}
+                                list-group-item-info
+                                {% elif ideia.estado == 3%}
+                                list-group-item-danger
+                                {% endif %}">
+                                    <b class="col-md-12 nome_ideia">{{ ideia.nome }}</b>
+                                    <ins class="col-md-3">{{ ideia.autor }}</ins>
+                                    <p class="col-md-3">{{ ideia.estado_nome }}</p>
+                                    <ins class="col-md-3">{{ ideia.data }}</ins>
+                                    <i class="col-md-3 text-">{{ ideia.tipo_nome }}</i>
+                                </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div class="panel-footer">
+                        {% if is_paginated %}
+                            <ul class="pagination">
+                                {% if page_obj.has_previous %}
+                                    <li class="previous">
+                                        <a href="/sgidi/ideias/?page={{ page_obj.previous_page_number }}">Anterior</a>
+                                    </li>
+                                {% endif %}
+
+                                {% for i in range %}
+                                    <li class="{% if page_obj.number == forloop.counter %}active{% endif %}">
+                                        <a href="/sgidi/ideias/?page={{forloop.counter}}">{{forloop.counter}}</a>
+                                    </li>
                                 {% endfor %}
-                            {% endfor %}
-                            {% for error in form.non_field_errors %}
-                                <div class="alert alert-danger">
-                                    <strong>{{ error|escape }}</strong>
-                                </div>
-                            {% endfor %}
+
+                                {% if page_obj.has_next %}
+                                    <li class="next">
+                                        <a href="/sgidi/ideias/?page={{ page_obj.next_page_number }}">Seguinte</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
                         {% endif %}
-                        <fieldset>
-                            <legend class="text-center header">Registo de ideias</legend>
-                            <div class="form-group">
-                                <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-user bigicon"></i></span>
-                                <div class="col-md-1">
-                                    <input id="sigla" name="name" type="text" class="form-control" placeholder="{{ user.username }}" disabled>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-lightbulb-o bigicon" ></i></span>
-                                <div class="col-md-8">
-                                    <input id="nome_ideia" name="nome" type="text" maxlength="100" class="form-control" placeholder="Dê um nome à sua ideia" required>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-pencil-square-o bigicon" ></i></span>
-                                <div class="col-md-8">
-                                    <label class="radio-inline"><input type="radio" aria-label="tipo de ideias" name="tipo" value="0" checked>Novo produto</label>
-                                </div>
-                                <div class="col-md-8">
-                                    <label class="radio-inline"><input type="radio" aria-label="tipo de ideias" name="tipo" value="1">Novo processo</label>
-                                </div>
-                                <div class="col-md-8 col-md-offset-3">
-                                    <label class="radio-inline"><input type="radio" aria-label="tipo de ideias" name="tipo" value="2">Melhoria de produto existente</label>
-                                </div>
-                                <div class="col-md-8 col-md-offset-3">
-                                    <label class="radio-inline"><input type="radio" aria-label="tipo de ideias" name="tipo" value="3">Melhoria de processo existente</label>
-                                </div>
-                                <div class="col-md-8 col-md-offset-3">
-                                    <label class="radio-inline"><input type="radio" id="radio_outra" aria-label="tipo de ideias" name="tipo" value="4"> Outra: <input id="radio_outra_text" type="text" name="outra_text" maxlength="100" disabled> </label>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-exclamation-circle bigicon"></i></span>
-                                <div class="col-md-8">
-                                    <label for="problema">Descrição do problema</label>
-                                    <textarea class="form-control" rows="5" maxlength="1600" name="problema" id="problema" placeholder="Exemplos: Falta de eficácia do sistema de gestão de stock; Furto de viaturas." required></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <span class="col-md-1 col-md-offset-2 text-center"><i class="fa fa-check-circle bigicon"></i></span>
-                                <div class="col-md-8">
-                                    <label for="solucao">Descrição da solução</label>
-                                    <textarea class="form-control" rows="5" maxlength="1600" name="solucao" id="solucao" placeholder="Faça uma descrição de modo a perceber como a ideia pode ser aplicada e qual o seu funcionamento." required></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-8 text-center">
-                                    <button type="submit" class="btn btn-primary">Enviar Ideia</button>
-                                </div>
-                            </div>
-                        </fieldset>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-{% endblock %}
 
-{% block include_footer %}<script src="{% static "js/ideias.js" %}"></script>{% endblock %}
+
+
+{% endblock %}
+{% block include_footer %}
+    <script src="{% static "js/ideias.js" %}"></script>
+{% endblock %}

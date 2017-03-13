@@ -1,11 +1,12 @@
 from django.conf.urls import url
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from sgidi.views import IdeiasView, IdeiasAvaliacaoView
+from sgidi.views import IdeiasView, IdeiasAvaliacaoView, IdeiasListView
 from . import views
 
 urlpatterns = [
     url(r'^$', views.index_view, name='index'),
-    url(r'^ideias/$', IdeiasView.as_view(), name='ideias'),
+    url(r'^ideias/$', IdeiasListView.as_view(), name='ideias_lista'),
+    url(r'^ideias/nova/$', IdeiasView.as_view(), name='ideias_nova'),
     url(r'^ideias/postIdeia/$', IdeiasView.as_view(), name='ideias_post'),
     url(r'^ideias/avaliacao/(?P<ideia_id>[0-9]+)$', IdeiasAvaliacaoView.as_view(), name='ideias_avaliacao'),
     url(r'^ideias/avaliacao/ajax/change_estado/$', IdeiasAvaliacaoView.as_view(), name='post_atualizar_estado'),

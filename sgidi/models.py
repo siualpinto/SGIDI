@@ -25,7 +25,7 @@ class Ideias(models.Model):
 
     def __str__(self):
         return self.nome
-# TODO iNSERIR MinValueValidator NOS INTEIROS QUE FALTAM
+
 class Analises(models.Model):
     ideia = models.ForeignKey(Ideias, unique=False, related_name='avaliacaoes')
     ordem = models.IntegerField(validators=[MaxValueValidator(14), MinValueValidator(0)])
