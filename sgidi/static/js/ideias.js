@@ -27,8 +27,6 @@ function calcularTotal() {
         var peso = $(this).find("td > input").last().val();
         sum1 += tipo * peso;
         sum2 += 5 * peso;
-        console.log("times"+x+":"+"tipo:"+tipo+" Peso "+peso);
-        x++;
     });
     total = sum1 / sum2;
     table.find("tr:last-child > td:last-child").html((Math.round(total*100)).toString()+"%");
@@ -44,7 +42,7 @@ $(".add_line").click(function () {
     var rows = table.find("tr").length;
     if( rows < 17) {
         var penultimate_tr = table.find("tr:nth-last-child(2)");
-        penultimate_tr.after("<tr><td><input type='text' class='tabela_avaliacao' maxlength='110' size='50'></td>" +
+        penultimate_tr.after("<tr><td contenteditable>exemplo<input type='hidden' name='avaliacao"+penultimate_tr.index()+"' class='tabela_avaliacao' maxlength='110' size='50' value='exemplo'></tdcontenteditable>" +
             "<td><i class='fa fa-times smallicon'><input type='hidden' name='tipo" + penultimate_tr.index() + "' value='1'></i></td>" +
             "<td></td><td></td><td></td><td></td>" +
             "<td><input type='text' class='pesos' name='peso"+ (rows - 2) +"' id='peso" + (rows - 2) + "' value='1' size='2' maxlength='2'></td></tr>");
@@ -82,6 +80,15 @@ $("#tabela_avaliacao").on("change", ".pesos", function () {
     if(this.value == "")
         this.value = 1;
     calcularTotal();
+});
+//TODO ADICIONAR KEYUP EVENT A TODOS NOVAS LINHAS
+//TODO BUG LIMITAR OS CARACTERES DA AVALICAO PK VAI APAGAR O ELEMENTO INPUT
+//TODO contenteditable PASSA PARA FORA DO BLOQUEIO DA TABELA!!!
+
+$("#tabela_avaliacao").find("tr td:first-child").on("keyup", function () {
+    console.log($(this).text().length);
+    if($(this).text().length != null)
+        $(this).find("input").val($(this).text());
 });
 
 $.ajaxSetup({//TODO POR NUM JS GLOBAL
@@ -138,15 +145,20 @@ $("#editar_pre_analise").click(function () {
     this.remove();
 });
 
-$("#pre_analise_text").change(function() {
+$("#pre_analise_text").keypress(function() {
     $("#inserir_pre_analise").prop("disabled",false);
 });
 
 $("#editar_analise").click(function () {
     $("#analise_text").prop("disabled",false);
+    $("#tabela_avaliacao_div").removeClass("disabledform2");
     this.remove();
 });
 
-$("#analise_text").change(function() {
+$("#analise_text").keypress(function() {
+    $("#inserir_analise").prop("disabled",false);
+});
+
+$("#tabela_avaliacao_div").on("change",function () {
     $("#inserir_analise").prop("disabled",false);
 });

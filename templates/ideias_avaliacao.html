@@ -93,37 +93,41 @@
                                     <p><strong>Data da Análise: </strong><span class="text-uppercase">{{ ideia.data_analise }}</span></p>
                                     <p><strong>Autor da Análise: </strong><span class="text-uppercase">{{ avaliador2.username }}</span></p>
                                 {% endif %}
-                                <table id="tabela_avaliacao">
-                                    <tr>
-                                        <th></th>
-                                        <th>Muito fraco</th>
-                                        <th>Fraco</th>
-                                        <th>Médio</th>
-                                        <th>Bom</th>
-                                        <th>Muito bom</th>
-                                        <th>Peso</th>
-                                    </tr>
-                                    {% for key, value in tipos_avalicao %}
+                                <div id="tabela_avaliacao_div" class="{% if avaliador1 is not null %}disabledform2{% endif %}">
+                                    <table id="tabela_avaliacao" >
                                         <tr>
-                                            <td> {{ value.0 }} </td>
-                                            <td><i class='fa fa-times smallicon'><input type='hidden' name="tipo{{ key }}" value="{{ value.1 }}" ></i></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td><input type="text" class="pesos" name="peso{{ key }}" id="peso{{ key }}" value="{{ value.2 }}" size="2" maxlength="2"></td>
+                                            <th></th>
+                                            <th>Muito fraco</th>
+                                            <th>Fraco</th>
+                                            <th>Médio</th>
+                                            <th>Bom</th>
+                                            <th>Muito bom</th>
+                                            <th>Peso</th>
                                         </tr>
-                                    {% endfor %}
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Total: 100%</td>
-                                    </tr>
-                                </table>
+                                        {% for key, value in tipos_avalicao %}
+                                            <tr>
+                                                <td {% if key > 7 %}contenteditable> {{ value.0 }} {% else %}>{% endif %}<input {% if key >= 8 %} type="hidden" name="avaliacao{{ key }}" value="{{ value.0 }}" class='tabela_avaliacao' maxlength='110' size='50'>  {% else %} type="hidden" name="avaliacao{{ key }}" value="default"> {{ value.0 }} {% endif %} </td>
+                                                    {% for n in "12345" %}
+                                                        {% if n == value.1|stringformat:"d" %}
+                                                            <td><i class='fa fa-times smallicon'><input type='hidden' name="tipo{{ key }}" value="{{ value.1 }}" ></i></td>
+                                                        {% else %}
+                                                            <td></td>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                <td><input type="text" class="pesos" name="peso{{ key }}" id="peso{{ key }}" value="{{ value.2 }}" size="2" maxlength="2"></td>
+                                            </tr>
+                                        {% endfor %}
+                                        <tr>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>Total: 100%</td>
+                                        </tr>
+                                    </table>
+                                </div>
                                 <a class="btn add_line"><i class="fa fa-plus-square mediumicon"></i></a>
                                 <a class="btn delete_line"><i class="fa fa-minus-square mediumicon"></i></a>
                                 <div >

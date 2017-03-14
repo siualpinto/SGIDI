@@ -84,6 +84,11 @@ tr:nth-child(even) {
     opacity: 0.4;
 }
 
+.disabledform2 {
+    pointer-events: none;
+    opacity: 0.8;
+}
+
 input.pesos {
     text-align: center;
 }

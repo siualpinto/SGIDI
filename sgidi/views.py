@@ -1,13 +1,13 @@
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.http import JsonResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404 , get_list_or_404
 from django.views import View
 from django.utils import timezone
 from django.views.generic.list import ListView
-
 from sgidi.forms import IdeiasForm, PreAnaliseForm, AnaliseForm
 from sgidi.models import Ideias, Analises
+
 
 # Create your views here.
 
@@ -16,6 +16,7 @@ def index_view(request):
         return render(request, 'index.html')
     else:
         return render(request, 'registration/login.html')
+
 
 class IdeiasView(View):
     template_name = "ideias_nova.html"
@@ -31,7 +32,8 @@ class IdeiasView(View):
         if request.user.is_authenticated:
             form = self.form_class(request.POST)
             if form.is_valid():
-                commit = form.save(commit=False) #Pára o auto-commit do django para introduzir campos que não estão no form mas no modelo.
+                commit = form.save(
+                    commit=False)  # Pára o auto-commit do django para introduzir campos que não estão no form mas no modelo.
                 commit.autor = request.user
                 if form.cleaned_data['tipo'] == 4:
                     commit.tipo_nome = form.data['outra_text']
@@ -50,12 +52,13 @@ class IdeiasView(View):
 
     @staticmethod
     def tipos_ideia(__x, tipo):
-        return{
+        return {
             0: "Novo produto",
             1: "Novo processo",
             2: "Melhoria de produto existente",
             3: "Melhoria de processo existente",
         }.get(__x, "erro_tipos_ideia")
+
 
 class IdeiasAvaliacaoView(View):
     form_class = PreAnaliseForm
@@ -80,6 +83,8 @@ class IdeiasAvaliacaoView(View):
         if request.user.is_authenticated:
             ideia = get_object_or_404(Ideias, id=ideia_id)
             autor = get_object_or_404(User, id=ideia.autor_id)
+            analises = list(Analises.objects.filter(ordem__gte=8, ideia_id=ideia_id))
+
             if ideia.autor_pre_analise_id is None:
                 avaliador_pre_analise = ideia.autor_pre_analise_id
             else:
@@ -98,10 +103,20 @@ class IdeiasAvaliacaoView(View):
             for key, value in self.tipos_avaliacao_dic.items():
                 tipos_avaliacao.setdefault(key, [])
                 tipos_avaliacao[key].append(value)
-                tipos_avaliacao[key].append(Analises.objects.values_list('tipo', flat=True).get(ideia=ideia_id, ordem=key))
-                tipos_avaliacao[key].append(Analises.objects.values_list('peso', flat=True).get(ideia=ideia_id, ordem=key))
-            return render(request, self.template_name, {'ideia': ideia, 'autor': autor, 'avaliador1': avaliador_pre_analise, 'avaliador2': avaliador_analise,
-                                                        'estados': estados.items(), 'tipos_avalicao': sorted(tipos_avaliacao.items())})
+                tipos_avaliacao[key].append(
+                    Analises.objects.values_list('tipo', flat=True).get(ideia=ideia_id, ordem=key))
+                tipos_avaliacao[key].append(
+                    Analises.objects.values_list('peso', flat=True).get(ideia=ideia_id, ordem=key))
+
+            for a in analises:
+                tipos_avaliacao.setdefault(a.ordem, [])
+                tipos_avaliacao[a.ordem].append(a.avaliacao)
+                tipos_avaliacao[a.ordem].append(a.tipo)
+                tipos_avaliacao[a.ordem].append(a.peso)
+            return render(request, self.template_name,
+                          {'ideia': ideia, 'autor': autor, 'avaliador1': avaliador_pre_analise,
+                           'avaliador2': avaliador_analise,
+                           'estados': estados.items(), 'tipos_avalicao': sorted(tipos_avaliacao.items())})
         else:
             return render(request, 'registration/login.html')
 
@@ -115,7 +130,7 @@ class IdeiasAvaliacaoView(View):
                     commit.autor_pre_analise = request.user
                     commit.data_pre_analise = timezone.now()
                     commit.save()
-                    return HttpResponseRedirect('/sgidi/ideias/avaliacao/'+request.POST.get("id", ""))
+                    return HttpResponseRedirect('/sgidi/ideias/avaliacao/' + request.POST.get("id", ""))
                 else:
                     return render(request, 'ideias_avaliacao.html', {'form': form})
 
@@ -123,23 +138,26 @@ class IdeiasAvaliacaoView(View):
                 ideia_id = request.POST.get("id", "")
                 instance = get_object_or_404(Ideias, id=ideia_id)
                 form = self.second_form_class(request.POST, instance=instance)
-                if form.is_valid():
-                    for key, value in request.POST.items():
-                        if key.startswith('tipo'):
-                            # print(key, value)
-                            # TODO APANHAR OS TIPOS E PESOS E JUNTAR
-                            # TODO INSERIR PESOS E TIPOS AO MESMO TEMPO SE POSSIVEL
-                            obj, created = Analises.objects.filter(ideia_id=ideia_id, ordem=key[4:]).update_or_create(tipo=value)
-                            print(obj, created)
-                    for key, value in request.POST.items():
-                        if key.startswith('peso'):
-                              print(key, value)
 
+                if form.is_valid():
                     commit = form.save(commit=False)
                     commit.autor_analise = request.user
                     commit.data_analise = timezone.now()
                     commit.save()
-                    return HttpResponseRedirect('/sgidi/ideias/avaliacao/' + request.POST.get("id", ""))
+                    avaliacoes = {}
+                    for key, value in request.POST.items():
+                        if key.startswith('avaliacao'):
+                            avaliacoes.setdefault(key[-1:], [])
+                            avaliacoes[key[-1:]].append(value)
+                        if key.startswith('tipo'):
+                            avaliacoes[key[-1:]].append(value)
+                        if key.startswith('peso'):
+                            avaliacoes[key[-1:]].append(value)
+                    for key, value in avaliacoes.items():
+                        Analises.objects.update_or_create(ideia_id=ideia_id, ordem=key,
+                                                          defaults={"tipo": value[1], "peso": value[2],
+                                                          "avaliacao": None if value[0] == 'default' else value[0]})
+                    return HttpResponseRedirect('/sgidi/ideias/avaliacao/' + ideia_id)
                 else:
                     return render(request, 'ideias_avaliacao.html', {'form': form})
 
@@ -162,7 +180,7 @@ class IdeiasListView(ListView):
     paginate_by = 5
 
     def get_context_data(self, **kwargs):
-        "add range template context variable that we can loop through pages"
+        """add range template context variable that we can loop through pages"""
         context = super(IdeiasListView, self).get_context_data(**kwargs)
         context['range'] = range(context["paginator"].num_pages)
         return context
