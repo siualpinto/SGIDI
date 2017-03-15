@@ -42,11 +42,12 @@ $(".add_line").click(function () {
     var rows = table.find("tr").length;
     if( rows < 17) {
         var penultimate_tr = table.find("tr:nth-last-child(2)");
-        penultimate_tr.after("<tr><td contenteditable>exemplo<input type='hidden' name='avaliacao"+penultimate_tr.index()+"' class='tabela_avaliacao' maxlength='110' size='50' value='exemplo'></tdcontenteditable>" +
+        penultimate_tr.after("<tr><td><input class='tabela_avaliacao_inputs' maxlength='110' size='50' type='text' name='avaliacao"+penultimate_tr.index()+"' value='exemplo'></td>" +
             "<td><i class='fa fa-times smallicon'><input type='hidden' name='tipo" + penultimate_tr.index() + "' value='1'></i></td>" +
             "<td></td><td></td><td></td><td></td>" +
             "<td><input type='text' class='pesos' name='peso"+ (rows - 2) +"' id='peso" + (rows - 2) + "' value='1' size='2' maxlength='2'></td></tr>");
         calcularTotal();
+        $("#inserir_analise").prop("disabled",false);
     }
 });
 
@@ -56,9 +57,11 @@ $(".add_line").click(function () {
  * */
 $(".delete_line").click(function () {
     var table = $("#tabela_avaliacao");
-    if(table.find("> tbody:last-child").children().length != 10)
+    if(table.find("> tbody:last-child").children().length != 10){
         table.find("> tbody:last-child").children().last().prev().remove();
-    calcularTotal();
+        calcularTotal();
+        $("#inserir_analise").prop("disabled",false);
+    }
 });
 
 /*
@@ -71,6 +74,7 @@ $("#tabela_avaliacao").on("click", "td:not(:first-child):not(:last-child)", func
         $(this).siblings().children().remove("i");
         $(this).html("<i class='fa fa-times smallicon'><input type='hidden' name='tipo"+row+"' value='"+$(this).index()+"'></i>");
         calcularTotal();
+        $("#inserir_analise").prop("disabled",false);
     }
 });
 
@@ -80,15 +84,7 @@ $("#tabela_avaliacao").on("change", ".pesos", function () {
     if(this.value == "")
         this.value = 1;
     calcularTotal();
-});
-//TODO ADICIONAR KEYUP EVENT A TODOS NOVAS LINHAS
-//TODO BUG LIMITAR OS CARACTERES DA AVALICAO PK VAI APAGAR O ELEMENTO INPUT
-//TODO contenteditable PASSA PARA FORA DO BLOQUEIO DA TABELA!!!
-
-$("#tabela_avaliacao").find("tr td:first-child").on("keyup", function () {
-    console.log($(this).text().length);
-    if($(this).text().length != null)
-        $(this).find("input").val($(this).text());
+    $("#inserir_analise").prop("disabled",false);
 });
 
 $.ajaxSetup({//TODO POR NUM JS GLOBAL
@@ -120,11 +116,10 @@ $("#atualizar_estado").click(function () {
     var estados = $("#options");
     var estado_nome = estados.find(":selected").text();
     var estado = estados.find(":selected").val();
-    var path = window.location.pathname.split("/");
-    var ideia_id = path[4];
+    var ideia_id = $(".lead").attr("id").substring(5);
     $.ajax({
         type:"POST",
-        url: "ajax/change_estado/",
+        url: "/sgidi/ideias/avaliacao/mudar_estado/",
         data: {
             "ideia_id":ideia_id,
             "estado": estado,
@@ -156,9 +151,5 @@ $("#editar_analise").click(function () {
 });
 
 $("#analise_text").keypress(function() {
-    $("#inserir_analise").prop("disabled",false);
-});
-
-$("#tabela_avaliacao_div").on("change",function () {
     $("#inserir_analise").prop("disabled",false);
 });

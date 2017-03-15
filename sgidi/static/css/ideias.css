@@ -128,3 +128,13 @@ input.pesos {
     font-size: 26px;
 }
 
+.tabela_avaliacao_inputs{
+    outline: none;
+    border: none;
+    /*background: transparent;*/
+    text-align: center;
+}
+.pesos {
+    outline: none;
+    border: none;
+}

@@ -12,7 +12,7 @@
                     <fieldset>
                         <legend class="text-center header avaliacao">Análise de ideias</legend>
                         <div class="col-md-12">
-                            <p class="lead text-left text-capitalize">{{ ideia.nome }}</p>
+                            <p class="lead text-left text-capitalize" id="ideia{{ ideia.id }}">{{ ideia.nome }}</p>
                             <p><strong>Data de criação: </strong><span class="text-uppercase">{{ ideia.data }}</span></p>
                             <p><strong>Autor da Ideia: </strong><span class="text-uppercase">{{ autor.username }}</span></p>
                             <p><strong>Estado Atual: </strong>
@@ -93,7 +93,7 @@
                                     <p><strong>Data da Análise: </strong><span class="text-uppercase">{{ ideia.data_analise }}</span></p>
                                     <p><strong>Autor da Análise: </strong><span class="text-uppercase">{{ avaliador2.username }}</span></p>
                                 {% endif %}
-                                <div id="tabela_avaliacao_div" class="{% if avaliador1 is not null %}disabledform2{% endif %}">
+                                <div id="tabela_avaliacao_div" class="{% if avaliador2 is not null %}disabledform2{% endif %}">
                                     <table id="tabela_avaliacao" >
                                         <tr>
                                             <th></th>
@@ -106,14 +106,14 @@
                                         </tr>
                                         {% for key, value in tipos_avalicao %}
                                             <tr>
-                                                <td {% if key > 7 %}contenteditable> {{ value.0 }} {% else %}>{% endif %}<input {% if key >= 8 %} type="hidden" name="avaliacao{{ key }}" value="{{ value.0 }}" class='tabela_avaliacao' maxlength='110' size='50'>  {% else %} type="hidden" name="avaliacao{{ key }}" value="default"> {{ value.0 }} {% endif %} </td>
-                                                    {% for n in "12345" %}
-                                                        {% if n == value.1|stringformat:"d" %}
-                                                            <td><i class='fa fa-times smallicon'><input type='hidden' name="tipo{{ key }}" value="{{ value.1 }}" ></i></td>
-                                                        {% else %}
-                                                            <td></td>
-                                                        {% endif %}
-                                                    {% endfor %}
+                                                <td><input  class='tabela_avaliacao_inputs' maxlength='110' size='50' {% if key >= 8 %} type="text" name="avaliacao{{ key }}" value="{{ value.0 }}"> {% else %} type="hidden" name="avaliacao{{ key }}" value="default">  {{ value.0 }} {% endif %} </td>
+                                                {% for n in "12345" %}
+                                                    {% if n ==  value.1|stringformat:"d" %}
+                                                        <td><i class='fa fa-times smallicon'><input type='hidden' name="tipo{{ key }}" value="{{ value.1 }}" ></i></td>
+                                                    {% else %}
+                                                        <td></td>
+                                                    {% endif %}
+                                                {% endfor %}
                                                 <td><input type="text" class="pesos" name="peso{{ key }}" id="peso{{ key }}" value="{{ value.2 }}" size="2" maxlength="2"></td>
                                             </tr>
                                         {% endfor %}
@@ -127,10 +127,10 @@
                                             <td>Total: 100%</td>
                                         </tr>
                                     </table>
+                                    <a class="btn add_line"><i class="fa fa-plus-square mediumicon"></i></a>
+                                    <a class="btn delete_line"><i class="fa fa-minus-square mediumicon"></i></a>
                                 </div>
-                                <a class="btn add_line"><i class="fa fa-plus-square mediumicon"></i></a>
-                                <a class="btn delete_line"><i class="fa fa-minus-square mediumicon"></i></a>
-                                <div >
+                                <div>
                                     <p><strong>Conclusão: </strong>
                                         <textarea class="form-control" rows="5" maxlength="1600" name="analise" id="analise_text" placeholder="Análise" required{% if avaliador2 is not none %} disabled{% endif %}>{{ ideia.analise }}</textarea>
                                     </p>

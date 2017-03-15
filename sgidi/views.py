@@ -46,7 +46,7 @@ class IdeiasView(View):
                     Analises.objects.create(ideia=commit, ordem=x, peso=1, tipo=1)
                 return HttpResponseRedirect('/sgidi/ideias')
             else:
-                return render(request, 'ideias_nova.html', {'form': form})
+                return render(request, 'ideias/ideias_nova.html', {'form': form})
         else:
             return render(request, 'registration/login.html')
 
@@ -132,7 +132,7 @@ class IdeiasAvaliacaoView(View):
                     commit.save()
                     return HttpResponseRedirect('/sgidi/ideias/avaliacao/' + request.POST.get("id", ""))
                 else:
-                    return render(request, 'ideias_avaliacao.html', {'form': form})
+                    return render(request, 'ideias/ideias_avaliacao.html', {'form': form})
 
             elif "form2" in request.POST:
                 ideia_id = request.POST.get("id", "")
@@ -147,19 +147,19 @@ class IdeiasAvaliacaoView(View):
                     avaliacoes = {}
                     for key, value in request.POST.items():
                         if key.startswith('avaliacao'):
-                            avaliacoes.setdefault(key[-1:], [])
-                            avaliacoes[key[-1:]].append(value)
+                            avaliacoes.setdefault(key[+9:], [])
+                            avaliacoes[key[+9:]].append(value)
                         if key.startswith('tipo'):
-                            avaliacoes[key[-1:]].append(value)
+                            avaliacoes[key[+4:]].append(value)
                         if key.startswith('peso'):
-                            avaliacoes[key[-1:]].append(value)
+                            avaliacoes[key[+4:]].append(value)
                     for key, value in avaliacoes.items():
                         Analises.objects.update_or_create(ideia_id=ideia_id, ordem=key,
                                                           defaults={"tipo": value[1], "peso": value[2],
                                                           "avaliacao": None if value[0] == 'default' else value[0]})
                     return HttpResponseRedirect('/sgidi/ideias/avaliacao/' + ideia_id)
                 else:
-                    return render(request, 'ideias_avaliacao.html', {'form': form})
+                    return render(request, 'ideias/ideias_avaliacao.html', {'form': form})
 
             elif request.is_ajax():
                 estado = request.POST.get('estado', "error_estado")
@@ -174,7 +174,7 @@ class IdeiasAvaliacaoView(View):
 
 
 class IdeiasListView(ListView):
-    template_name = "ideias.html"
+    template_name = "ideias/ideias.html"
     model = Ideias
     allow_empty = True
     paginate_by = 5
