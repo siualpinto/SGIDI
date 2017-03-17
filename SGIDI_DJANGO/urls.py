@@ -22,5 +22,6 @@ urlpatterns = [
     url(r'^logout/$', auth_views.logout, {'template_name': 'registration/logout.html'}, name='logout'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^sgidi/', include('sgidi.urls')),
+    url(r'^o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
 ]
 admin.site.site_header = 'Nibble - SGIDI - administration'

@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'sgidi',
+    'oauth2_provider',
 ]
 
 MIDDLEWARE = [
@@ -126,3 +127,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = 'index'
+LOGIN_URL = 'login'
