@@ -119,7 +119,7 @@ $("#atualizar_estado").click(function () {
     var ideia_id = $(".lead").attr("id").substring(5);
     $.ajax({
         type:"POST",
-        url: "/sgidi/ideias/avaliacao/mudar_estado/",
+        url: "/ideias/avaliacao/mudar_estado/",
         data: {
             "ideia_id":ideia_id,
             "estado": estado,

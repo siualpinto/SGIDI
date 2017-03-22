@@ -7,18 +7,15 @@
 
 
 {% block content %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <a class="btn" id="nova_ideia" href="{% url 'ideias_nova' %}">Criar nova Ideia</a>
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Gestão de Ideias</h3>
-                    </div>
-                    <div class="panel-body">
-                        <ul class="list-group" id="lista_ideias">
-                            {% for ideia in ideias_list %}
-                                <li> <a href="{% url "ideias_avaliacao" ideia.id %}" class="list-group-item col-md-12
+    <a class="btn" id="nova_ideia" href="{% url 'ideias_nova' %}">Criar nova Ideia</a>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Gestão de Ideias</h3>
+        </div>
+        <div class="panel-body">
+            <ul class="list-group" id="lista_ideias">
+                {% for ideia in ideias_list %}
+                    <li> <a href="{% url "ideias_avaliacao" ideia.id %}" class="list-group-item col-md-12
                                 {% if ideia.estado == 0 %}
                                 list-group-item-warning
                                 {% elif ideia.estado == 1%}
@@ -28,46 +25,40 @@
                                 {% elif ideia.estado == 3%}
                                 list-group-item-danger
                                 {% endif %}">
-                                    <b class="col-md-12 nome_ideia">{{ ideia.nome }}</b>
-                                    <ins class="col-md-3">{{ ideia.autor }}</ins>
-                                    <p class="col-md-3">{{ ideia.estado_nome }}</p>
-                                    <ins class="col-md-3">{{ ideia.data }}</ins>
-                                    <i class="col-md-3 text-">{{ ideia.tipo_nome }}</i>
-                                </a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                    <div class="panel-footer">
-                        {% if is_paginated %}
-                            <ul class="pagination">
-                                {% if page_obj.has_previous %}
-                                    <li class="previous">
-                                        <a href="/sgidi/ideias/?page={{ page_obj.previous_page_number }}">Anterior</a>
-                                    </li>
-                                {% endif %}
+                        <b class="col-md-12 nome_ideia">{{ ideia.nome }}</b>
+                        <ins class="col-md-3">{{ ideia.autor }}</ins>
+                        <p class="col-md-3">{{ ideia.estado_nome }}</p>
+                        <ins class="col-md-3">{{ ideia.data }}</ins>
+                        <i class="col-md-3 text-">{{ ideia.tipo_nome }}</i>
+                    </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="panel-footer">
+            {% if is_paginated %}
+                <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                        <li class="previous">
+                            <a href="/ideias/?page={{ page_obj.previous_page_number }}">Anterior</a>
+                        </li>
+                    {% endif %}
 
-                                {% for i in range %}
-                                    <li class="{% if page_obj.number == forloop.counter %}active{% endif %}">
-                                        <a href="/sgidi/ideias/?page={{forloop.counter}}">{{forloop.counter}}</a>
-                                    </li>
-                                {% endfor %}
+                    {% for i in range %}
+                        <li class="{% if page_obj.number == forloop.counter %}active{% endif %}">
+                            <a href="/ideias/?page={{forloop.counter}}">{{forloop.counter}}</a>
+                        </li>
+                    {% endfor %}
 
-                                {% if page_obj.has_next %}
-                                    <li class="next">
-                                        <a href="/sgidi/ideias/?page={{ page_obj.next_page_number }}">Seguinte</a>
-                                    </li>
-                                {% endif %}
-                            </ul>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
+                    {% if page_obj.has_next %}
+                        <li class="next">
+                            <a href="/ideias/?page={{ page_obj.next_page_number }}">Seguinte</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            {% endif %}
         </div>
     </div>
-
-
-
 {% endblock %}
 {% block include_footer %}
     <script src="{% static "js/ideias.js" %}"></script>

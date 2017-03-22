@@ -23,9 +23,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '-ks(&z@gz+mje_4n78109ilrc(wg4y4l1&a0rcfnb%vic%_uvx'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
+# SESSION_EXPIRE_AT_BROWSER_CLOSE=True
 DEBUG = True #TODO final projeto por a false
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['10.0.1.200', 'server.nibble.pt', '127.0.0.1']
 
 
 # Application definition
@@ -38,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'sgidi',
-    'oauth2_provider',
 ]
 
 MIDDLEWARE = [
@@ -80,8 +82,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'sgidi',
-        'USER': 'root',
-        'PASSWORD': 'root',
+        'USER': 'sgidi',
+        'PASSWORD': 'sgidibanana',
         'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
         'PORT': '3306',
     }

@@ -4,7 +4,6 @@
 {% block h1 %} SGIDI {% endblock %}
 
 {% block content %}
-    <div class="container">
         <div class="col-sm-6 col-md-4">
             <div class="thumbnail">
                 <a href="{% url "ideias_lista" %}" >
@@ -27,7 +26,7 @@
         </div>
         <div class="col-sm-6 col-md-4">
             <div class="thumbnail">
-                <a href="#" >
+                <a href="{% url "projetos" %}" >
                     <img src="{% static "img/projeto.jpg" %}" class="img-thumbnail" alt="Gestão de Projetos" >
                     <div class="caption">
                         <h3>Gestão de Projetos</h3>
@@ -55,7 +54,6 @@
                 </a>
             </div>
         </div>
-    </div>
 {% endblock %}
 
 

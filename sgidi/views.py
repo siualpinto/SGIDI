@@ -1,19 +1,81 @@
+import json
+import asana
 from django.contrib.auth.models import User
+from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.http import JsonResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, render_to_response
+from django.template import RequestContext
 from django.views import View
 from django.utils import timezone
+from django.views.decorators.csrf import csrf_protect
+from django.views.generic import DetailView
 from django.views.generic.list import ListView
 from sgidi.forms import IdeiasForm, PreAnaliseForm, AnaliseForm
 from sgidi.models import Ideias, Analises
+from django.contrib.auth import authenticate, login, logout
+from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
 
+# @csrf_protect
+# def login_user(request):
+#     logout(request)
+#     username = password = ''
+#     if request.POST:
+#         username = request.POST['username']
+#         password = request.POST['password']
+#
+#         user = authenticate(username=username, password=password)
+#         if user is not None:
+#             if user.is_active:
+#                 login(request, user)
+#                 # me = client.users.me()
+#                 #projects_id = me['projects'][0]['id']
+#                 #project = client.projects.create_in_workspace(projects_id, {'name': 'new project'})
+#                 #print("Created project with id: " + str(project['id']))
+#                 return render(request, 'index.html')
+#     return render(request, 'registration/login.html')
+
+# @csrf_protect
+# def asana_view(request):
+#     print("ASANA")
+#     if request.params['state'] == state:
+#         token = client.session.fetch_token(code=request.params['code'])
+#         return render(request, 'index.html')
+#     else:
+#         return render(request, 'registration/login.html')
+#
+# # error! possible CSRF attack
+
+
 def index_view(request):
     return render(request, 'index.html')
+    # if request.user.is_authenticated:
+    #     return render(request, 'index.html')
+    #     (url, state) = client.session.authorization_url()
+    #     print(url)
+    #     if request.params['state'] == state:
+    #         token = client.session.fetch_token(code=request.params['code'])
+    #         # ...
+    #     else:
+    #         return render(request, 'registration/login.html')
+    # else:
+    #     return render(request, 'registration/login.html')
+
+
+# error! possible CSRF attack
+# return redirect(url)
+# if request.params['state'] == state:
+#     token = client.session.fetch_token(code=request.params['code'])
+#     return redirect(url)
+# else:
+#     return render(request, 'index.html')
+# error! possible CSRF attack
+
+
 
 
 class IdeiasView(View):
@@ -38,7 +100,7 @@ class IdeiasView(View):
             commit.save()
             for x in range(8):
                 Analises.objects.create(ideia=commit, ordem=x, peso=1, tipo=1)
-            return HttpResponseRedirect('/sgidi/ideias')
+            return HttpResponseRedirect('/ideias')
         else:
             return render(request, 'ideias/ideias_nova.html', {'form': form})
 
@@ -118,7 +180,7 @@ class IdeiasAvaliacaoView(View):
                 commit.autor_pre_analise = request.user
                 commit.data_pre_analise = timezone.now()
                 commit.save()
-                return HttpResponseRedirect('/sgidi/ideias/avaliacao/' + request.POST.get("id", ""))
+                return HttpResponseRedirect('/ideias/avaliacao/' + request.POST.get("id", ""))
             else:
                 return render(request, 'ideias/ideias_avaliacao.html', {'form': form})
 
@@ -144,12 +206,13 @@ class IdeiasAvaliacaoView(View):
                 for key, value in avaliacoes.items():
                     Analises.objects.update_or_create(ideia_id=ideia_id, ordem=key,
                                                       defaults={"tipo": value[1], "peso": value[2],
-                                                                "avaliacao": None if value[0] == 'default' else value[0]})
+                                                                "avaliacao": None if value[0] == 'default' else value[
+                                                                    0]})
                 for a in analises:
                     if str(a.ordem) not in avaliacoes.keys():
                         Analises.objects.filter(ideia_id=a.ideia_id, ordem=a.ordem).delete()
 
-                return HttpResponseRedirect('/sgidi/ideias/avaliacao/' + ideia_id)
+                return HttpResponseRedirect('/ideias/avaliacao/' + ideia_id)
             else:
                 return render(request, 'ideias/ideias_avaliacao.html', {'form': form})
 
@@ -166,6 +229,7 @@ class IdeiasAvaliacaoView(View):
 class IdeiasListView(ListView):
     template_name = "ideias/ideias.html"
     model = Ideias
+    queryset = Ideias.objects.order_by('-data')
     allow_empty = True
     paginate_by = 5
 
@@ -174,3 +238,22 @@ class IdeiasListView(ListView):
         context = super(IdeiasListView, self).get_context_data(**kwargs)
         context['range'] = range(context["paginator"].num_pages)
         return context
+
+
+client = asana.Client.access_token('0/ce4e5bf93acd15f0121a88a142be4548')
+
+
+class ProjetosDetailView(View):
+    # template_name = "projetos/projetos.html"
+    def get(self, request, *args, **kwargs):
+        data = {}
+        data['projects'] = []
+        me = client.users.me()
+        workspace_id = me['workspaces'][0]['id']
+        projects = client.projects.find_by_workspace(workspace_id)
+        for project in projects:
+            data['projects'].append(project)
+            tasks = client.projects.tasks(project['id'])
+            for task in tasks:
+                data['projects'].append([task])
+        return HttpResponse(json.dumps(data), content_type="application/json")
