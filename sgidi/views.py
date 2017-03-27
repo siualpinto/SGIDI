@@ -12,7 +12,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.generic import DetailView
 from django.views.generic.list import ListView
 from sgidi.forms import IdeiasForm, PreAnaliseForm, AnaliseForm
-from sgidi.models import Ideias, Analises
+from sgidi.models import Ideias, Analises, AnalisesDefault
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
@@ -76,8 +76,6 @@ def index_view(request):
 # error! possible CSRF attack
 
 
-
-
 class IdeiasView(View):
     template_name = "ideias_nova.html"
     form_class = IdeiasForm
@@ -98,8 +96,9 @@ class IdeiasView(View):
             commit.estado = 0
             commit.estado_nome = "Em análise"
             commit.save()
-            for x in range(8):
-                Analises.objects.create(ideia=commit, ordem=x, peso=1, tipo=1)
+            analises_default = AnalisesDefault.objects.all()
+            for analise in analises_default:
+                Analises.objects.create(ideia=commit, ordem=(analise.id - 1), peso=analise.peso, tipo=1, avaliacao=analise.avaliacao)
             return HttpResponseRedirect('/ideias')
         else:
             return render(request, 'ideias/ideias_nova.html', {'form': form})
@@ -123,20 +122,11 @@ class IdeiasAvaliacaoView(View):
         1: "Projeto",
         2: "Arquivada",
         3: "Reprovada"}
-    tipos_avaliacao_dic = {
-        0: "Duração e custo do projeto",
-        1: "Impacto no cliente e impacto no volume de vendas",
-        2: "Grau de inovação",
-        3: "Fatores de risco",
-        4: "Requisitos legais, sociais, tecnológicos e financeiros",
-        5: "Estabelecimento de parcerias com entidades do SCTN",
-        6: "Coerência com os objetivos de IDI",
-        7: "Aprovação da Gestão de Topo"}
 
     def get(self, request, ideia_id):
         ideia = get_object_or_404(Ideias, id=ideia_id)
         autor = get_object_or_404(User, id=ideia.autor_id)
-        analises = list(Analises.objects.filter(ordem__gte=8, ideia_id=ideia_id))
+        analises = list(Analises.objects.filter(ideia_id=ideia_id))
 
         if ideia.autor_pre_analise_id is None:
             avaliador_pre_analise = ideia.autor_pre_analise_id
@@ -153,13 +143,6 @@ class IdeiasAvaliacaoView(View):
             if key != ideia.estado:
                 estados.update({key: value})
         tipos_avaliacao = {}
-        for key, value in self.tipos_avaliacao_dic.items():
-            tipos_avaliacao.setdefault(key, [])
-            tipos_avaliacao[key].append(value)
-            tipos_avaliacao[key].append(
-                Analises.objects.values_list('tipo', flat=True).get(ideia=ideia_id, ordem=key))
-            tipos_avaliacao[key].append(
-                Analises.objects.values_list('peso', flat=True).get(ideia=ideia_id, ordem=key))
 
         for a in analises:
             tipos_avaliacao.setdefault(a.ordem, [])
@@ -205,9 +188,7 @@ class IdeiasAvaliacaoView(View):
                         avaliacoes[key[+4:]].append(value)
                 for key, value in avaliacoes.items():
                     Analises.objects.update_or_create(ideia_id=ideia_id, ordem=key,
-                                                      defaults={"tipo": value[1], "peso": value[2],
-                                                                "avaliacao": None if value[0] == 'default' else value[
-                                                                    0]})
+                                                      defaults={"avaliacao": value[0], "tipo": value[1], "peso": value[2]})
                 for a in analises:
                     if str(a.ordem) not in avaliacoes.keys():
                         Analises.objects.filter(ideia_id=a.ideia_id, ordem=a.ordem).delete()
@@ -246,8 +227,7 @@ client = asana.Client.access_token('0/ce4e5bf93acd15f0121a88a142be4548')
 class ProjetosDetailView(View):
     # template_name = "projetos/projetos.html"
     def get(self, request, *args, **kwargs):
-        data = {}
-        data['projects'] = []
+        data = {'projects': []}
         me = client.users.me()
         workspace_id = me['workspaces'][0]['id']
         projects = client.projects.find_by_workspace(workspace_id)

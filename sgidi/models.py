@@ -26,6 +26,7 @@ class Ideias(models.Model):
     def __str__(self):
         return self.nome
 
+
 class Analises(models.Model):
     ideia = models.ForeignKey(Ideias, unique=False, related_name='avaliacaoes')
     ordem = models.IntegerField(validators=[MaxValueValidator(14), MinValueValidator(0)])
@@ -37,5 +38,9 @@ class Analises(models.Model):
         return self.avaliacao
 
 
+class AnalisesDefault(models.Model):
+    avaliacao = models.CharField(max_length=110, null=True)
+    peso = models.IntegerField(validators=[MaxValueValidator(99), MinValueValidator(0)])
 
-
+    def __str__(self):
+        return self.AnalisesDefault

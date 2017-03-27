@@ -102,7 +102,7 @@
                             </tr>
                             {% for key, value in tipos_avalicao %}
                                 <tr>
-                                    <td><input  class='tabela_avaliacao_inputs' maxlength='110' size='50' {% if key >= 8 %} type="text" name="avaliacao{{ key }}" value="{{ value.0 }}"> {% else %} type="hidden" name="avaliacao{{ key }}" value="default">  {{ value.0 }} {% endif %} </td>
+                                    <td><input  class='tabela_avaliacao_inputs' maxlength='110' size='50' {% if key >= 8 %} type="text" name="avaliacao{{ key }}" value="{{ value.0 }}"> {% else %} type="hidden" name="avaliacao{{ key }}" value="{{ value.0 }}">  {{ value.0 }} {% endif %} </td>
                                     {% for n in "12345" %}
                                         {% if n ==  value.1|stringformat:"d" %}
                                             <td><i class='fa fa-times smallicon'><input type='hidden' name="tipo{{ key }}" value="{{ value.1 }}" ></i></td>
