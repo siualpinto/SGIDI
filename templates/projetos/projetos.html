@@ -1,10 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'pattern/base.html' %}
+{% load static %}
+{% block includes_top %}<link rel="stylesheet" href="{% static "css/projetos.css" %}" >{% endblock %}
+{% block title %}Projetos{% endblock %}
 
-</body>
-</html>
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2 text-center class_title">
+
+                <div class="list-group">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            Projetos
+                        </div>
+                    </div>
+                    {% for p in projects %}
+                        <a id="{{ p.id }}" class="list-group-item {% if forloop.first %}active{% endif %}">{{ p.name }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-md-10 text-center class_title">
+                <nav class="navbar navbar_projetos">
+                    <ul class="nav navbar-nav">
+                        <li class="projetos active"><a>Informação do projeto</a></li>
+                        <li class="projetos"><a >Tarefas</a></li>
+                        <li class="projetos"><a>Diagrama de Gantt</a></li>
+                    </ul>
+                </nav>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="well well">
+{#                            <div class="loader"></div>#}
+{#                            <dl class="dl-horizontal disabledElement">#}
+                            <dl class="dl-horizontal">
+                                <dt>Nome do Projeto:</dt>
+                                <dd class="nome"></dd>
+                                <dt>Tipo do Projeto:</dt>
+                                <dd class="tipo"></dd>
+                                <dt>Estado:</dt>
+                                <dd class="estado"></dd>
+                                <dt>Responsável:</dt>
+                                <dd class="responsavel"></dd>
+                                <dt>Data Criação:</dt>
+                                <dd class="data_criacao"></dd>
+                                <dt>Data Modificação:</dt>
+                                <dd class="data_modificacao"></dd>
+                                <dt>Seguidores:</dt>
+                                <dd class="seguidores"></dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block include_footer %}
+    <script src="{% static "js/asana-min.js" %}"></script>
+    <script src="{% static "js/projetos.js" %}"></script>
+{% endblock %}

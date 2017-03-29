@@ -225,15 +225,24 @@ client = asana.Client.access_token('0/ce4e5bf93acd15f0121a88a142be4548')
 
 
 class ProjetosDetailView(View):
-    # template_name = "projetos/projetos.html"
+    template_name = "projetos/projetos.html"
+
     def get(self, request, *args, **kwargs):
-        data = {'projects': []}
+        data = {'projects': [], 'fullprojects':[], 'tasks': [], 'subtasks':[]}
         me = client.users.me()
         workspace_id = me['workspaces'][0]['id']
         projects = client.projects.find_by_workspace(workspace_id)
         for project in projects:
             data['projects'].append(project)
-            tasks = client.projects.tasks(project['id'])
-            for task in tasks:
-                data['projects'].append([task])
-        return HttpResponse(json.dumps(data), content_type="application/json")
+            # full_project = client.projects.find_by_id(project['id'])
+            # data['fullprojects'].append(full_project)
+            # data['projects'].append(full_project)
+            # tasks = client.projects.tasks(project['id'])
+            # for task in tasks:
+            #     data['tasks'].append(client.tasks.find_by_id(task['id']))
+            #     # data['tasks'].append(client.tasks.find_by_id(task.id))
+            #     subtasks = client.tasks.subtasks(task['id'])
+            #     for subtask in subtasks:
+            #         data['subtasks'].append(client.tasks.find_by_id(subtask['id']))
+        # return HttpResponse(json.dumps(data['projects'][0]), content_type="application/json")
+        return render(request, self.template_name, {'projects': data['projects'], 'fullprojects': data['fullprojects']})

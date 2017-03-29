@@ -4,144 +4,150 @@
 {% block title %}Avaliação de Ideias{% endblock %}
 
 {% block content %}
-    <div class="well well">
-        <fieldset>
-            <legend class="text-center header avaliacao">Análise de ideias</legend>
+    <div class="container">
+        <div class="row">
             <div class="col-md-12">
-                <p class="lead text-left text-capitalize" id="ideia{{ ideia.id }}">{{ ideia.nome }}</p>
-                <p><strong>Data de criação: </strong><span class="text-uppercase">{{ ideia.data }}</span></p>
-                <p><strong>Autor da Ideia: </strong><span class="text-uppercase">{{ autor.username }}</span></p>
-                <p><strong>Estado Atual: </strong>
-                    <label class="selector" for="options">
-                        <select id="options">
-                            {% for key, value in estados %}
-                                <option value="{{ key }}">{{ value }}</option>
+                <div class="well well">
+                    <fieldset>
+                        <legend class="text-center header avaliacao">Análise de ideias</legend>
+                        <div class="col-md-12">
+                            <p class="lead text-left text-capitalize" id="ideia{{ ideia.id }}">{{ ideia.nome }}</p>
+                            <p><strong>Data de criação: </strong><span class="text-uppercase">{{ ideia.data }}</span></p>
+                            <p><strong>Autor da Ideia: </strong><span class="text-uppercase">{{ autor.username }}</span></p>
+                            <p><strong>Estado Atual: </strong>
+                                <label class="selector" for="options">
+                                    <select id="options">
+                                        {% for key, value in estados %}
+                                            <option value="{{ key }}">{{ value }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </label>
+                                {% csrf_token %}
+                                <button id="atualizar_estado">Atualizar estado</button>
+                            </p>
+                            <p><strong>Tipo de ideia: </strong><span class="text-justify">{{ ideia.tipo_nome }}</span></p>
+                            <p><strong>Problema: </strong><br><span class="text-justify">{{ ideia.problema }}</span></p>
+                            <p><strong>Solução: </strong><br><span class="text-justify">{{ ideia.solucao }}</span></p>
+                        </div>
+                    </fieldset>
+                    <form class="form-horizontal" action="{% url "post_pre_analise" %}" method="post" >
+                        {% csrf_token %}
+                        {% if form.errors %}
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <div class="alert alert-danger">
+                                        <strong>{{ error|escape }}</strong>
+                                    </div>
+                                {% endfor %}
                             {% endfor %}
-                        </select>
-                    </label>
-                    {% csrf_token %}
-                    <button id="atualizar_estado">Atualizar estado</button>
-                </p>
-                <p><strong>Tipo de ideia: </strong><span class="text-justify">{{ ideia.tipo_nome }}</span></p>
-                <p><strong>Problema: </strong><br><span class="text-justify">{{ ideia.problema }}</span></p>
-                <p><strong>Solução: </strong><br><span class="text-justify">{{ ideia.solucao }}</span></p>
-            </div>
-        </fieldset>
-        <form class="form-horizontal" action="{% url "post_pre_analise" %}" method="post" >
-            {% csrf_token %}
-            {% if form.errors %}
-                {% for field in form %}
-                    {% for error in field.errors %}
-                        <div class="alert alert-danger">
-                            <strong>{{ error|escape }}</strong>
-                        </div>
-                    {% endfor %}
-                {% endfor %}
-                {% for error in form.non_field_errors %}
-                    <div class="alert alert-danger">
-                        <strong>{{ error|escape }}</strong>
-                    </div>
-                {% endfor %}
-            {% endif %}
-            <fieldset>
-                <legend class="text-center header avaliacao">Pré-Análise</legend>
-                <div class="form-group" id="form1" >
-                    <input type="hidden" name="id" value="{{ ideia.id }}">
-                    {% if avaliador1 is not none %}
-                        <p><strong>Data da Pré-Análise: </strong><span class="text-uppercase">{{ ideia.data_pre_analise }}</span></p>
-                        <p><strong>Autor da Pré-Análise: </strong><span class="text-uppercase">{{ avaliador1.username  }}</span></p>
-                    {% endif %}
-                    <p><strong>Conclusão: </strong>
-                        <textarea class="form-control" rows="5" maxlength="1600" name="pre_analise" id="pre_analise_text" placeholder="Pré Análise" required{% if avaliador1 is not none %} disabled{% endif %}>{{ ideia.pre_analise }}</textarea>
-                    </p>
-                    <div class="btn-group btn-group-xs">
-                        {% if avaliador1 is not none %}
-                            <button type="button" class="btn btn-warning" id="editar_pre_analise">Editar Pré-Análise</button>
-                            <button type="submit" name="form1" class="btn btn-success" id="inserir_pre_analise" disabled>Inserir Pré-Análise</button>
-                        {% else %}
-                            <button type="submit" name="form1" class="btn btn-success" id="inserir_pre_analise">Inserir Pré-Análise</button>
+                            {% for error in form.non_field_errors %}
+                                <div class="alert alert-danger">
+                                    <strong>{{ error|escape }}</strong>
+                                </div>
+                            {% endfor %}
                         {% endif %}
-                    </div>
-                </div>
-            </fieldset>
-        </form>
-        <form class="form-horizontal {% if avaliador1 is null %}disabledform{% endif %}" action="{% url "post_analise" %}" method="post">
-            {% csrf_token %}
-            {% if form.errors %}
-                {% for field in form %}
-                    {% for error in field.errors %}
-                        <div class="alert alert-danger">
-                            <strong>{{ error|escape }}</strong>
-                        </div>
-                    {% endfor %}
-                {% endfor %}
-                {% for error in form.non_field_errors %}
-                    <div class="alert alert-danger">
-                        <strong>{{ error|escape }}</strong>
-                    </div>
-                {% endfor %}
-            {% endif %}
-            <fieldset>
-                <legend class="text-center header avaliacao">Tabela de Análise</legend>
-                <div class="form-group" id="form2">
-                    <input type="hidden" name="id" value="{{ ideia.id }}">
-                    {% if avaliador2 is not null %}
-                        <p><strong>Data da Análise: </strong><span class="text-uppercase">{{ ideia.data_analise }}</span></p>
-                        <p><strong>Autor da Análise: </strong><span class="text-uppercase">{{ avaliador2.username }}</span></p>
-                    {% endif %}
-                    <div id="tabela_avaliacao_div" class="{% if avaliador2 is not null %}disabledform2{% endif %}">
-                        <table id="tabela_avaliacao" >
-                            <tr>
-                                <th></th>
-                                <th>Muito fraco</th>
-                                <th>Fraco</th>
-                                <th>Médio</th>
-                                <th>Bom</th>
-                                <th>Muito bom</th>
-                                <th>Peso</th>
-                            </tr>
-                            {% for key, value in tipos_avalicao %}
-                                <tr>
-                                    <td><input  class='tabela_avaliacao_inputs' maxlength='110' size='50' {% if key >= 8 %} type="text" name="avaliacao{{ key }}" value="{{ value.0 }}"> {% else %} type="hidden" name="avaliacao{{ key }}" value="{{ value.0 }}">  {{ value.0 }} {% endif %} </td>
-                                    {% for n in "12345" %}
-                                        {% if n ==  value.1|stringformat:"d" %}
-                                            <td><i class='fa fa-times smallicon'><input type='hidden' name="tipo{{ key }}" value="{{ value.1 }}" ></i></td>
-                                        {% else %}
+                        <fieldset>
+                            <legend class="text-center header avaliacao">Pré-Análise</legend>
+                            <div class="form-group" id="form1" >
+                                <input type="hidden" name="id" value="{{ ideia.id }}">
+                                {% if avaliador1 is not none %}
+                                    <p><strong>Data da Pré-Análise: </strong><span class="text-uppercase">{{ ideia.data_pre_analise }}</span></p>
+                                    <p><strong>Autor da Pré-Análise: </strong><span class="text-uppercase">{{ avaliador1.username  }}</span></p>
+                                {% endif %}
+                                <p><strong>Conclusão: </strong>
+                                    <textarea class="form-control" rows="5" maxlength="1600" name="pre_analise" id="pre_analise_text" placeholder="Pré Análise" required{% if avaliador1 is not none %} disabled{% endif %}>{{ ideia.pre_analise }}</textarea>
+                                </p>
+                                <div class="btn-group btn-group-xs">
+                                    {% if avaliador1 is not none %}
+                                        <button type="button" class="btn btn-warning" id="editar_pre_analise">Editar Pré-Análise</button>
+                                        <button type="submit" name="form1" class="btn btn-success" id="inserir_pre_analise" disabled>Inserir Pré-Análise</button>
+                                    {% else %}
+                                        <button type="submit" name="form1" class="btn btn-success" id="inserir_pre_analise">Inserir Pré-Análise</button>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                    <form class="form-horizontal {% if avaliador1 is null %}disabledform{% endif %}" action="{% url "post_analise" %}" method="post">
+                        {% csrf_token %}
+                        {% if form.errors %}
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <div class="alert alert-danger">
+                                        <strong>{{ error|escape }}</strong>
+                                    </div>
+                                {% endfor %}
+                            {% endfor %}
+                            {% for error in form.non_field_errors %}
+                                <div class="alert alert-danger">
+                                    <strong>{{ error|escape }}</strong>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        <fieldset>
+                            <legend class="text-center header avaliacao">Tabela de Análise</legend>
+                            <div class="form-group" id="form2">
+                                <input type="hidden" name="id" value="{{ ideia.id }}">
+                                {% if avaliador2 is not null %}
+                                    <p><strong>Data da Análise: </strong><span class="text-uppercase">{{ ideia.data_analise }}</span></p>
+                                    <p><strong>Autor da Análise: </strong><span class="text-uppercase">{{ avaliador2.username }}</span></p>
+                                {% endif %}
+                                <div id="tabela_avaliacao_div" class="{% if avaliador2 is not null %}disabledform2{% endif %}">
+                                    <table id="tabela_avaliacao" >
+                                        <tr>
+                                            <th></th>
+                                            <th>Muito fraco</th>
+                                            <th>Fraco</th>
+                                            <th>Médio</th>
+                                            <th>Bom</th>
+                                            <th>Muito bom</th>
+                                            <th>Peso</th>
+                                        </tr>
+                                        {% for key, value in tipos_avalicao %}
+                                            <tr>
+                                                <td><input  class='tabela_avaliacao_inputs' maxlength='110' size='50' {% if key >= 8 %} type="text" name="avaliacao{{ key }}" value="{{ value.0 }}"> {% else %} type="hidden" name="avaliacao{{ key }}" value="{{ value.0 }}">  {{ value.0 }} {% endif %} </td>
+                                                {% for n in "12345" %}
+                                                    {% if n ==  value.1|stringformat:"d" %}
+                                                        <td><i class='fa fa-times smallicon'><input type='hidden' name="tipo{{ key }}" value="{{ value.1 }}" ></i></td>
+                                                    {% else %}
+                                                        <td></td>
+                                                    {% endif %}
+                                                {% endfor %}
+                                                <td><input type="text" class="pesos" name="peso{{ key }}" id="peso{{ key }}" value="{{ value.2 }}" size="2" maxlength="2"></td>
+                                            </tr>
+                                        {% endfor %}
+                                        <tr>
                                             <td></td>
-                                        {% endif %}
-                                    {% endfor %}
-                                    <td><input type="text" class="pesos" name="peso{{ key }}" id="peso{{ key }}" value="{{ value.2 }}" size="2" maxlength="2"></td>
-                                </tr>
-                            {% endfor %}
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td>Total: 100%</td>
-                            </tr>
-                        </table>
-                        <a class="btn add_line"><i class="fa fa-plus-square mediumicon"></i></a>
-                        <a class="btn delete_line"><i class="fa fa-minus-square mediumicon"></i></a>
-                    </div>
-                    <div>
-                        <p><strong>Conclusão: </strong>
-                            <textarea class="form-control" rows="5" maxlength="1600" name="analise" id="analise_text" placeholder="Análise" required{% if avaliador2 is not none %} disabled{% endif %}>{{ ideia.analise }}</textarea>
-                        </p>
-                    </div>
-                    <div class="btn-group btn-group-xs">
-                        {% if avaliador2 is not none %}
-                            <button type="button" class="btn btn-warning" id="editar_analise">Editar Análise</button>
-                            <button type="submit" name="form2" class="btn btn-success" id="inserir_analise" disabled>Inserir Análise</button>
-                        {% else %}
-                            <button type="submit" name="form2" class="btn btn-success" id="inserir_analise">Inserir Análise</button>
-                        {% endif %}
-                    </div>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>Total: 100%</td>
+                                        </tr>
+                                    </table>
+                                    <a class="btn add_line"><i class="fa fa-plus-square mediumicon"></i></a>
+                                    <a class="btn delete_line"><i class="fa fa-minus-square mediumicon"></i></a>
+                                </div>
+                                <div>
+                                    <p><strong>Conclusão: </strong>
+                                        <textarea class="form-control" rows="5" maxlength="1600" name="analise" id="analise_text" placeholder="Análise" required{% if avaliador2 is not none %} disabled{% endif %}>{{ ideia.analise }}</textarea>
+                                    </p>
+                                </div>
+                                <div class="btn-group btn-group-xs">
+                                    {% if avaliador2 is not none %}
+                                        <button type="button" class="btn btn-warning" id="editar_analise">Editar Análise</button>
+                                        <button type="submit" name="form2" class="btn btn-success" id="inserir_analise" disabled>Inserir Análise</button>
+                                    {% else %}
+                                        <button type="submit" name="form2" class="btn btn-success" id="inserir_analise">Inserir Análise</button>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
                 </div>
-            </fieldset>
-        </form>
+            </div>
+        </div>
     </div>
 {% endblock %}
 {% block include_footer %}
