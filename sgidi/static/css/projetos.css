@@ -79,10 +79,28 @@ a.list-group-item:hover {
 
 dd {
     border-bottom: 1px solid #e1e2e4;
-     text-align: left;
+    text-align: left;
 }
 dt {
     border-bottom:1px solid #000;
+}
+
+ul.tarefas li.list-group-item {
+    /*height: 80px;*/
+    display: inline-block;
+    text-align: left;
+    border: 2px solid #a1a1a1;
+    background: #dddddd;
+    border-radius: 25px;
+}
+
+ul.seccoes {
+    list-style-type: none;
+}
+
+.secondary-heading {
+    color: #d43f3a;
+    font-size: 120%;
 }
 
 /*

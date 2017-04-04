@@ -1,13 +1,16 @@
 {% extends 'pattern/base.html' %}
 {% load static %}
-{% block includes_top %}<link rel="stylesheet" href="{% static "css/projetos.css" %}" >{% endblock %}
+{% block includes_top %}<link rel="stylesheet" href="{% static "css/projetos.css" %}" >
+    <script src="{% static "js/gantt/codebase/dhtmlxgantt.js" %}" type="text/javascript" charset="utf-8"></script>
+    <link rel="stylesheet" href="{% static "js/gantt/codebase/dhtmlxgantt.css" %}" type="text/css" media="screen" title="no title" charset="utf-8">
+    <script type="text/javascript" src="{% static "js/gantt/testdata.js"%}"></script>
+{% endblock %}
 {% block title %}Projetos{% endblock %}
 
 {% block content %}
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-2 text-center class_title">
-
                 <div class="list-group">
                     <div class="panel panel-default">
                         <div class="panel-body">
@@ -22,16 +25,16 @@
             <div class="col-md-10 text-center class_title">
                 <nav class="navbar navbar_projetos">
                     <ul class="nav navbar-nav">
-                        <li class="projetos active"><a>Informação do projeto</a></li>
-                        <li class="projetos"><a >Tarefas</a></li>
-                        <li class="projetos"><a>Diagrama de Gantt</a></li>
+                        <li class="projetos active" id="informacao"><a>Informação do projeto</a></li>
+                        <li class="projetos" id="li_tarefas"><a >Tarefas</a></li>
+                        <li class="projetos" id="li_gantt"><a>Diagrama de Gantt</a></li>
                     </ul>
                 </nav>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="well well">
-{#                            <div class="loader"></div>#}
-{#                            <dl class="dl-horizontal disabledElement">#}
+                            {#                            <div class="loader"></div>#}
+                            {#                            <dl class="dl-horizontal disabledElement">#}
                             <dl class="dl-horizontal">
                                 <dt>Nome do Projeto:</dt>
                                 <dd class="nome"></dd>
@@ -48,12 +51,20 @@
                                 <dt>Seguidores:</dt>
                                 <dd class="seguidores"></dd>
                             </dl>
+                            <div class="panel-body">
+                                <ul class="list-group seccoes">
+
+                                </ul>
+
+                            </div>
+                            <div id="diagrama_gantt" style='width:1200px; height:400px;'></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
 {% endblock %}
 
 {% block include_footer %}
