@@ -3,10 +3,17 @@
  */
 
 var client = Asana.Client.create().useAccessToken('0/ce4e5bf93acd15f0121a88a142be4548');
-// var projeto = client.projects.findById($("a.list-group-item.active").attr("id"));
+// var projeto = client.projects.findById($("a.list-group-item.active").attr(id));
 /*client.users.me().then(function(me) {
  console.log(me);
  });*/
+
+var gannt_dados = {
+    data:[
+    ]
+};
+
+
 reloadProjectInfo();
 
 function reloadProjectInfo() {
@@ -14,12 +21,21 @@ function reloadProjectInfo() {
     $(".seccoes").hide();
     $("#diagrama_gantt").hide();
     $projeto_ativo = $("a.list-group-item.active");
-    client.projects.findById($projeto_ativo.attr("id")).then(function (projeto) {
-
+    client.projects.findById($projeto_ativo.attr('id')).then(function (projeto) {
         console.log(projeto);
         $("dd").empty();
         // $(".dl-horizontal").css({"pointer-events": "none", "opacity": "0.4"});
         $("dd.nome").append(projeto.name);
+        gannt_dados.data.push({
+            id: 1,
+            text: projeto.name,
+            start_date: dataToGantt(projeto.created_at,false),
+            duration: "1",
+            end_date: "06-04-2017",
+            open: true,
+            users: [],
+            priority: "2"
+        });
         $("dd.tipo").append(projeto.notes);
         if(projeto.current_status !== null){
             var cor = projeto.current_status.color;
@@ -36,30 +52,35 @@ function reloadProjectInfo() {
                     $("dd.seguidores").append("<img src='/static/img/default-user-icon-profile.png' alt='imagem do follower' class='img' height='36' width='36'>"+user.name+"");
                 else
                     $("dd.seguidores").append("<img src='"+user.photo.image_36x36+"' alt='imagem do follower' class='img'>"+user.name+"");
+                gannt_dados.data[0].users.push(user.name);
             });
         }
         /*$(".dl-horizontal").css({"pointer-events": "", "opacity": ""});
          $(".dl-horizontal").removeClass("disabledElement");
          $(".loader").remove();*/
     });
-    reloadTasksInfo();
-    reloadDiagramInfo();
+    setTimeout(reloadTasksInfo, 1500);
 }
-
 function reloadTasksInfo() {
     $tarefas = $(".seccoes");
     $projeto_ativo = $("a.list-group-item.active");
 
-    client.projects.sections($projeto_ativo.attr("id")).then(function (sections) {
+    client.projects.sections($projeto_ativo.attr('id')).then(function (sections) {
         for(var i=0;i<sections.data.length;i++){
             $(".seccoes").append("<li class='nav-header disabled'><p class='secondary-heading'>"+sections.data[i].name+"</p></li>" +
-                "<li class='list-group-item col-md-12'><ul class='list-group tarefas' id="+sections.data[i].id+"></ul></li>");
+                "<li class='list-group-item col-md-12'><ul class='list-group tarefas "+((gannt_dados.data[gannt_dados.data.length-1].id)+1)+"' id="+sections.data[i].id+"></ul></li>");
+            gannt_dados.data.push({
+                id: (gannt_dados.data[gannt_dados.data.length-1].id)+1,
+                text: sections.data[i].name,
+                open: true,
+                parent: 1,
+                priority: "2"
+            });
         }
     });
-    client.tasks.findByProject($projeto_ativo.attr("id"),{opt_fields: 'id'}).then(function (tasks) {
+    client.tasks.findByProject($projeto_ativo.attr('id'),{opt_fields: 'id'}).then(function (tasks) {
         for(var i=0;i<tasks.data.length;i++){
             client.tasks.findById(tasks.data[i].id).then(function (task) {
-                console.log(task);
                 var followers = "";
                 for(var i=0;i<task.followers.length;i++){
                     if(i===0)
@@ -70,76 +91,48 @@ function reloadTasksInfo() {
                     }
                 }
                 if(task.memberships[0].section !== null)
-                    if(task.id !== task.memberships[0].section.id)
-                        $tarefas.find("#"+task.memberships[0].section.id+"").append("<li class='list-group-item col-md-12' id='"+task.id+"'>" +
-                            "<div class='col-md-8'><label>Nome:&nbsp</label>"+task.name+"</div>" +
-                            "<div class='col-md-4'><label>Estado:&nbsp</label>"+task.assignee_status+"</div>" +
-                            "<div class='col-md-4'><label>Data Inicial:&nbsp</label>"+cleanData(task.created_at)+"</div>" +
-                            "<div class='col-md-4'><label>Data Final:&nbsp</label>"+(task.due_on === null ?  "Não tem data final" : task.due_on)+"</div>" +
-                            "<div class='col-md-4'><label>Tarefa Completa:&nbsp</label>"+(task.completed ? task.completed_at : "Ainda não completa")+"</div>" +
-                            "<div class='col-md-4'><label class='responsavel'>Responsavel:&nbsp</label>"+(task.assignee === null ?  "Não tem responsável" : task.assignee.name)+"</div>" +
-                            "<div class='col-md-8'><label class='followers'>Followers:&nbsp</label>"+followers+"</div>"+
-                            "<div class='col-md-12'><label>Descrição:&nbsp</label>"+task.notes+"</div></li>");
+                    if(task.id !== task.memberships[0].section.id) {
+                        $tarefas.find("#" + task.memberships[0].section.id + "").append("<li class='list-group-item col-md-12' id='" + task.id + "'>" +
+                            "<div class='col-md-8'><label>Nome:&nbsp</label>" + task.name + "</div>" +
+                            "<div class='col-md-4'><label>Estado:&nbsp</label>" + task.assignee_status + "</div>" +
+                            "<div class='col-md-4'><label>Data Inicial:&nbsp</label>" + cleanData(task.created_at) + "</div>" +
+                            "<div class='col-md-4'><label>Data Final:&nbsp</label>" + (task.due_on === null ? "Não tem data final" : task.due_on) + "</div>" +
+                            "<div class='col-md-4'><label>Tarefa Completa:&nbsp</label>" + (task.completed ? task.completed_at : "Ainda não completa") + "</div>" +
+                            "<div class='col-md-4'><label class='responsavel'>Responsavel:&nbsp</label>" + (task.assignee === null ? "Não tem responsável" : task.assignee.name) + "</div>" +
+                            "<div class='col-md-8'><label class='followers'>Followers:&nbsp</label>" + followers + "</div>" +
+                            "<div class='col-md-12'><label>Descrição:&nbsp</label>" + task.notes + "</div></li>");
+                        gannt_dados.data.push({
+                            id: (gannt_dados.data[gannt_dados.data.length-1].id)+1,
+                            text: task.name,
+                            start_date: dataToGantt(task.created_at,false),
+                            end_date: (task.due_on === null ? null : dataToGantt(task.due_on,true)),
+                            open: true,
+                            parent: $tarefas.find("#" + task.memberships[0].section.id + "").attr('class').split(' ').pop(),
+                            users: [followers],
+                            priority: "2"
+                        });
+
+                    }
             });
         }
-
+        setTimeout(reloadDiagramInfo, 3000);
     });
 }
 function reloadDiagramInfo() {
+    console.log("DIAGRAMA");
+    console.log(JSON.stringify(gannt_dados,0 ,2));
     $diagrama = $("#diagrama_gantt");
-
-    var tasks =  {
-        data:[
-            {id:1, text:"Project #2", start_date:"01-04-2013", duration:18,order:10,
-                progress:0.4, open: true},
-            {id:2, text:"Task #1", 	  start_date:"02-04-2013", duration:8, order:10,
-                progress:0.6, parent:1},
-            {id:3, text:"Task #2",    start_date:"11-04-2013", duration:8, order:20,
-                progress:0.6, parent:1}
-        ],
-        links:[
-            { id:1, source:1, target:2, type:"1"},
-            { id:2, source:2, target:3, type:"0"},
-            { id:3, source:3, target:4, type:"0"},
-            { id:4, source:2, target:5, type:"2"}
-        ]
-    };
-
-    var users_data = {
-        "data":[
-            {"id":1, "text":"Project #1", "start_date":"01-04-2013", "duration":"11", "progress": 0.6, "open": true, "users": ["John", "Mike", "Anna"], "priority": "2"},
-            {"id":2, "text":"Task #1", "start_date":"03-04-2013", "duration":"5", "parent":"1", "progress": 1, "open": true, "users": ["John", "Mike"], "priority": "1"},
-            {"id":3, "text":"Task #2", "start_date":"02-04-2013", "duration":"7", "parent":"1", "progress": 0.5, "open": true, "users": ["Anna"], "priority": "1"},
-            {"id":4, "text":"Task #3", "start_date":"02-04-2013", "duration":"6", "parent":"1", "progress": 0.8, "open": true, "users": ["Mike", "Anna"], "priority": "2"},
-            {"id":5, "text":"Task #4", "start_date":"02-04-2013", "duration":"5", "parent":"1", "progress": 0.2, "open": true, "users": ["John"], "priority": "3"},
-            {"id":6, "text":"Task #5", "start_date":"02-04-2013", "duration":"7", "parent":"1", "progress": 0, "open": true, "users": ["John"], "priority": "2"},
-            {"id":7, "text":"Task #2.1", "start_date":"03-04-2013", "duration":"2", "parent":"3", "progress": 1, "open": true, "users": ["Mike", "Anna"], "priority": "2"},
-            {"id":8, "text":"Task #2.2", "start_date":"06-04-2013", "duration":"3", "parent":"3", "progress": 0.8, "open": true, "users": ["Anna"], "priority": "3"},
-            {"id":9, "text":"Task #2.3", "start_date":"10-04-2013", "duration":"4", "parent":"3", "progress": 0.2, "open": true, "users": ["Mike", "Anna"], "priority": "1"},
-            {"id":10, "text":"Task #2.4", "start_date":"10-04-2013", "duration":"4", "parent":"3", "progress": 0, "open": true, "users": ["John", "Mike"], "priority": "1"},
-            {"id":11, "text":"Task #4.1", "start_date":"03-04-2013", "duration":"4", "parent":"5", "progress": 0.5, "open": true, "users": ["John", "Anna"], "priority": "3"},
-            {"id":12, "text":"Task #4.2", "start_date":"03-04-2013", "duration":"4", "parent":"5", "progress": 0.1, "open": true, "users": ["John"], "priority": "3"},
-            {"id":13, "text":"Task #4.3", "start_date":"03-04-2013", "duration":"5", "parent":"5", "progress": 0, "open": true, "users": ["Anna"], "priority": "3"}
-        ],
-        "links":[
-            {"id":"10","source":"11","target":"12","type":"1"},
-            {"id":"11","source":"11","target":"13","type":"1"},
-            {"id":"12","source":"11","target":"14","type":"1"},
-            {"id":"13","source":"11","target":"15","type":"1"},
-            {"id":"14","source":"11","target":"16","type":"1"},
-
-            {"id":"15","source":"13","target":"17","type":"1"},
-            {"id":"16","source":"17","target":"18","type":"0"},
-            {"id":"17","source":"18","target":"19","type":"0"},
-            {"id":"18","source":"19","target":"20","type":"0"},
-            {"id":"19","source":"15","target":"21","type":"2"},
-            {"id":"20","source":"15","target":"22","type":"2"},
-            {"id":"21","source":"15","target":"23","type":"2"}
-        ]
-    };
-
     $diagrama.dhx_gantt({
-        data:users_data
+        data:gannt_dados,
+        columns:[
+            {name:"text", label:"Task name", tree:true,align: "left",  width:'*' },
+            {name:"assigned", label:"Assigned to", align: "center", width:100,
+                template: function(item) {
+                    if (!item.users) return "Nobody";
+                    return item.users.join(", ");
+                }
+            }
+        ]
     });
 }
 
@@ -157,7 +150,6 @@ $('.list-group>a').click(function(e) {
         $li.parent().parent().find('li#informacao').addClass('active');
     }
 });
-
 
 $('ul>li.projetos>a').click(function(e) {
     e.preventDefault();
@@ -187,6 +179,12 @@ $('ul>li.projetos>a').click(function(e) {
     }
 });
 
+
+/*  Funcões auxiliares
+ *
+ *
+ *
+ */
 function cleanData(foo) {
     var res;
     if (null !== foo)
@@ -194,5 +192,15 @@ function cleanData(foo) {
         res = (foo.replace(/T/g, " ")).replace(/Z/g,"");
         return res;
     }
+}
+
+function dataToGantt(data, end_date) {
+    var dateSplit;
+    var formatFunc = gantt.date.date_to_str("%d-%m-%Y");
+    dateSplit = (cleanData(data).replace(/-|:/g, ' ')).split(' ');
+    if(end_date){
+        return formatFunc(gantt.date.add(new Date(dateSplit[0], dateSplit[1] - 1, dateSplit[2]), 1, 'day'));
+    }
+    return formatFunc(new Date(dateSplit[0], dateSplit[1] - 1, dateSplit[2]));
 }
 
