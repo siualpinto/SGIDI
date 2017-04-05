@@ -2,15 +2,15 @@
  * Created by lsmor on 28/03/2017.
  */
 
-var client = Asana.Client.create().useAccessToken('0/ce4e5bf93acd15f0121a88a142be4548');
+// var client = Asana.Client.create().useAccessToken('0/ce4e5bf93acd15f0121a88a142be4548'); //meu
+var client = Asana.Client.create().useAccessToken('0/8f62a923af9681d7530fe81d36ea3f0b');
 // var projeto = client.projects.findById($("a.list-group-item.active").attr(id));
 /*client.users.me().then(function(me) {
- console.log(me);
- });*/
+    console.log(me);
+});*/
 
 var gannt_dados = {
-    data:[
-    ]
+    data:[]
 };
 
 
@@ -22,7 +22,6 @@ function reloadProjectInfo() {
     $("#diagrama_gantt").hide();
     $projeto_ativo = $("a.list-group-item.active");
     client.projects.findById($projeto_ativo.attr('id')).then(function (projeto) {
-        console.log(projeto);
         $("dd").empty();
         // $(".dl-horizontal").css({"pointer-events": "none", "opacity": "0.4"});
         $("dd.nome").append(projeto.name);
@@ -59,7 +58,7 @@ function reloadProjectInfo() {
          $(".dl-horizontal").removeClass("disabledElement");
          $(".loader").remove();*/
     });
-    setTimeout(reloadTasksInfo, 1500);
+    setTimeout(reloadTasksInfo, 2500);
 }
 function reloadTasksInfo() {
     $tarefas = $(".seccoes");
@@ -81,6 +80,7 @@ function reloadTasksInfo() {
     client.tasks.findByProject($projeto_ativo.attr('id'),{opt_fields: 'id'}).then(function (tasks) {
         for(var i=0;i<tasks.data.length;i++){
             client.tasks.findById(tasks.data[i].id).then(function (task) {
+                // console.log(task);
                 var followers = "";
                 for(var i=0;i<task.followers.length;i++){
                     if(i===0)
@@ -97,7 +97,7 @@ function reloadTasksInfo() {
                             "<div class='col-md-4'><label>Estado:&nbsp</label>" + task.assignee_status + "</div>" +
                             "<div class='col-md-4'><label>Data Inicial:&nbsp</label>" + cleanData(task.created_at) + "</div>" +
                             "<div class='col-md-4'><label>Data Final:&nbsp</label>" + (task.due_on === null ? "Não tem data final" : task.due_on) + "</div>" +
-                            "<div class='col-md-4'><label>Tarefa Completa:&nbsp</label>" + (task.completed ? task.completed_at : "Ainda não completa") + "</div>" +
+                            "<div class='col-md-4'><label>Tarefa Completa:&nbsp</label>" + (task.completed ? cleanData(task.completed_at) : "Ainda não completa") + "</div>" +
                             "<div class='col-md-4'><label class='responsavel'>Responsavel:&nbsp</label>" + (task.assignee === null ? "Não tem responsável" : task.assignee.name) + "</div>" +
                             "<div class='col-md-8'><label class='followers'>Followers:&nbsp</label>" + followers + "</div>" +
                             "<div class='col-md-12'><label>Descrição:&nbsp</label>" + task.notes + "</div></li>");
@@ -119,8 +119,8 @@ function reloadTasksInfo() {
     });
 }
 function reloadDiagramInfo() {
-    console.log("DIAGRAMA");
-    console.log(JSON.stringify(gannt_dados,0 ,2));
+    // console.log("DIAGRAMA");
+    // console.log(JSON.stringify(gannt_dados,0 ,2));
     $diagrama = $("#diagrama_gantt");
     $diagrama.dhx_gantt({
         data:gannt_dados,
@@ -142,6 +142,7 @@ $('.list-group>a').click(function(e) {
     if($that.parent().find('a.active').attr('id') !== $that.attr('id')){
         $that.parent().find('a').removeClass('active');
         $that.addClass('active');
+        gannt_dados = {data:[]};
         $(".seccoes").empty();
         $("#diagrama_gantt").empty();
         reloadProjectInfo();
