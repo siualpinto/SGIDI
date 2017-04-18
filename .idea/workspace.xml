@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="b6967d17-7b2f-494c-a0f3-94d58749fc71" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sgidi/static/css/projetos.css" afterPath="$PROJECT_DIR$/sgidi/static/css/projetos.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sgidi/static/js/projetos.js" afterPath="$PROJECT_DIR$/sgidi/static/js/projetos.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sgidi/views.py" afterPath="$PROJECT_DIR$/sgidi/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/projetos/projetos.html" afterPath="$PROJECT_DIR$/templates/projetos/projetos.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -819,7 +815,14 @@
       <option name="project" value="LOCAL" />
       <updated>1491409219789</updated>
     </task>
-    <option name="localTasksCounter" value="38" />
+    <task id="LOCAL-00038" summary="Projetos v1.4&#10;- Mostrar substasks (adiconar uma ul).✔&#10;- Mostrar tasks sem secções. ✔&#10;- Scrollview na vista de projetos.✔&#10;- Ajustar o tamanho da gantt.✔">
+      <created>1492532446498</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1492532446498</updated>
+    </task>
+    <option name="localTasksCounter" value="39" />
     <servers />
   </component>
   <component name="TodoView">
@@ -892,7 +895,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Template Engine Jinja2&#10;Nav bar in all pages&#10;Login more friendly" />
     <MESSAGE value="Ideias template" />
     <MESSAGE value="Ideias template v1.1" />
     <MESSAGE value="Ideias template v1.2&#10;inputs of form - done ✔" />
@@ -917,7 +919,8 @@
     <MESSAGE value="Projetos v1.1&#10;Informação - done&#10;Tasks e sections - done&#10;Diagrama de gantt - 50%" />
     <MESSAGE value="Projetos v1.2&#10;Diagrama de gantt - 70%" />
     <MESSAGE value="Projetos v1.3" />
-    <option name="LAST_COMMIT_MESSAGE" value="Projetos v1.3" />
+    <MESSAGE value="Projetos v1.4&#10;- Mostrar substasks (adiconar uma ul).✔&#10;- Mostrar tasks sem secções. ✔&#10;- Scrollview na vista de projetos.✔&#10;- Ajustar o tamanho da gantt.✔" />
+    <option name="LAST_COMMIT_MESSAGE" value="Projetos v1.4&#10;- Mostrar substasks (adiconar uma ul).✔&#10;- Mostrar tasks sem secções. ✔&#10;- Scrollview na vista de projetos.✔&#10;- Ajustar o tamanho da gantt.✔" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
