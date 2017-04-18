@@ -221,8 +221,9 @@ class IdeiasListView(ListView):
         return context
 
 
-# client = asana.Client.access_token('0/ce4e5bf93acd15f0121a88a142be4548') meu
-client = asana.Client.access_token('0/8f62a923af9681d7530fe81d36ea3f0b')
+client = asana.Client.access_token('0/ce4e5bf93acd15f0121a88a142be4548')
+#  Token
+# client = asana.Client.access_token('0/8f62a923af9681d7530fe81d36ea3f0b')
 
 
 class ProjetosDetailView(View):

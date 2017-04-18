@@ -3,8 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="b6967d17-7b2f-494c-a0f3-94d58749fc71" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sgidi/static/css/projetos.css" afterPath="$PROJECT_DIR$/sgidi/static/css/projetos.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sgidi/static/js/projetos.js" afterPath="$PROJECT_DIR$/sgidi/static/js/projetos.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sgidi/views.py" afterPath="$PROJECT_DIR$/sgidi/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/projetos/projetos.html" afterPath="$PROJECT_DIR$/templates/projetos/projetos.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -61,8 +63,8 @@
       <file leaf-file-name="projetos.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/projetos/projetos.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="15" column="48" lean-forward="false" selection-start-line="15" selection-start-column="48" selection-end-line="15" selection-end-column="48" />
+            <state relative-caret-position="378">
+              <caret line="18" column="57" lean-forward="false" selection-start-line="18" selection-start-column="44" selection-end-line="18" selection-end-column="57" />
               <folding />
             </state>
           </provider>
@@ -71,8 +73,18 @@
       <file leaf-file-name="projetos.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sgidi/static/css/projetos.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2142">
-              <caret line="102" column="18" lean-forward="false" selection-start-line="102" selection-start-column="18" selection-end-line="102" selection-end-column="18" />
+            <state relative-caret-position="626">
+              <caret line="107" column="23" lean-forward="false" selection-start-line="107" selection-start-column="23" selection-end-line="107" selection-end-column="23" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/sgidi/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="456">
+              <caret line="223" column="72" lean-forward="true" selection-start-line="223" selection-start-column="72" selection-end-line="223" selection-end-column="72" />
               <folding />
             </state>
           </provider>
@@ -81,23 +93,12 @@
       <file leaf-file-name="projetos.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sgidi/static/js/projetos.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="705">
-              <caret line="63" column="29" lean-forward="true" selection-start-line="63" selection-start-column="29" selection-end-line="63" selection-end-column="29" />
+            <state relative-caret-position="2289">
+              <caret line="182" column="58" lean-forward="true" selection-start-line="182" selection-start-column="58" selection-end-line="182" selection-end-column="58" />
               <folding>
-                <element signature="e#0#42#0" expanded="false" />
-                <element signature="e#6731#7252#0" expanded="false" />
-                <element signature="e#7296#7995#0" expanded="false" />
+                <element signature="e#10281#10802#0" expanded="false" />
+                <element signature="e#10846#11545#0" expanded="false" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/sgidi/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="294">
-              <caret line="223" column="78" lean-forward="false" selection-start-line="223" selection-start-column="78" selection-end-line="223" selection-end-column="78" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -116,11 +117,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Tasks.prototype</find>
-      <find>checkEvent</find>
-      <find>?</find>
-      <find>poin</find>
-      <find>conso</find>
       <find>section</find>
       <find>findById</find>
       <find>findByProjec</find>
@@ -144,8 +140,13 @@
       <find>dataToGantt</find>
       <find>empty</find>
       <find>consol</find>
-      <find>task</find>
       <find>console</find>
+      <find>list-gr</find>
+      <find>TODO</find>
+      <find>subtask</find>
+      <find>Projetos</find>
+      <find>task</find>
+      <find>#ddddd</find>
     </findStrings>
     <replaceStrings>
       <replace>tr</replace>
@@ -159,6 +160,7 @@
       <replace>'</replace>
       <replace />
       <replace>,</replace>
+      <replace>subtask</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -217,9 +219,9 @@
         <option value="$PROJECT_DIR$/templates/pattern/footer.html" />
         <option value="$PROJECT_DIR$/templates/pattern/base.html" />
         <option value="$PROJECT_DIR$/templates/pattern/top-nav.html" />
-        <option value="$PROJECT_DIR$/sgidi/static/css/projetos.css" />
-        <option value="$PROJECT_DIR$/templates/projetos/projetos.html" />
         <option value="$PROJECT_DIR$/SGIDI_DJANGO/settings.py" />
+        <option value="$PROJECT_DIR$/templates/projetos/projetos.html" />
+        <option value="$PROJECT_DIR$/sgidi/static/css/projetos.css" />
         <option value="$PROJECT_DIR$/sgidi/views.py" />
         <option value="$PROJECT_DIR$/sgidi/static/js/projetos.js" />
       </list>
@@ -232,16 +234,16 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-1876" />
-    <option name="y" value="14" />
-    <option name="width" value="1825" />
-    <option name="height" value="1050" />
+    <option name="x" value="1911" />
+    <option name="y" value="-2" />
+    <option name="width" value="1938" />
+    <option name="height" value="1060" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
+    <navigator proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -254,102 +256,7 @@
       <manualOrder />
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes>
-      <pane id="Scope" />
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SGIDI_DJANGO" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SGIDI_DJANGO" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SGIDI_DJANGO" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SGIDI_DJANGO" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SGIDI_DJANGO" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SGIDI_DJANGO" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pattern" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SGIDI_DJANGO" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SGIDI_DJANGO" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="templates" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ideias" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SGIDI_DJANGO" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SGIDI_DJANGO" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SGIDI_DJANGO" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SGIDI_DJANGO" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="SGIDI_DJANGO" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sgidi" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scratches" />
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -905,7 +812,14 @@
       <option name="project" value="LOCAL" />
       <updated>1491404852167</updated>
     </task>
-    <option name="localTasksCounter" value="37" />
+    <task id="LOCAL-00037" summary="Projetos v1.3">
+      <created>1491409219789</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1491409219789</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TodoView">
@@ -918,18 +832,18 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1876" y="14" width="1825" height="1050" extended-state="0" />
+    <frame x="1911" y="-2" width="1938" height="1060" extended-state="6" />
+    <editor active="true" />
     <layout>
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.19172932" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32542372" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.47184685" sideWeight="0.5182857" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33519554" sideWeight="0.52685285" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22878624" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32849163" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32576618" sideWeight="0.4978355" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.32849163" sideWeight="0.4914071" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4124294" sideWeight="0.48171428" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.189251" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22878624" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.61417323" sideWeight="0.49570355" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24919441" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33519554" sideWeight="0.47314715" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.4122905" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32975295" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -942,6 +856,7 @@
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3988764" sideWeight="0.49166188" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3242938" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.61417323" sideWeight="0.49570355" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
@@ -950,15 +865,15 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.47184685" sideWeight="0.5182857" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33519554" sideWeight="0.52685285" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32849163" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32576618" sideWeight="0.4978355" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.32849163" sideWeight="0.4914071" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="manage.py@SGIDI_DJANGO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.27821228" sideWeight="0.4882656" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.4124294" sideWeight="0.48171428" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33519554" sideWeight="0.47314715" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3988764" sideWeight="0.49166188" order="14" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.189251" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.19172932" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection Results" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3242938" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22878624" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -977,7 +892,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Página Inicial- Miniaturas &amp; Perfil e mensagens v1.1" />
     <MESSAGE value="Template Engine Jinja2&#10;Nav bar in all pages&#10;Login more friendly" />
     <MESSAGE value="Ideias template" />
     <MESSAGE value="Ideias template v1.1" />
@@ -1002,7 +916,8 @@
     <MESSAGE value="Projetos v1.0" />
     <MESSAGE value="Projetos v1.1&#10;Informação - done&#10;Tasks e sections - done&#10;Diagrama de gantt - 50%" />
     <MESSAGE value="Projetos v1.2&#10;Diagrama de gantt - 70%" />
-    <option name="LAST_COMMIT_MESSAGE" value="Projetos v1.2&#10;Diagrama de gantt - 70%" />
+    <MESSAGE value="Projetos v1.3" />
+    <option name="LAST_COMMIT_MESSAGE" value="Projetos v1.3" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1287,26 +1202,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/SGIDI_DJANGO/static/js/asana.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="2463" column="0" lean-forward="false" selection-start-line="2463" selection-start-column="0" selection-end-line="2463" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sgidi/static/css/projetos.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2142">
-          <caret line="102" column="18" lean-forward="false" selection-start-line="102" selection-start-column="18" selection-end-line="102" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/SGIDI_DJANGO/static/js/asana.js" />
     <entry file="file://$PROJECT_DIR$/sgidi/static/js/gantt/codebase/dhtmlxgantt.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="396">
           <caret line="323" column="462" lean-forward="false" selection-start-line="323" selection-start-column="462" selection-end-line="323" selection-end-column="462" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1322,7 +1222,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1806">
           <caret line="89" column="15" lean-forward="false" selection-start-line="89" selection-start-column="15" selection-end-line="89" selection-end-column="15" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1344,36 +1243,43 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/projetos/projetos.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="15" column="48" lean-forward="false" selection-start-line="15" selection-start-column="48" selection-end-line="15" selection-end-column="48" />
+        <state relative-caret-position="378">
+          <caret line="18" column="57" lean-forward="false" selection-start-line="18" selection-start-column="44" selection-end-line="18" selection-end-column="57" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sgidi/static/js/asana.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="1826" column="3" lean-forward="true" selection-start-line="1826" selection-start-column="3" selection-end-line="1826" selection-end-column="3" />
+        <state relative-caret-position="288">
+          <caret line="2463" column="0" lean-forward="false" selection-start-line="2463" selection-start-column="0" selection-end-line="2463" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sgidi/static/css/projetos.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="626">
+          <caret line="107" column="23" lean-forward="false" selection-start-line="107" selection-start-column="23" selection-end-line="107" selection-end-column="23" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sgidi/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="294">
-          <caret line="223" column="78" lean-forward="false" selection-start-line="223" selection-start-column="78" selection-end-line="223" selection-end-column="78" />
+        <state relative-caret-position="456">
+          <caret line="223" column="72" lean-forward="true" selection-start-line="223" selection-start-column="72" selection-end-line="223" selection-end-column="72" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/sgidi/static/js/projetos.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="705">
-          <caret line="63" column="29" lean-forward="true" selection-start-line="63" selection-start-column="29" selection-end-line="63" selection-end-column="29" />
+        <state relative-caret-position="2289">
+          <caret line="182" column="58" lean-forward="true" selection-start-line="182" selection-start-column="58" selection-end-line="182" selection-end-column="58" />
           <folding>
-            <element signature="e#0#42#0" expanded="false" />
-            <element signature="e#6731#7252#0" expanded="false" />
-            <element signature="e#7296#7995#0" expanded="false" />
+            <element signature="e#10281#10802#0" expanded="false" />
+            <element signature="e#10846#11545#0" expanded="false" />
           </folding>
         </state>
       </provider>

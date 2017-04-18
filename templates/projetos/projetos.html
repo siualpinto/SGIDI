@@ -11,12 +11,12 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-2 text-center class_title">
-                <div class="list-group">
-                    <div class="panel panel-default">
-                        <div class="panel-body">
-                            Projetos
-                        </div>
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        Projetos
                     </div>
+                </div>
+                <div class="list-group" id="listaProjetos">
                     {% for p in projects %}
                         <a id="{{ p.id }}" class="list-group-item {% if forloop.first %}active{% endif %}">{{ p.name }}</a>
                     {% endfor %}
