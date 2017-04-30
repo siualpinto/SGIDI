@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 
+from django.contrib.auth.models import User
+
+
 # Create your models here.
 
 class Ideias(models.Model):
@@ -43,4 +46,9 @@ class AnalisesDefault(models.Model):
     peso = models.IntegerField(validators=[MaxValueValidator(99), MinValueValidator(0)])
 
     def __str__(self):
-        return self.AnalisesDefault
+        return self.avaliacao
+
+
+class Token(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    token = models.CharField(max_length=50)

@@ -1,8 +1,13 @@
 {% extends 'pattern/base.html' %}
 {% load static %}
-{% block includes_top %}<link rel="stylesheet" href="{% static "css/projetos.css" %}" >
+{% block includes_top %}
     <script src="{% static "js/gantt/codebase/dhtmlxgantt.js" %}" type="text/javascript" charset="utf-8"></script>
-    <link rel="stylesheet" href="{% static "js/gantt/codebase/skins/dhtmlxgantt_broadway.css" %}" type="text/css" media="screen" title="no title" charset="utf-8">
+    <script src="{% static "js/gantt/codebase/ext/dhtmlxgantt_tooltip.js" %}" type="text/javascript" charset="utf-8"></script>
+    <script src="{% static "js/gantt/codebase/ext/dhtmlxgantt_marker.js" %}" type="text/javascript" charset="utf-8"></script>
+    {#    <link rel="stylesheet" href="{% static "js/gantt/codebase/skins/dhtmlxgantt_broadway.css" %}" type="text/css" media="screen" title="no title" charset="utf-8">#}
+    <link rel="stylesheet" href="{% static "js/gantt/codebase/dhtmlxgantt.css" %}" type="text/css" media="screen" title="no title" charset="utf-8">
+    <script src="{% static "js/gantt/codebase/locale/locale_pt.js" %}" charset="utf-8"></script>
+    <link rel="stylesheet" href="{% static "css/projetos.css" %}" >
     <script type="text/javascript" src="{% static "js/gantt/testdata.js"%}"></script>
 {% endblock %}
 {% block title %}Projetos{% endblock %}
@@ -56,6 +61,9 @@
 
                                 </ul>
 
+                            </div>
+                            <div class="diagrama_button" style="text-align: center;height: 40px;line-height: 40px;">
+                                <button id="diagrama_button_id" style="height: 34px;line-height: 30px;margin:3px auto">Zoom to Fit</button>
                             </div>
                             <div id="diagrama_gantt" style='width:1200px; height:400px;'></div>
                         </div>

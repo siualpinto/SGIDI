@@ -108,6 +108,60 @@ ul.seccoes {
     background: #e8e8e8;
 }
 
+/*Diagrama de Gantt*/
+.high{
+    border:2px solid #d96c49;
+    color: #d96c49;
+    background: #d96c49;
+}
+.high .gantt_task_progress{
+    background: #db2536;
+}
+
+.medium{
+    border:2px solid #34c461;
+    color:#34c461;
+    background: #34c461;
+}
+.medium .gantt_task_progress{
+    background: #23964d;
+}
+
+.low{
+    border:2px solid #6ba8e3;
+    color:#6ba8e3;
+    background: #6ba8e3;
+}
+.low .gantt_task_progress{
+    background: #547dab;
+}
+
+#diagrama_button_id{
+    background-color: #4CAF50; /* Green */
+    color: white;
+    text-align: center;
+    border: inset;
+    border-color: #d43f3a;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.dhx_calendar_cont input {
+    width: 96px;
+    padding: 0;
+    margin: 3px 10px 10px 10px;
+    font-size: 11px;
+    height: 17px;
+    text-align: center;
+    border: 1px solid #ccc;
+    color: #646464;
+}
+
+.dhtmlxcalendar_dhx_skyblue, .dhtmlxcalendar_dhx_web, .dhtmlxcalendar_dhx_terrace {
+    z-index: 999999 !important;
+}
+
+
 /*
 .loader {
     position: fixed;
