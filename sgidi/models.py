@@ -17,7 +17,7 @@ class Ideias(models.Model):
     problema = models.TextField(max_length=1700)
     solucao = models.TextField(max_length=1700)
     data = models.DateTimeField(auto_now_add=True)
-    #AVALIACAO
+    # AVALIACAO
     total = models.DecimalField(max_digits=5, decimal_places=3, null=True)
     autor_pre_analise = models.ForeignKey(User, null=True, related_name="avaliador1")
     data_pre_analise = models.DateTimeField(null=True)
@@ -49,6 +49,37 @@ class AnalisesDefault(models.Model):
         return self.avaliacao
 
 
-class Token(models.Model):
+class Tokens(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     token = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.token
+
+
+class Tags(models.Model):
+    tag = models.CharField(max_length=110, null=False)
+    user = models.ManyToManyField(User)
+
+    def __str__(self):
+        return self.tag
+
+
+class Conhecimentos(models.Model):
+    autor = models.ForeignKey(User, on_delete=models.CASCADE)
+    titulo = models.CharField(max_length=110, null=True)
+    texto = models.TextField(max_length=1700)
+    data = models.DateTimeField(auto_now_add=True)
+    tag = models.ManyToManyField(Tags)
+
+    def __str__(self):
+        return self.titulo
+
+
+class Notificacoes(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    read = models.BooleanField(default=False)
+    conhecimento = models.ForeignKey(Conhecimentos,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.read

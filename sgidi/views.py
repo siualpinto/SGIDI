@@ -1,18 +1,19 @@
 import json
 import asana
 from django.contrib.auth.models import User
+import operator
+from django.db.models import Q
+from functools import reduce
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, render_to_response
-from django.template import RequestContext
 from django.views import View
 from django.utils import timezone
-from django.views.decorators.csrf import csrf_protect
-from django.views.generic import DetailView
-from django.views.generic.list import ListView
-from sgidi.forms import IdeiasForm, PreAnaliseForm, AnaliseForm
-from sgidi.models import Ideias, Analises, AnalisesDefault
+from django.views.generic import DetailView, CreateView, ListView
+from sgidi.forms import IdeiasForm, PreAnaliseForm, AnaliseForm, ConhecimentoForm
+from sgidi.models import Ideias, Analises, AnalisesDefault, Tokens, Conhecimentos, Tags
+
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
@@ -221,7 +222,6 @@ class IdeiasListView(ListView):
         return context
 
 
-client = asana.Client.access_token('0/ce4e5bf93acd15f0121a88a142be4548')
 #  Token
 # client = asana.Client.access_token('0/8f62a923af9681d7530fe81d36ea3f0b')
 
@@ -231,6 +231,11 @@ class ProjetosDetailView(View):
 
     def get(self, request, *args, **kwargs):
         data = {'projects': [], 'fullprojects':[], 'tasks': [], 'subtasks':[]}
+        # client = asana.Client.access_token('0/ce4e5bf93acd15f0121a88a142be4548')
+        token = get_object_or_404(Tokens, user_id=request.user.id)
+        client = asana.Client.access_token(token.token)
+
+
         me = client.users.me()
         workspace_id = me['workspaces'][0]['id']
         projects = client.projects.find_by_workspace(workspace_id)
@@ -247,4 +252,91 @@ class ProjetosDetailView(View):
             #     for subtask in subtasks:
             #         data['subtasks'].append(client.tasks.find_by_id(subtask['id']))
         # return HttpResponse(json.dumps(data['projects'][0]), content_type="application/json")
-        return render(request, self.template_name, {'projects': data['projects'], 'fullprojects': data['fullprojects']})
+        return render(request, self.template_name, {'projects': data['projects'], 'fullprojects': data['fullprojects'], 'token': token.token})
+
+
+class ConhecimentoCreateView(CreateView):
+    template_name = 'conhecimento/conhecimento_novo.html'
+    model = Conhecimentos
+    form_class = ConhecimentoForm
+
+    def get(self, request, *args, **kwargs):
+        super(ConhecimentoCreateView, self).get(request, *args, **kwargs)
+        form = self.form_class
+        tags = Tags.objects.order_by('-id')
+        return self.render_to_response(self.get_context_data(
+            object=self.object, form=form, tags=tags))
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        if form.is_valid():
+            commit_connhecimento = form.save(commit=False)
+            commit_connhecimento.autor = request.user
+            commit_connhecimento.save()
+            for tag in request.POST.getlist("existing_tag", ""):
+                Tags.objects.update_or_create(tag=tag)
+                commit_connhecimento.tag.add(Tags.objects.get(tag=tag).id)
+            return HttpResponseRedirect('/conhecimentos/')
+        else:
+            return self.render_to_response(self.get_context_data(form=form))
+
+
+class ConhecimentoListView(ListView):
+    template_name = 'conhecimento/conhecimentos.html'
+    model = Conhecimentos
+    queryset = Conhecimentos.objects.order_by('-data')
+    paginate_by = 5
+
+    def get_queryset(self):
+        try:
+            query = self.request.GET.get('query')
+        except:
+            query = ''
+        if query is None:
+            query = ''
+        if (query != ''):
+            object_list = Conhecimentos.objects.filter(Q(titulo__icontains=query) | Q(texto__icontains=query) | Q(tag__tag__icontains=query) | Q(autor__username__icontains=query) | Q(data__icontains=query)).distinct()
+        else:
+            object_list = Conhecimentos.objects.all()
+        print(object_list)
+        return object_list
+
+    def get_context_data(self, **kwargs):
+        context = super(ConhecimentoListView, self).get_context_data(**kwargs)
+        context['range'] = range(context["paginator"].num_pages)
+        return context
+
+
+class ConhecimentoDetailView(DetailView):
+    template_name = 'conhecimento/conhecimento.html'
+    model = Conhecimentos
+
+    def get_context_data(self, **kwargs):
+        context = super(ConhecimentoDetailView, self).get_context_data(**kwargs)
+        context['tags'] = context['conhecimentos'].tag.all()
+        return context
+
+
+class UserView(View):
+    template_name = "user/profile.html"
+
+    def get(self, request, username):
+        user = User.objects.get(username=username)
+        tags_db = Tags.objects.all()
+        tags = {}
+        for tag in tags_db:
+            tags.setdefault(tag.id, [])
+            tags[tag.id].append(tag.tag)
+            for user_tag in tag.user.all():
+                if str(user_tag) == request.user.username:
+                    tags[tag.id].append(1)
+        return render(request, 'user/profile.html', {"user": user, "user_tags": tags.items(), "all_tags": tags_db})
+
+    def post(self, request, *args, **kwargs):
+        tags_db = Tags.objects.all()
+        for tag in tags_db:
+            tag.user.remove(request.user)
+        for tag in request.POST.getlist("existing_tag", ""):
+            tag_db = Tags.objects.get(tag=tag)
+            tag_db.user.add(request.user.id)
+        return HttpResponseRedirect('/profile/'+str(request.user.username))

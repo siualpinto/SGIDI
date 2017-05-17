@@ -38,7 +38,7 @@
                                 <li>
                                     <div class="navbar-brand navbar-brand-centered">
                                         <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                                        <a href="#">{{ user.username }}</a>
+                                        <a href="{% url 'profile' user.username%}">{{ user.username }}</a>
                                     </div>
                                 </li>
                                 <li role="presentation">

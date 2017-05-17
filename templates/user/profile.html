@@ -1,0 +1,22 @@
+{% extends 'pattern/base.html' %}
+{% load static %}
+{% block includes_top %}
+{% endblock %}
+{% block title %}Partilha de Conhecimento{% endblock %}
+{% block content %}
+    <h1>Profile</h1>
+    {{ user.username }}
+    {{ user.email }}
+    {#    {{ user.first_name }}#}
+    {#    {{ user.last_name }}#}
+    <form class="form-horizontal" action="{% url "profle_subscribe_tags" %}" method="post">
+        {% csrf_token %}
+        <p>Tags a subscrever</p>
+        {% for key,value in user_tags %}
+            <input type="checkbox" name="existing_tag" value="{{ value.0 }}" {% if value.1 == 1 %} checked {% endif %}>{{ value.0 }}
+        {% endfor %}
+        <input type="submit" value="Subscrever Tags" />
+    </form>
+{% endblock %}
+{% block include_footer %}
+{% endblock %}

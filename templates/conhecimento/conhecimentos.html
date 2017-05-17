@@ -1,0 +1,61 @@
+{% extends 'pattern/base.html' %}
+{% load static %}
+{% block includes_top %}
+    <link rel="stylesheet" href="{% static "css/conhecimento.css" %}" >
+{% endblock %}
+{% block title %}Partilha de Conhecimento{% endblock %}
+{% block content %}
+
+    <a class="btn" href="{% url 'conhecimento_novo' %}">Criar nova Ideia</a>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Aprendizagens</h3>
+        </div>
+        <div class="panel-body">
+            <form id="searchform" action="{% url 'conhecimento_lista' %}" method="get" accept-charset="utf-8">
+                <button class="searchbutton" type="submit">
+                    <i class="fa fa-search"></i>
+                </button>
+                <input class="searchfield" id="searchbox" name="query" type="text" placeholder="Search">
+                <p>Para pesquisar datas: "2017-05-15"</p>
+            </form>
+            <ul>
+                <li> Título - Data - Tags </li>
+                {% for conhecimento in conhecimentos_list %}
+                    <a href="{% url "conhecimento" conhecimento.id %}">
+                        <li> {{ conhecimento.titulo }} - {{ conhecimento.data|date }}{% for tag in conhecimento.tag.all %} - {{ tag }}	{% endfor %}</li>
+                    </a>
+                {% empty %}
+                    <li>Não há aprendizagens</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="panel-footer">
+            {% if is_paginated %}
+                <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                        <li class="previous">
+                            <a href="/conhecimentos/?page={{ page_obj.previous_page_number }}">Anterior</a>
+                        </li>
+                    {% endif %}
+
+                    {% for i in range %}
+                        <li class="{% if page_obj.number == forloop.counter %}active{% endif %}">
+                            <a href="/conhecimentos/?page={{forloop.counter}}">{{forloop.counter}}</a>
+                        </li>
+                    {% endfor %}
+
+                    {% if page_obj.has_next %}
+                        <li class="next">
+                            <a href="/conhecimentos/?page={{ page_obj.next_page_number }}">Seguinte</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+{% block include_footer %}
+    <script src="{% static "js/conhecimento.js" %}"></script>
+{% endblock %}

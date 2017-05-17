@@ -1,0 +1,18 @@
+{% extends 'pattern/base.html' %}
+{% load static %}
+{% block includes_top %}
+    <link rel="stylesheet" href="{% static "css/conhecimento.css" %}" >
+{% endblock %}
+{% block title %}Partilha de Conhecimento{% endblock %}
+{% block content %}
+    <h1>Conhecimento</h1>
+    <p>Titulo: {{ object.titulo }}</p>
+    <p>Texto: {{ object.texto }}</p>
+    <p>Data de criação: {{ object.data|date }}</p>
+    {% for tag in tags %}
+        <p> Tags: {{ tag }}</p>
+    {% endfor %}
+{% endblock %}
+{% block include_footer %}
+    <script src="{% static "js/conhecimento.js" %}"></script>
+{% endblock %}

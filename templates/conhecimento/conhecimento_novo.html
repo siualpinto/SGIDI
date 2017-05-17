@@ -1,0 +1,40 @@
+{% extends 'pattern/base.html' %}
+{% load static %}
+{% block includes_top %}
+    <link rel="stylesheet" href="{% static "css/conhecimento.css" %}" >
+{% endblock %}
+{% block title %}Partilha de Conhecimento{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="well">
+                    <form action="" method="post">{% csrf_token %}
+                        <fieldset>
+                            <legend class="text-center header">Registo de aprendizagens</legend>
+                            {{ form.as_p }}
+                        </fieldset>
+                        <fieldset>
+                            <legend class="text-center header">Tags</legend>
+                            <p><label for="id_tag_select">Tags:</label>
+                            <div class="form-group" id="tag_group">
+                                {% for tag in tags %}
+                                    <input type="checkbox" name="existing_tag" value="{{ tag.tag }}">{{ tag.tag }}
+                                {% empty %}
+                                {% endfor %}
+                            </div>
+                            <div class="col-md-3">
+                                <p><label for="id_tag">Tag:</label> <input id="id_tag" name="tag" type="text" /></p>
+                            </div>
+                            <button id="add_tag" type="button">+</button>
+                        </fieldset>
+                        <input type="submit" value="Enviar Aprendizagem" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block include_footer %}
+    <script src="{% static "js/conhecimento.js" %}"></script>
+{% endblock %}
