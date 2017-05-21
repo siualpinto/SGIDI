@@ -1,23 +1,30 @@
 import json
+from itertools import chain
+
 import asana
 from django.contrib.auth.models import User
+from operator import attrgetter
 import operator
+from django.conf import settings
 from django.db.models import Q
 from functools import reduce
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, render_to_response
+from django.utils.decorators import method_decorator
 from django.views import View
 from django.utils import timezone
+from notifications.signals import notify
 from django.views.generic import DetailView, CreateView, ListView
+from notifications.views import AllNotificationsList, NotificationViewList
+
 from sgidi.forms import IdeiasForm, PreAnaliseForm, AnaliseForm, ConhecimentoForm
 from sgidi.models import Ideias, Analises, AnalisesDefault, Tokens, Conhecimentos, Tags
 
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
-
 
 # Create your views here.
 
@@ -273,9 +280,19 @@ class ConhecimentoCreateView(CreateView):
             commit_connhecimento = form.save(commit=False)
             commit_connhecimento.autor = request.user
             commit_connhecimento.save()
+            tags = ""
+            result_list = []
             for tag in request.POST.getlist("existing_tag", ""):
-                Tags.objects.update_or_create(tag=tag)
-                commit_connhecimento.tag.add(Tags.objects.get(tag=tag).id)
+                obj, created = Tags.objects.update_or_create(tag=tag)
+                commit_connhecimento.tag.add(obj.id)
+                tags += ", " + str(obj)
+                result_list = sorted(
+                    chain(obj.user.all(), result_list),
+                    key=attrgetter('username'))
+            for user in list(set(result_list)):
+                notify.send(request.user, recipient=user,
+                            verb='introduziu uma nova aprendizagem com as seguintes tags' + tags,
+                            description=str(commit_connhecimento.id))
             return HttpResponseRedirect('/conhecimentos/')
         else:
             return self.render_to_response(self.get_context_data(form=form))
@@ -284,8 +301,7 @@ class ConhecimentoCreateView(CreateView):
 class ConhecimentoListView(ListView):
     template_name = 'conhecimento/conhecimentos.html'
     model = Conhecimentos
-    queryset = Conhecimentos.objects.order_by('-data')
-    paginate_by = 5
+    paginate_by = 14
 
     def get_queryset(self):
         try:
@@ -297,8 +313,7 @@ class ConhecimentoListView(ListView):
         if (query != ''):
             object_list = Conhecimentos.objects.filter(Q(titulo__icontains=query) | Q(texto__icontains=query) | Q(tag__tag__icontains=query) | Q(autor__username__icontains=query) | Q(data__icontains=query)).distinct()
         else:
-            object_list = Conhecimentos.objects.all()
-        print(object_list)
+            object_list = Conhecimentos.objects.order_by('-data').filter(autor=self.request.user)
         return object_list
 
     def get_context_data(self, **kwargs):
@@ -340,3 +355,5 @@ class UserView(View):
             tag_db = Tags.objects.get(tag=tag)
             tag_db.user.add(request.user.id)
         return HttpResponseRedirect('/profile/'+str(request.user.username))
+
+

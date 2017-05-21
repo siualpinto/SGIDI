@@ -1,7 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
-
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth.models import User
 
 
@@ -75,11 +76,3 @@ class Conhecimentos(models.Model):
     def __str__(self):
         return self.titulo
 
-
-class Notificacoes(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    read = models.BooleanField(default=False)
-    conhecimento = models.ForeignKey(Conhecimentos,on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.read

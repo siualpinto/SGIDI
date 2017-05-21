@@ -3,7 +3,7 @@
 <head>
     {% include 'pattern/top-nav.html' %}
     {% load static %}
-    {% block includes_top %}{% endblock %}
+    {% block includes_top %} {% load notifications_tags %}{% endblock %}
     <title>{% block title %}SGIDI{% endblock %}</title>
 </head>
 
@@ -42,9 +42,15 @@
                                     </div>
                                 </li>
                                 <li role="presentation">
-                                    <a href="#">
+{#                                    <a href="{% url  "notifications:all" %}">#}
+                                    <a href="{% url  "notificacoes" %}">
                                         <span class="glyphicon glyphicon-bell" aria-hidden="true"> </span>
-                                        <span class="label label-danger label-as-badge blink_me">3</span>
+                                        <span class="label label-danger label-as-badge blink_me">
+                                            {% notifications_unread as unread_count %}
+                                            {% if unread_count %}
+                                                {{ unread_count }}
+                                            {% endif %}
+                                            </span>
                                     </a>
                                 </li>
                                 <li>

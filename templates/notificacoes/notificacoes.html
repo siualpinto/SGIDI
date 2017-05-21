@@ -1,0 +1,16 @@
+{% extends 'pattern/base.html' %}
+{% load static %}
+{% block includes_top %}
+    {% load notifications_tags %}
+    <script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
+    <script src="{% static "js/notificacoes.js" %}"></script>
+    {#     TODO tambem um botao para marcar como lida e outro para apagar a notificação    #}
+    <!-- TODO -->
+    {% register_notify_callbacks fetch="10" callbacks='fill_notification_list,fill_notification_badge,my_special_notification_callback' %}
+{% endblock %}
+{% block title %}Notificações{% endblock %}
+{% block content %}
+{#    {% live_notify_list classes="list-group"%}#}
+{% endblock %}
+{% block include_footer %}
+{% endblock %}

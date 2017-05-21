@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
+import notifications.urls
 
 from sgidi import views
 
@@ -25,6 +26,7 @@ urlpatterns = [
     url(r'^login/$', auth_views.login, name='login'),
     url(r'^logout/$', auth_views.logout, {'template_name': 'registration/logout.html'}, name='logout'),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^inbox/notifications/', include(notifications.urls, namespace='notifications')),
     url(r'^', include('sgidi.urls')),
 ]
 admin.site.site_header = 'Nibble - SGIDI - administration'

@@ -6,7 +6,7 @@
 {% block title %}Partilha de Conhecimento{% endblock %}
 {% block content %}
 
-    <a class="btn" href="{% url 'conhecimento_novo' %}">Criar nova Ideia</a>
+    <a class="btn" href="{% url 'conhecimento_novo' %}">Criar nova Aprendizagem</a>
 
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -21,10 +21,10 @@
                 <p>Para pesquisar datas: "2017-05-15"</p>
             </form>
             <ul>
-                <li> Título - Data - Tags </li>
+                <li> Título - Autor - Data - Tags </li>
                 {% for conhecimento in conhecimentos_list %}
                     <a href="{% url "conhecimento" conhecimento.id %}">
-                        <li> {{ conhecimento.titulo }} - {{ conhecimento.data|date }}{% for tag in conhecimento.tag.all %} - {{ tag }}	{% endfor %}</li>
+                        <li> {{ conhecimento.titulo }} - {{ user }} -{{ conhecimento.data|date }}{% for tag in conhecimento.tag.all %} - {{ tag }}	{% endfor %}</li>
                     </a>
                 {% empty %}
                     <li>Não há aprendizagens</li>
