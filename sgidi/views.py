@@ -15,12 +15,13 @@ from django.shortcuts import render, get_object_or_404, render_to_response
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.utils import timezone
+from notifications.models import Notification
 from notifications.signals import notify
 from django.views.generic import DetailView, CreateView, ListView
 from notifications.views import AllNotificationsList, NotificationViewList
 
 from sgidi.forms import IdeiasForm, PreAnaliseForm, AnaliseForm, ConhecimentoForm
-from sgidi.models import Ideias, Analises, AnalisesDefault, Tokens, Conhecimentos, Tags
+from sgidi.models import Ideias, Analises, AnalisesDefault, Tokens, Conhecimentos, Tags, Projetos, Tasks
 
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect
@@ -241,8 +242,6 @@ class ProjetosDetailView(View):
         # client = asana.Client.access_token('0/ce4e5bf93acd15f0121a88a142be4548')
         token = get_object_or_404(Tokens, user_id=request.user.id)
         client = asana.Client.access_token(token.token)
-
-
         me = client.users.me()
         workspace_id = me['workspaces'][0]['id']
         projects = client.projects.find_by_workspace(workspace_id)
@@ -292,7 +291,7 @@ class ConhecimentoCreateView(CreateView):
             for user in list(set(result_list)):
                 notify.send(request.user, recipient=user,
                             verb='introduziu uma nova aprendizagem com as seguintes tags' + tags,
-                            description=str(commit_connhecimento.id))
+                            description="tag-"+str(commit_connhecimento.id))
             return HttpResponseRedirect('/conhecimentos/')
         else:
             return self.render_to_response(self.get_context_data(form=form))
@@ -310,7 +309,7 @@ class ConhecimentoListView(ListView):
             query = ''
         if query is None:
             query = ''
-        if (query != ''):
+        if query != '':
             object_list = Conhecimentos.objects.filter(Q(titulo__icontains=query) | Q(texto__icontains=query) | Q(tag__tag__icontains=query) | Q(autor__username__icontains=query) | Q(data__icontains=query)).distinct()
         else:
             object_list = Conhecimentos.objects.order_by('-data').filter(autor=self.request.user)
@@ -355,5 +354,131 @@ class UserView(View):
             tag_db = Tags.objects.get(tag=tag)
             tag_db.user.add(request.user.id)
         return HttpResponseRedirect('/profile/'+str(request.user.username))
+
+
+class ApagarNotificacao(View):
+
+    def post(self, request):
+        if request.is_ajax():
+            notificacao_id = request.POST.get('notificacao_id', "error_notificacao_id")
+            data = {
+                "notificacao": Notification.objects.get(id=notificacao_id).delete(),
+            }
+            return JsonResponse(data)
+
+
+class InterfacesView(View):
+    template = "interfaces/interfaces.html"
+    # form_class = ProjetoForm
+
+    def get(self, request, *args, **kwargs):
+        # form = self.form_class
+        token = get_object_or_404(Tokens, user_id=request.user.id)
+
+        # project, created = saveproject(token)
+        # saveprojecttasks(token)
+
+        project = Projetos.objects.get(pk=1)
+        tasks = Tasks.objects.filter(projeto_id=210156681957457, parent=None, section=0)
+        subtasks = Tasks.objects.filter(projeto_id=210156681957457, section=0).exclude(parent__isnull=True)
+        sections = Tasks.objects.filter(projeto_id=210156681957457, parent=None, section=1)
+
+        # TODO SEMPRE QUE SE ATUALIZAR A DB, VERIFICAR SE A MODIFIED DATA MUDOU
+        # TODO SE SIM: MANDAR UM ALERT COM A TASK QUE FOI ALTERADA
+        # TODO E TAMBÉM SEMPRE QUE SURGIR UMA TASK NOVA
+        # TODO PODE SER VERIFICADO CREATED DEVOLVIDO
+
+        # tasks = Tasks.objects.filter(projeto_id=299870043677028, parent=None, section=0)
+        # subtasks = Tasks.objects.filter(projeto_id=299870043677028, section=0).exclude(parent__isnull=True)
+        # sections = Tasks.objects.filter(projeto_id=299870043677028, parent=None, section=1)
+        return render(request, self.template, {'token': token.token, 'project': project, 'tasks': tasks, 'subtasks': subtasks, 'sections': sections})
+
+
+def saveproject(token):
+    client = asana.Client.access_token(token.token)
+    project = client.projects.find_by_id(Projetos.objects.get(pk=1).id_asana)
+    status = 0
+    if project['current_status'] is not None:
+        if project['current_status']['color'] == 'green':
+            status = 0
+        elif project['current_status']['color'] == 'yellow':
+            status = 1
+        elif project['current_status']['color'] == 'red':
+            status = 2
+
+    return Projetos.objects.update_or_create(id_asana=project['id'],
+                                             defaults={'name': project['name'],
+                                                       'notes': 'Sem Notas' if  project['notes'] == '' else project['notes'],
+                                                       'current_status': status,
+                                                       'current_status_text': 'Sem estado' if project['current_status'] is None
+                                                       else project['current_status']['text'],
+                                                       'due_date': project['due_date'],
+                                                       'created_at': project['created_at'],
+                                                       'modified_at': project['modified_at']
+                                                       })
+
+
+def saveprojecttasks(token):
+    client = asana.Client.access_token(token.token)
+    projeto_id = Projetos.objects.get(pk=1).id_asana
+    tasks = client.tasks.find_by_project(projeto_id)
+    sections = client.projects.sections(projeto_id)
+    section_id = 0
+    for task in tasks:
+        task_asana = client.tasks.find_by_id(task['id'])
+        print(task_asana)
+        try:
+            if task_asana['memberships'] is not None:
+                members = task_asana['memberships']
+                for member in members:
+                    if member['section'] is not None:
+                        section_id = member['section']['id']
+        except ValueError:
+            print(ValueError)
+
+        task_db, created = Tasks.objects.update_or_create(id_asana=task['id'],
+                                                          defaults={'name': task_asana['name'],
+                                                                    'notes': task_asana['notes'],
+                                                                    'assignee': 'Sem atribuição' if task_asana['assignee'] is None
+                                                                    else task_asana['assignee']['name'],
+                                                                    'assignee_status': 'Sem atribuição' if task_asana['assignee_status']
+                                                                                                           is None else task_asana['assignee_status'],
+                                                                    'completed': task_asana['completed'],
+                                                                    'created_at': task_asana['created_at'],
+                                                                    'completed_at': task_asana['completed_at'],
+                                                                    'due_at': task_asana['due_at'],
+                                                                    'due_on': task_asana['due_on'],
+                                                                    'modified_at': task_asana['modified_at'],
+                                                                    'section': False,
+                                                                    'projeto_id': projeto_id,
+                                                                    'section_id': section_id
+                                                                    # 'parent_id': task_asana['parent']['id'] if task_asana['parent'] is not None else None
+                                                                    })
+        subtasks = client.tasks.subtasks(task=task['id'])
+        for subtask_compact in subtasks:
+            subtask = client.tasks.find_by_id(subtask_compact['id'])
+            Tasks.objects.update_or_create(id_asana=subtask['id'],
+                                           defaults={'name': subtask['name'],
+                                                     'notes': subtask['notes'],
+                                                     'assignee': 'Sem atribuição' if subtask['assignee'] is None
+                                                     else subtask['assignee']['name'],
+                                                     'assignee_status': 'Sem atribuição' if subtask[
+                                                                                                'assignee_status']
+                                                                                            is None else subtask[
+                                                         'assignee_status'],
+                                                     'completed': subtask['completed'],
+                                                     'created_at': subtask['created_at'],
+                                                     'completed_at': subtask['completed_at'],
+                                                     'due_at': subtask['due_at'],
+                                                     'due_on': subtask['due_on'],
+                                                     'modified_at': subtask['modified_at'],
+                                                     'section': False,
+                                                     'projeto_id': projeto_id,
+                                                     'section_id': '0',
+                                                     'parent_id': task_db.id
+                                                     })
+    for section in sections:
+        Tasks.objects.filter(id_asana=section['id']).update(section=True)
+
 
 

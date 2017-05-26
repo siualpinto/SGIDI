@@ -1,0 +1,47 @@
+{% extends 'pattern/base.html' %}
+{% load static %}
+{% block includes_top %}
+{% endblock %}
+{% block title %}Interfaces{% endblock %}
+{% block content %}
+    <div class="col-md-12" id="{{ token }}-{{ project.id_asana }}">
+        <p>Nome: {{project.name}}</p>
+        <p>Notas: {{project.notes}}</p>
+        <p>Estado Atual: {{project.current_status}}</p>
+        <p>Notas acerca do estado atual: {{project.current_status_text}}</p>
+        <p>Data de fim: {{project.due_date}}</p>
+        <p>Data de Criação: {{project.created_at}}</p>
+        <p>Data de Modificação: {{project.modified_at}}</p>
+    </div>
+    <div class="col-md-12">
+        <ul>
+            {% for section in sections %}
+                <li>
+                    <p>{{ section.name }}</p>
+                    <ul>
+                        {% for task in tasks %}
+                            {% if section.section_id == task.section_id %}
+                                <li>
+                                    <p>{{ task.name }}</p>
+                                    <ul>
+                                        {% for subtask in subtasks %}
+                                            {% if subtask.parent.id == task.id %}
+                                                <li>
+                                                    <p>{{ subtask.name }}</p>
+                                                </li>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </ul>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
+{% block include_footer %}
+    <script src="{% static "js/asana-min.js" %}"></script>
+    <script src="{% static "js/interfaces.js" %}"></script>
+{% endblock %}

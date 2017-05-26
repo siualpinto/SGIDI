@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Ideias, Analises, Conhecimentos, Tags
+from .models import Ideias, Analises, Conhecimentos, Tags, Projetos
 from django.forms.models import inlineformset_factory
 
 class IdeiasForm(forms.ModelForm):
@@ -31,9 +31,7 @@ class ConhecimentoForm(forms.ModelForm):
         exclude = ['autor']
 
 
-# class TagForm(forms.ModelForm):
-#     tag = forms.CharField(required=False)
-#
+# class ProjetoForm(forms.ModelForm):
 #     class Meta:
-#         model = Tag
-#         fields = ['tag']
+#         model = Projetos
+#         fields = ['name', 'notes', 'current_status', 'current_status_text', 'due_date', 'created_at', 'modified_at']

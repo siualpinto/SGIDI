@@ -76,3 +76,42 @@ class Conhecimentos(models.Model):
     def __str__(self):
         return self.titulo
 
+
+class Projetos(models.Model):
+    STATUS_CHOICES = (
+        ('0', 'green'),
+        ('1', 'yellow'),
+        ('2', 'red'),
+    )
+    id_asana = models.CharField(max_length=20, null=False)
+    name = models.CharField(max_length=100, null=False)
+    notes = models.TextField(max_length=1700)
+    current_status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='0')
+    current_status_text = models.TextField(max_length=1700)
+    due_date = models.DateTimeField(null=True)
+    created_at = models.DateTimeField(null=True)
+    modified_at = models.DateTimeField(null=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Tasks(models.Model):
+    id_asana = models.CharField(max_length=20, null=False)
+    name = models.CharField(max_length=100, null=False)
+    notes = models.TextField(max_length=1700)
+    assignee = models.CharField(max_length=100, null=True)
+    assignee_status = models.CharField(max_length=100, null=True)
+    created_at = models.DateTimeField(null=True)
+    completed = models.BooleanField(default=False)
+    completed_at = models.DateTimeField(null=True)
+    due_on = models.DateField(null=True)
+    due_at = models.DateTimeField(null=True)
+    modified_at = models.DateTimeField(null=True)
+    section = models.BooleanField(default=False)
+    section_id = models.CharField(max_length=20, null=False)
+    projeto_id = models.CharField(max_length=20, null=False)
+    parent = models.ForeignKey('self', null=True)
+
+    def __str__(self):
+        return self.name

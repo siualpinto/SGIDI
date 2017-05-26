@@ -4,7 +4,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.views.generic import TemplateView
 
 from sgidi.views import IdeiasView, IdeiasAvaliacaoView, IdeiasListView, ProjetosDetailView, ConhecimentoCreateView, \
-    ConhecimentoListView, ConhecimentoDetailView, UserView
+    ConhecimentoListView, ConhecimentoDetailView, UserView, ApagarNotificacao, InterfacesView
 from . import views
 
 urlpatterns = [
@@ -23,7 +23,8 @@ urlpatterns = [
     url(r'^conhecimentos/novo/$', login_required(ConhecimentoCreateView.as_view()), name='conhecimento_novo'),
     url(r'^conhecimentos/$', login_required(ConhecimentoListView.as_view()), name='conhecimento_lista'),
     url(r'^conhecimentos/(?P<pk>[0-9]+)/$', login_required(ConhecimentoDetailView.as_view()), name='conhecimento'),
+    url(r'^notificacoes/apagar_notificacao/$', login_required(ApagarNotificacao.as_view()), name='post_apagar_notificacao'),
     url(r'^notificacoes/', login_required(TemplateView.as_view(template_name='notificacoes/notificacoes.html')), name="notificacoes"),
-
+    url(r'^interfaces/', login_required(InterfacesView.as_view()), name="interfaces"),
 ]
 urlpatterns += staticfiles_urlpatterns() #TODO REMOVER NO FIM DO PROJETO e correr "python manage.py collectstatic"

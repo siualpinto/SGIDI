@@ -34,7 +34,6 @@ function reloadProjectInfo() {
             users: [],
             priority: "3"
         });
-        console.log(projeto.id);
         $("dd.tipo").append(projeto.notes);
         if(projeto.current_status !== null){
             var cor = projeto.current_status.color;
@@ -125,6 +124,9 @@ function reloadTasksInfo(){
 }
 
 function reloadTaskInfo(task,followers) {
+
+    console.log(task);
+
     console.log("4-reloadTaskInfo");
     if(task.memberships[0].section !== null && task.id === task.memberships[0].section.id)
         return;
@@ -321,17 +323,17 @@ function reloadDiagramInfo() {
     $diagrama = $("#diagrama_gantt");
 
 
-     var hints = [
-     "Diagrama Disponivel",
-     ];
-     for(var i=0; i < hints.length; i++){
-     setTimeout(
-     (function(i){
-     return function(){
-     gantt.message(hints[i]);
-     } })(i)
-     , (i+1)*600);
-     }
+    var hints = [
+        "Diagrama Disponivel",
+    ];
+    for(var i=0; i < hints.length; i++){
+        setTimeout(
+            (function(i){
+                return function(){
+                    gantt.message(hints[i]);
+                } })(i)
+            , (i+1)*600);
+    }
     gantt.templates.task_class  = function(start, end, task){
         switch (task.priority){
             case "1":

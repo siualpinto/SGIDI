@@ -87,7 +87,7 @@ $("#tabela_avaliacao").on("change", ".pesos", function () {
     $("#inserir_analise").prop("disabled",false);
 });
 
-$.ajaxSetup({//TODO POR NUM JS GLOBAL
+$.ajaxSetup({
     beforeSend: function(xhr, settings) {
         function getCookie(name) {
             var cookieValue = null;
