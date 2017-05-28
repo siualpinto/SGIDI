@@ -1,6 +1,6 @@
 import json
 from itertools import chain
-
+from django.contrib.auth.models import Group
 import asana
 from django.contrib.auth.models import User
 from operator import attrgetter
@@ -12,6 +12,7 @@ from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, render_to_response
+from django.template import RequestContext
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.utils import timezone
@@ -370,33 +371,46 @@ class ApagarNotificacao(View):
 class InterfacesView(View):
     template = "interfaces/interfaces.html"
     # form_class = ProjetoForm
-
+    # TODO O BOTAO DE ATUALIZAR AS INTERFACES DEVE SER REDIRECIONADO PARA AQUI MAS COM ATUALIZAÇÃO DA DB
     def get(self, request, *args, **kwargs):
         # form = self.form_class
         token = get_object_or_404(Tokens, user_id=request.user.id)
 
-        # project, created = saveproject(token)
-        # saveprojecttasks(token)
+        # project, created = saveproject(token, 2)
+        id_projeto = 2
+        id_asana_projeto = 299870043677028
+        grupo = Group.objects.get(name='grupo_atividades')
+        created_final, new_tasks = saveprojecttasks(token, id_projeto, id_asana_projeto)
+        print(created_final)
+        if created_final:
+            new_tasks_str = ""
+            for new_task in new_tasks:
+                new_tasks_str += ", " + str(new_task)
+            print(new_tasks)
+            notify.send(request.user, recipient=grupo,
+                        verb='Foram inseridas novas tasks no SGIDI Atividades'+new_tasks_str,
+                        description='atividades-')
 
-        project = Projetos.objects.get(pk=1)
-        tasks = Tasks.objects.filter(projeto_id=210156681957457, parent=None, section=0)
-        subtasks = Tasks.objects.filter(projeto_id=210156681957457, section=0).exclude(parent__isnull=True)
-        sections = Tasks.objects.filter(projeto_id=210156681957457, parent=None, section=1)
+        project = Projetos.objects.get(pk=id_projeto)
+        # tasks = Tasks.objects.filter(projeto_id=210156681957457, parent=None, section=0)
+        # subtasks = Tasks.objects.filter(projeto_id=210156681957457, section=0).exclude(parent__isnull=True)
+        # sections = Tasks.objects.filter(projeto_id=210156681957457, parent=None, section=1)
 
         # TODO SEMPRE QUE SE ATUALIZAR A DB, VERIFICAR SE A MODIFIED DATA MUDOU
         # TODO SE SIM: MANDAR UM ALERT COM A TASK QUE FOI ALTERADA
         # TODO E TAMBÉM SEMPRE QUE SURGIR UMA TASK NOVA
         # TODO PODE SER VERIFICADO CREATED DEVOLVIDO
+        # TODO A NOTIFICAÇÃO MANDADA PODE SER PARA UM GRUPO CRIADO NA PAGINA DE ADMIN LIGADO AO SGIDI ATIVIDADES
 
-        # tasks = Tasks.objects.filter(projeto_id=299870043677028, parent=None, section=0)
-        # subtasks = Tasks.objects.filter(projeto_id=299870043677028, section=0).exclude(parent__isnull=True)
-        # sections = Tasks.objects.filter(projeto_id=299870043677028, parent=None, section=1)
+        tasks = Tasks.objects.filter(projeto_id=id_asana_projeto, parent=None, section=0)
+        subtasks = Tasks.objects.filter(projeto_id=id_asana_projeto, section=0).exclude(parent__isnull=True)
+        sections = Tasks.objects.filter(projeto_id=id_asana_projeto, parent=None, section=1)
         return render(request, self.template, {'token': token.token, 'project': project, 'tasks': tasks, 'subtasks': subtasks, 'sections': sections})
 
 
-def saveproject(token):
+def saveproject(token, id_db):
     client = asana.Client.access_token(token.token)
-    project = client.projects.find_by_id(Projetos.objects.get(pk=1).id_asana)
+    project = client.projects.find_by_id(Projetos.objects.get(pk=id_db).id_asana)
     status = 0
     if project['current_status'] is not None:
         if project['current_status']['color'] == 'green':
@@ -418,15 +432,18 @@ def saveproject(token):
                                                        })
 
 
-def saveprojecttasks(token):
+def saveprojecttasks(token, id_db, id_asana):
     client = asana.Client.access_token(token.token)
-    projeto_id = Projetos.objects.get(pk=1).id_asana
+    projeto_id = Projetos.objects.get(pk=id_db).id_asana
     tasks = client.tasks.find_by_project(projeto_id)
     sections = client.projects.sections(projeto_id)
     section_id = 0
+    new_tasks_id = 0
+    created_final = False
+    new_tasks = {}
+    tasks_db = Tasks.objects.filter(projeto_id=id_asana)
     for task in tasks:
         task_asana = client.tasks.find_by_id(task['id'])
-        print(task_asana)
         try:
             if task_asana['memberships'] is not None:
                 members = task_asana['memberships']
@@ -452,11 +469,22 @@ def saveprojecttasks(token):
                                                                     'section': False,
                                                                     'projeto_id': projeto_id,
                                                                     'section_id': section_id
-                                                                    # 'parent_id': task_asana['parent']['id'] if task_asana['parent'] is not None else None
                                                                     })
+        if created:
+            print("task criada")
+            new_tasks.setdefault(new_tasks_id, [])
+            new_tasks[new_tasks_id].append(task_db.name)
+            new_tasks_id = new_tasks_id+1
+        created_final = created_final | created
         subtasks = client.tasks.subtasks(task=task['id'])
+        for task_db in tasks_db:
+            if task_db.name == task['name']:
+                tasks_db = tasks_db.exclude(name=task['name'])
         for subtask_compact in subtasks:
             subtask = client.tasks.find_by_id(subtask_compact['id'])
+            for task_db in tasks_db:
+                if task_db.name == subtask['name']:
+                    tasks_db = tasks_db.exclude(name=subtask['name'])
             Tasks.objects.update_or_create(id_asana=subtask['id'],
                                            defaults={'name': subtask['name'],
                                                      'notes': subtask['notes'],
@@ -479,6 +507,7 @@ def saveprojecttasks(token):
                                                      })
     for section in sections:
         Tasks.objects.filter(id_asana=section['id']).update(section=True)
+    tasks_db.delete()
 
-
+    return created_final, new_tasks
 

@@ -26,7 +26,7 @@ $.ajaxSetup({
 function my_special_notification_callback(data) {
     $('#notificacoes').empty();
     if(data.unread_list.length===0){
-         $('#notificacoes').append("Não tem notificações");
+        $('#notificacoes').append("Não tem notificações");
         return;
     }
 
@@ -36,6 +36,28 @@ function my_special_notification_callback(data) {
         id = msg.description.split("-")[1];
         if (type === "tag") {
             $('#notificacoes').append("<div class='col-md-12'><div class='col-md-8'><a href='/conhecimentos/" + id + "'<p>" + msg.actor + ' ' + msg.verb + "</p></a></div><div class='col-md-4'> <button class='alert-danger conhecimento' id='notificacao_"+msg.id+"'>Eliminar notificação</button></div></div></div>");
+            $("#notificacao_"+msg.id+"").click(function () {
+                var notificacao_id = this.getAttribute("id").split("_")[1];
+                alert(notificacao_id);
+                $.ajax({
+                    type:"POST",
+                    url: "/notificacoes/apagar_notificacao/",
+                    data: {
+                        "notificacao_id": notificacao_id
+                    },
+                    dataType: "json",
+                    success: function (data) {
+                        if (data) {
+                            alert("Notificação apagada: "+ (data.notificacao ? "Sucesso" : "Falhou"));
+                            if(data.notificacao)
+                                location.reload();
+                        }
+                    }
+                });
+            });
+        }
+        else if (type === "atividades"){
+            $('#notificacoes').append("<div class='col-md-12'><div class='col-md-8'><a href='/interfaces/'<p>" + msg.actor + ' ' + msg.verb + "</p></a></div><div class='col-md-4'> <button class='alert-danger conhecimento' id='notificacao_"+msg.id+"'>Eliminar notificação</button></div></div></div>");
             $("#notificacao_"+msg.id+"").click(function () {
                 var notificacao_id = this.getAttribute("id").split("_")[1];
                 alert(notificacao_id);
