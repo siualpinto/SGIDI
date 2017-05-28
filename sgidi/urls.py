@@ -26,6 +26,6 @@ urlpatterns = [
     url(r'^notificacoes/apagar_notificacao/$', login_required(ApagarNotificacao.as_view()), name='post_apagar_notificacao'),
     url(r'^notificacoes/', login_required(TemplateView.as_view(template_name='notificacoes/notificacoes.html')), name="notificacoes"),
     url(r'^interfaces/', login_required(InterfacesView.as_view()), name="interfaces"),
-    url(r'^interfaces/novo/$', login_required(InterfacesView.as_view()), name='atualizar_interfaces'),
+    url(r'^interfaces/atualizar/$', login_required(InterfacesView.as_view()), name='interfaces_atualizar'),
 ]
 urlpatterns += staticfiles_urlpatterns() #TODO REMOVER NO FIM DO PROJETO e correr "python manage.py collectstatic"

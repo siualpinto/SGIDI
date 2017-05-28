@@ -6,7 +6,7 @@
 {% block title %}Interfaces{% endblock %}
 {% block content %}
     <div class="col-md-12">
-        <a class="btn" href="/conhecimentos/novo/">Atualizar SGIDI - Atividades</a>
+        <a class="btn" href="{% url 'interfaces_atualizar' %}">Atualizar SGIDI - Atividades</a>
     </div>
     <div class="col-md-12" id="{{ token }}-{{ project.id_asana }}">
         <p>Nome: {{project.name}}</p>
