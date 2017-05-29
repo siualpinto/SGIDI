@@ -1,0 +1,38 @@
+{% extends 'pattern/base.html' %}
+{% load static %}
+{% block includes_top %}
+    <link rel="stylesheet" href="{% static "css/objetivos.css" %}" >
+{% endblock %}
+{% block title %}Objetivos{% endblock %}
+{% block content %}
+    <form class="form-horizontal" action="{% url "objetivos_post" %}" method="post">
+        {% csrf_token %}
+        <div class="form-group" id="form1">
+            <div class="col-md-offset-1">
+                <table id="tabela_objetivos">
+                    <tr>
+                        <th>ID</th>
+                        <th>Data</th>
+                        <th>Objetivo</th>
+                        <th>Indicador</th>
+                        <th>Métrica</th>
+                        {% for objetivo in objetivos %}
+                            {% if objetivo.y == 1  %}<tr>{% endif %}
+                        <td {% if objetivo.y == 1 %} width="4%" {% elif objetivo.y == 2 %}  width="15%" {% else %} width="27%" {% endif %}>
+                            <textarea class="tabela_objetivos_inputs" rows="3" maxlength="2000" name="objetivo{{ objetivo.x }}-{{ objetivo.y }}">{{ objetivo.text }}</textarea>
+                        </td>
+                        {% if objetivo.y == 5 %}</tr>{% endif %}
+                        {% endfor %}
+                </table>
+                <a class="btn add_line"><i class="fa fa-plus-square mediumicon"></i>Nova linha</a>
+                {#                <a class="btn delete_line"><i class="fa fa-minus-square mediumicon">Eliminar linha</i></a>#}
+            </div>
+            <div class="col-md-offset-6">
+                <button type="submit" name="form1" class="btn btn-success" id="inserir_objetivos">Atualizar Objetivos</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+{% block include_footer %}
+    <script src="{% static "js/objetivos.js" %}"></script>
+{% endblock %}

@@ -38,7 +38,6 @@ function my_special_notification_callback(data) {
             $('#notificacoes').append("<div class='col-md-12'><div class='col-md-8'><a href='/conhecimentos/" + id + "'<p>" + msg.actor + ' ' + msg.verb + "</p></a></div><div class='col-md-4'> <button class='alert-danger conhecimento' id='notificacao_"+msg.id+"'>Eliminar notificação</button></div></div></div>");
             $("#notificacao_"+msg.id+"").click(function () {
                 var notificacao_id = this.getAttribute("id").split("_")[1];
-                alert(notificacao_id);
                 $.ajax({
                     type:"POST",
                     url: "/notificacoes/apagar_notificacao/",
@@ -60,7 +59,6 @@ function my_special_notification_callback(data) {
             $('#notificacoes').append("<div class='col-md-12'><div class='col-md-8'><a href='/interfaces/'<p>" + msg.verb + "</p></a></div><div class='col-md-4'> <button class='alert-danger conhecimento' id='notificacao_"+msg.id+"'>Eliminar notificação</button></div></div></div>");
             $("#notificacao_"+msg.id+"").click(function () {
                 var notificacao_id = this.getAttribute("id").split("_")[1];
-                alert(notificacao_id);
                 $.ajax({
                     type:"POST",
                     url: "/notificacoes/apagar_notificacao/",

@@ -115,3 +115,21 @@ class Tasks(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Objetivos(models.Model):
+    x = models.IntegerField()
+    y = models.IntegerField()
+    text = models.CharField(max_length=2000, null=True)
+
+    def __str__(self):
+        return self.text
+
+
+class NaoConformidades(models.Model):
+    x = models.IntegerField()
+    y = models.IntegerField()
+    text = models.CharField(max_length=2000, null=True)
+
+    def __str__(self):
+        return self.text

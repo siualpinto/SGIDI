@@ -1,0 +1,27 @@
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 90%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    padding: 8px;
+    text-align: center;
+}
+
+table td {
+    word-wrap:break-word;
+}
+
+textarea {
+    overflow: visible;
+    resize: none;
+    width: 100%;
+    text-align: center;
+    border: none;
+}
+
+body {
+    overflow-x:hidden;
+}

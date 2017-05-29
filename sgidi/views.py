@@ -13,6 +13,7 @@ from django.http import HttpResponseRedirect
 from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404, render_to_response
 from django.template import RequestContext
+from django.template.defaultfilters import register
 from django.utils.decorators import method_decorator
 from django.views import View
 from django.utils import timezone
@@ -22,68 +23,17 @@ from django.views.generic import DetailView, CreateView, ListView
 from notifications.views import AllNotificationsList, NotificationViewList
 
 from sgidi.forms import IdeiasForm, PreAnaliseForm, AnaliseForm, ConhecimentoForm
-from sgidi.models import Ideias, Analises, AnalisesDefault, Tokens, Conhecimentos, Tags, Projetos, Tasks
-
-from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import redirect
-from django.contrib.auth.decorators import login_required
-
-# Create your views here.
-
-# @csrf_protect
-# def login_user(request):
-#     logout(request)
-#     username = password = ''
-#     if request.POST:
-#         username = request.POST['username']
-#         password = request.POST['password']
-#
-#         user = authenticate(username=username, password=password)
-#         if user is not None:
-#             if user.is_active:
-#                 login(request, user)
-#                 # me = client.users.me()
-#                 #projects_id = me['projects'][0]['id']
-#                 #project = client.projects.create_in_workspace(projects_id, {'name': 'new project'})
-#                 #print("Created project with id: " + str(project['id']))
-#                 return render(request, 'index.html')
-#     return render(request, 'registration/login.html')
-
-# @csrf_protect
-# def asana_view(request):
-#     print("ASANA")
-#     if request.params['state'] == state:
-#         token = client.session.fetch_token(code=request.params['code'])
-#         return render(request, 'index.html')
-#     else:
-#         return render(request, 'registration/login.html')
-#
-# # error! possible CSRF attack
+from sgidi.models import Ideias, Analises, AnalisesDefault, Tokens, Conhecimentos, Tags, Projetos, Tasks, Objetivos, \
+    NaoConformidades
 
 
-def index_view(request):
-    return render(request, 'index.html')
-    # if request.user.is_authenticated:
-    #     return render(request, 'index.html')
-    #     (url, state) = client.session.authorization_url()
-    #     print(url)
-    #     if request.params['state'] == state:
-    #         token = client.session.fetch_token(code=request.params['code'])
-    #         # ...
-    #     else:
-    #         return render(request, 'registration/login.html')
-    # else:
-    #     return render(request, 'registration/login.html')
 
+class IndexView(View):
+    template = "index.html"
 
-# error! possible CSRF attack
-# return redirect(url)
-# if request.params['state'] == state:
-#     token = client.session.fetch_token(code=request.params['code'])
-#     return redirect(url)
-# else:
-#     return render(request, 'index.html')
-# error! possible CSRF attack
+    def get(self, request):
+        return render(request, 'index.html')
+
 
 
 class IdeiasView(View):
@@ -371,14 +321,14 @@ class ApagarNotificacao(View):
 class InterfacesView(View):
     template = "interfaces/interfaces.html"
     # form_class = ProjetoForm
-    # TODO O BOTAO DE ATUALIZAR AS INTERFACES DEVE SER REDIRECIONADO PARA AQUI MAS COM ATUALIZAÇÃO DA DB
+    # TODO O BOTAO DE ATUALIZAR AS INTERFACES DEVE SER REDIRECIONADO PARA AQUI MAS COM ATUALIZAÇÃO DA DB FEITO!!!!
 
     def get(self, request, atualizar = None):
         # form = self.form_class
         token = get_object_or_404(Tokens, user_id=request.user.id)
 
         id_projeto = 2
-        id_asana_projeto = 299870043677028
+        id_asana_projeto = 299870043677028 #210156681957457 SGIDI ATIVIDADES
         if request.get_full_path() == '/interfaces/atualizar/':
             grupo = Group.objects.get(name='grupo_atividades')
             project, created = saveproject(token, 2)
@@ -401,18 +351,13 @@ class InterfacesView(View):
                             verb='Foram alteradas algumas tasks no SGIDI Atividades' + modified_tasks_str,
                             description='atividades-')
 
-        project = Projetos.objects.get(pk=id_projeto)
-        # tasks = Tasks.objects.filter(projeto_id=210156681957457, parent=None, section=0)
-        # subtasks = Tasks.objects.filter(projeto_id=210156681957457, section=0).exclude(parent__isnull=True)
-        # sections = Tasks.objects.filter(projeto_id=210156681957457, parent=None, section=1)
-
         # TODO SEMPRE QUE SE ATUALIZAR A DB, VERIFICAR SE A MODIFIED DATA MUDOU FEITO!!!!
         # TODO SE SIM: MANDAR UM ALERT COM A TASK QUE FOI ALTERADA              FEITO!!!!
 
         # TODO E TAMBÉM SEMPRE QUE SURGIR UMA TASK NOVA                 FEITO!!!!
         # TODO PODE SER VERIFICADO CREATED DEVOLVIDO                    FEITO!!!!
         # TODO A NOTIFICAÇÃO MANDADA PODE SER PARA UM GRUPO CRIADO NA PAGINA DE ADMIN LIGADO AO SGIDI ATIVIDADES   FEITO!!!!
-
+        project = Projetos.objects.get(pk=id_projeto)
         tasks = Tasks.objects.filter(projeto_id=id_asana_projeto, parent=None, section=0)
         subtasks = Tasks.objects.filter(projeto_id=id_asana_projeto, section=0).exclude(parent__isnull=True)
         sections = Tasks.objects.filter(projeto_id=id_asana_projeto, parent=None, section=1)
@@ -535,4 +480,59 @@ def saveprojecttasks(token, id_db, id_asana):
     tasks_db.delete()
 
     return created_final, new_tasks, modified_final, modified_tasks
+
+
+class ObjetivosView(View):
+    template = "objetivos/objetivos.html"
+    objetivos = Objetivos.objects.all()
+
+    def get(self, request):
+        return render(request, self.template, {'objetivos': self.objetivos})
+
+    def post(self, request):
+        if "form1" in request.POST:
+            for key, value in request.POST.items():
+                if key.startswith('objetivo'):
+                    x = key[+8:].split('-')[0]
+                    y = key[+8:].split('-')[1]
+                    text = value
+                    Objetivos.objects.update_or_create(x=x, y=y, defaults={'text': text})
+            return HttpResponseRedirect('/objetivos')
+
+
+class NaoConformidadesView(View):
+    template = 'nao_conformidades/nao_conformidades.html'
+    nao_conformidades = NaoConformidades.objects.all()
+
+    def get(self, request):
+        return render(request, self.template, {'nao_conformidades': self.nao_conformidades})
+
+    def post(self, request):
+        if "form1" in request.POST:
+            for key, value in request.POST.items():
+                if key.startswith('nao_conformidades'):
+                    x = key[+17:].split('-')[0]
+                    y = key[+17:].split('-')[1]
+                    text = value
+                    NaoConformidades.objects.update_or_create(x=x, y=y, defaults={'text': text})
+            return HttpResponseRedirect('/nao_conformidades')
+
+
+class SearchView(View):
+    template_name = 'conhecimento/conhecimentos.html'
+    model = Conhecimentos
+    paginate_by = 14
+
+    def get_queryset(self):
+        try:
+            query = self.request.GET.get('query')
+        except:
+            query = ''
+        if query is None:
+            query = ''
+        if query != '':
+            object_list = Conhecimentos.objects.filter(Q(titulo__icontains=query) | Q(texto__icontains=query) | Q(tag__tag__icontains=query) | Q(autor__username__icontains=query) | Q(data__icontains=query)).distinct()
+        else:
+            object_list = Conhecimentos.objects.order_by('-data').filter(autor=self.request.user)
+        return object_list
 

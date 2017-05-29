@@ -1,0 +1,38 @@
+{% extends 'pattern/base.html' %}
+{% load static %}
+{% block includes_top %}
+    <link rel="stylesheet" href="{% static "css/nao_conformidades.css" %}" >
+{% endblock %}
+{% block title %}Não Conformidades{% endblock %}
+{% block content %}
+    <form class="form-horizontal" action="{% url "nao_conformidades" %}" method="post">
+        {% csrf_token %}
+        <div class="form-group" id="form1">
+            <div class="col-md-offset-1">
+                <table id="tabela_nao_conformidades">
+                    <tr>
+                        <th>ID</th>
+                        <th>Data</th>
+                        <th>Objetivo</th>
+                        <th>Indicador</th>
+                        <th>Métrica</th>
+                        {% for nao_conformidade in nao_conformidades %}
+                            {% if nao_conformidade.y == 1  %}<tr>{% endif %}
+                        <td {% if nao_conformidade.y == 1 %} width="4%" {% elif nao_conformidades.y == 2 %}  width="15%" {% else %} width="27%" {% endif %}>
+                            <textarea class="tabela_nao_conformidades_inputs" rows="3" maxlength="2000" name="nao_conformidades{{ nao_conformidade.x }}-{{ nao_conformidade.y }}">{{ nao_conformidade.text }}</textarea>
+                        </td>
+                        {% if nao_conformidade.y == 5 %}</tr>{% endif %}
+                        {% endfor %}
+                </table>
+                <a class="btn add_line"><i class="fa fa-plus-square mediumicon"></i>Nova linha</a>
+                {#                <a class="btn delete_line"><i class="fa fa-minus-square mediumicon">Eliminar linha</i></a>#}
+            </div>
+            <div class="col-md-offset-6">
+                <button type="submit" name="form1" class="btn btn-success" id="inserir_nao_conformidades">Atualizar Não Conformidades</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+{% block include_footer %}
+    <script src="{% static "js/nao_conformidades.js" %}"></script>
+{% endblock %}

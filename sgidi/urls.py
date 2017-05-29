@@ -4,14 +4,15 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.views.generic import TemplateView
 
 from sgidi.views import IdeiasView, IdeiasAvaliacaoView, IdeiasListView, ProjetosDetailView, ConhecimentoCreateView, \
-    ConhecimentoListView, ConhecimentoDetailView, UserView, ApagarNotificacao, InterfacesView
+    ConhecimentoListView, ConhecimentoDetailView, UserView, ApagarNotificacao, InterfacesView, ObjetivosView, \
+    NaoConformidadesView, IndexView
 from . import views
 
 urlpatterns = [
     # url(r'^auth/asana/callback/$', views.asana_view, name='asana'),
     url(r'^profile/(?P<username>[a-zA-Z0-9]+)/$', login_required(UserView.as_view()), name='profile'),
     url(r'^profile/postTags/$', login_required(UserView.as_view()), name='profle_subscribe_tags'),
-    url(r'^$', login_required(views.index_view), name='index'),
+    url(r'^$', login_required(IndexView.as_view()), name='index'),
     url(r'^ideias/$', login_required(IdeiasListView.as_view()), name='ideias_lista'),
     url(r'^ideias/nova/$', login_required(IdeiasView.as_view(template_name='ideias/ideias_nova.html')), name='ideias_nova'),
     url(r'^ideias/postIdeia/$', login_required(IdeiasView.as_view()), name='ideias_post'),
@@ -27,5 +28,9 @@ urlpatterns = [
     url(r'^notificacoes/', login_required(TemplateView.as_view(template_name='notificacoes/notificacoes.html')), name="notificacoes"),
     url(r'^interfaces/', login_required(InterfacesView.as_view()), name="interfaces"),
     url(r'^interfaces/atualizar/$', login_required(InterfacesView.as_view()), name='interfaces_atualizar'),
+    url(r'^objetivos/', login_required(ObjetivosView.as_view()), name="objetivos"),
+    url(r'^objetivos/postObjetivos', login_required(ObjetivosView.as_view()), name="objetivos_post"),
+    url(r'^nao_conformidades/', login_required(NaoConformidadesView.as_view()), name="nao_conformidades"),
+    url(r'^nao_conformidades/postNaoConformidades', login_required(NaoConformidadesView.as_view()), name="nao_conformidades_post"),
 ]
 urlpatterns += staticfiles_urlpatterns() #TODO REMOVER NO FIM DO PROJETO e correr "python manage.py collectstatic"

@@ -20,7 +20,7 @@ a:link
     max-width:100%;
 }
 
-h3 {
+h4 {
     text-align: center;
 }
 
@@ -29,3 +29,9 @@ h3 {
     color: #985f0d;
 }
 
+.thumbnail {
+    height: 270px;
+}
+.page-header {
+    margin-top: 10px;
+}
