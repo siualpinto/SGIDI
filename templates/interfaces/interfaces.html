@@ -6,7 +6,7 @@
 {% block title %}Interfaces{% endblock %}
 {% block content %}
     <div class="col-md-12">
-        <a class="btn" href="{% url 'interfaces_atualizar' %}">Atualizar SGIDI - Atividades</a>
+        <a class="btn btn-primary btn-md" href="{% url 'interfaces_atualizar' %}">Atualizar SGIDI - Atividades</a>
     </div>
     <div class="col-md-12" id="{{ token }}-{{ project.id_asana }}">
         <p>Nome: {{project.name}}</p>
@@ -21,27 +21,39 @@
         <ul>
             {% for section in sections %}
                 <li>
-                    <p>{{ section.name }}</p>
+                    <div class="col-md-12">{{ section.name }}</div>
                     <ul>
                         {% for task in tasks %}
                             {% if section.section_id == task.section_id %}
                                 <li>
-                                    <div id="{{ task.id }}">
-                                        <p class="name">{{ task.name }}</p>
-                                        <p class="notes" hidden>{{ task.notes }}</p>
+                                    <div  id="{{ task.id }}" class="col-md-12 task">
+                                        <div class="name col-md-12"><b>Nome:</b> {{ task.name }}</div>
+                                        <div class="col-md-2"><b>Responsável:</b>{{ task.assignee }}</div>
+                                        <div class="col-md-2"><b>Estado:</b>{{ task.assignee_status }}</div>
+                                        <div class="col-md-2"><b>Completa:</b>{{ task.completed }}</div>
+                                        <div class="col-md-2"><b>Data de Completação:</b>{{ task.completed_at }}</div>
+                                        <div class="col-md-2"><b>Data Final:</b>{{ task.due_on }}</div>
+                                        <div class="col-md-2"><b>Ultima modificação:</b>{{ task.modified_at }}</div>
+                                        <div class="notes col-md-12" hidden><b>Notas: </b>{{ task.notes }}</div>
                                     </div>
-                                    <ul>
-                                        {% for subtask in subtasks %}
+                                    {% for subtask in subtasks %}
+                                        <ul>
                                             {% if subtask.parent.id == task.id %}
                                                 <li>
-                                                    <div id="{{ subtask.id }}">
-                                                        <p class="name">{{ subtask.name }}</p>
-                                                        <p class="notes" hidden>{{ subtask.notes }}</p>
+                                                    <div class="col-md-12 subtask" id="{{ subtask.id }}">
+                                                        <div class="name col-md-12"><b>Nome:</b> {{ subtask.name }}</div>
+                                                        <div class="col-md-2"><b>Responsável:</b>{{ subtask.assignee }}</div>
+                                                        <div class="col-md-2"><b>Estado:</b>{{ subtask.assignee_status }}</div>
+                                                        <div class="col-md-2"><b>Completa:</b>{{ subtask.completed }}</div>
+                                                        <div class="col-md-2"><b>Data de Completação:</b>{{ subtask.completed_at }}</div>
+                                                        <div class="col-md-2"><b>Data Final:</b>{{ subtask.due_on }}</div>
+                                                        <div class="col-md-2"><b>Ultima modificação:</b>{{ subtask.modified_at }}</div>
+                                                        <div class="notes col-md-12" hidden><b>Notas: </b>{{ subtask.notes }}</div>
                                                     </div>
                                                 </li>
                                             {% endif %}
-                                        {% endfor %}
-                                    </ul>
+                                        </ul>
+                                    {% endfor %}
                                 </li>
                             {% endif %}
                         {% endfor %}
@@ -55,16 +67,28 @@
                         {% if task.section_id == '0' %}
                             <li>
                                 <div id="{{ task.id }}">
-                                    <p class="name">{{ task.name }}</p>
-                                    <p class="notes" hidden>{{ task.notes }}</p>
+                                    <div class="name col-md-12"><b>Nome:</b> {{ task.name }}</div>
+                                    <div class="col-md-2"><b>Responsável:</b>{{ task.assignee }}</div>
+                                    <div class="col-md-2"><b>Estado:</b>{{ task.assignee_status }}</div>
+                                    <div class="col-md-2"><b>Completa:</b>{{ task.completed }}</div>
+                                    <div class="col-md-2"><b>Data de Completação:</b>{{ task.completed_at }}</div>
+                                    <div class="col-md-2"><b>Data Final:</b>{{ task.due_on }}</div>
+                                    <div class="col-md-2"><b>Ultima modificação:</b>{{ task.modified_at }}</div>
+                                    <div class="notes col-md-12" hidden><b>Notas: </b>{{ task.notes }}</div>
                                 </div>
                                 <ul>
                                     {% for subtask in subtasks %}
                                         {% if subtask.parent.id == task.id %}
                                             <li>
                                                 <div id="{{ subtask.id }}">
-                                                    <p class="name">{{ subtask.name }}</p>
-                                                    <p class="notes" hidden>{{ subtask.notes }}</p>
+                                                    <div class="name col-md-12"><b>Nome:</b> {{ subtask.name }}</div>
+                                                    <div class="col-md-2"><b>Responsável:</b>{{ subtask.assignee }}</div>
+                                                    <div class="col-md-2"><b>Estado:</b>{{ subtask.assignee_status }}</div>
+                                                    <div class="col-md-2"><b>Completa:</b>{{ subtask.completed }}</div>
+                                                    <div class="col-md-2"><b>Data de Completação:</b>{{ subtask.completed_at }}</div>
+                                                    <div class="col-md-2"><b>Data Final:</b>{{ subtask.due_on }}</div>
+                                                    <div class="col-md-2"><b>Ultima modificação:</b>{{ subtask.modified_at }}</div>
+                                                    <div class="notes col-md-12" hidden><b>Notas: </b>{{ subtask.notes }}</div>
                                                 </div>
                                             </li>
                                         {% endif %}

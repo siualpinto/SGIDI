@@ -1,5 +1,6 @@
 import json
 from itertools import chain
+from django.core import serializers
 from django.contrib.auth.models import Group
 import asana
 from django.contrib.auth.models import User
@@ -27,13 +28,66 @@ from sgidi.models import Ideias, Analises, AnalisesDefault, Tokens, Conhecimento
     NaoConformidades
 
 
-
 class IndexView(View):
     template = "index.html"
 
     def get(self, request):
-        return render(request, 'index.html')
+        if request.is_ajax():
+            try:
+                query = self.request.GET.get('query')
+            except:
+                query = ''
+            if query is None:
+                query = ''
+            if query != '':
+                if len(query.split('-')) == 3 and len(query.split('-')[0]) == 4 and len(query.split('-')[1]) == 2 and \
+                                len(query.split('-')[2]) == 2:
+                    object_list_conhecimentos = Conhecimentos.objects.filter(
+                        Q(titulo__icontains=query) | Q(texto__icontains=query) |
+                        Q(tag__tag__icontains=query) | Q(autor__username__icontains=query) | Q(data__icontains=query)).distinct()
+                    object_list_ideias = Ideias.objects.filter(
+                        Q(autor__username__icontains=query) | Q(nome__icontains=query) | Q(tipo_nome__icontains=query) |
+                        Q(estado_nome__icontains=query) | Q(problema__icontains=query) | Q(solucao__icontains=query) |
+                        Q(data__icontains=query) | Q(total__icontains=query) | Q(pre_analise__icontains=query) |
+                        Q(analise__icontains=query)
+                    ).distinct()
+                    object_list_projetos = Projetos.objects.filter(
+                        Q(name__icontains=query) | Q(notes__icontains=query) | Q(current_status_text__icontains=query)
+                    ).distinct()
+                    object_list_tasks = Tasks.objects.filter(
+                        Q(name__icontains=query) | Q(notes__icontains=query) | Q(assignee__icontains=query) |
+                        Q(assignee_status__icontains=query) | Q(notes__icontains=query) | Q(assignee__icontains=query)
+                    ).distinct()
+                else:
+                    object_list_conhecimentos = Conhecimentos.objects.filter(
+                        Q(titulo__icontains=query) | Q(texto__icontains=query) |
+                        Q(tag__tag__icontains=query) | Q(autor__username__icontains=query)).distinct()
+                    object_list_ideias = Ideias.objects.filter(
+                        Q(autor__username__icontains=query) | Q(nome__icontains=query) | Q(tipo_nome__icontains=query) |
+                        Q(estado_nome__icontains=query) | Q(problema__icontains=query) | Q(solucao__icontains=query) |
+                        Q(total__icontains=query) | Q(pre_analise__icontains=query) | Q(analise__icontains=query)
+                    ).distinct()
+                    object_list_projetos = Projetos.objects.filter(
+                        Q(name__icontains=query) | Q(notes__icontains=query) | Q(current_status_text__icontains=query) |
+                        Q(due_date__icontains=query) | Q(created_at__icontains=query) | Q(modified_at__icontains=query)
+                    ).distinct()
+                    object_list_tasks = Tasks.objects.filter(
+                        Q(name__icontains=query) | Q(notes__icontains=query) | Q(assignee__icontains=query) |
+                        Q(assignee_status__icontains=query) | Q(notes__icontains=query) | Q(assignee__icontains=query) |
+                        Q(due_at__icontains=query) | Q(modified_at__icontains=query) | Q(assignee__icontains=query) |
+                        Q(due_on__icontains=query) | Q(created_at__icontains=query) | Q(completed_at__icontains=query)
+                    ).distinct()
 
+                object_list = chain(object_list_ideias, object_list_conhecimentos, object_list_projetos, object_list_tasks)
+                data = serializers.serialize('json', object_list)
+            else:
+                return render(request, 'index.html')
+            data = {
+                "resultados": data,
+            }
+            return JsonResponse(data)
+
+        return render(request, 'index.html')
 
 
 class IdeiasView(View):
@@ -261,7 +315,15 @@ class ConhecimentoListView(ListView):
         if query is None:
             query = ''
         if query != '':
-            object_list = Conhecimentos.objects.filter(Q(titulo__icontains=query) | Q(texto__icontains=query) | Q(tag__tag__icontains=query) | Q(autor__username__icontains=query) | Q(data__icontains=query)).distinct()
+            if len(query.split('-')) == 3 and len(query.split('-')[0]) == 4 and len(query.split('-')[1]) == 2 and len(
+                    query.split('-')[2]) == 2:
+                object_list = Conhecimentos.objects.filter(
+                    Q(titulo__icontains=query) | Q(texto__icontains=query) | Q(tag__tag__icontains=query) | Q(
+                        autor__username__icontains=query) | Q(data__icontains=query)).distinct()
+            else:
+                object_list = Conhecimentos.objects.filter(
+                    Q(titulo__icontains=query) | Q(texto__icontains=query) | Q(tag__tag__icontains=query) | Q(
+                        autor__username__icontains=query)).distinct()
         else:
             object_list = Conhecimentos.objects.order_by('-data').filter(autor=self.request.user)
         return object_list
@@ -320,11 +382,8 @@ class ApagarNotificacao(View):
 
 class InterfacesView(View):
     template = "interfaces/interfaces.html"
-    # form_class = ProjetoForm
-    # TODO O BOTAO DE ATUALIZAR AS INTERFACES DEVE SER REDIRECIONADO PARA AQUI MAS COM ATUALIZAÇÃO DA DB FEITO!!!!
 
     def get(self, request, atualizar = None):
-        # form = self.form_class
         token = get_object_or_404(Tokens, user_id=request.user.id)
 
         id_projeto = 2
@@ -337,20 +396,23 @@ class InterfacesView(View):
                 new_tasks_str = ""
                 for new_task in new_tasks.values():
                     new_tasks_str += ", " + str(new_task)
-                print(new_tasks)
-                notify.send(request.user, recipient=grupo,
-                            verb='Foram inseridas novas tasks no SGIDI Atividades'+new_tasks_str,
-                            description='atividades-')
+                print('new tasks'+str(new_tasks))
+                try:
+                    notify.send(request.user, recipient=grupo,
+                                verb='Foram inseridas novas tasks no SGIDI Atividades',
+                                description='atividades-' + new_tasks_str)
+                except ValueError:
+                    print(ValueError)
 
             if modified_final:
                 modified_tasks_str = ""
                 for modified_task in modified_tasks.values():
                     modified_tasks_str += ", " + str(modified_task)
-                print(modified_tasks)
+                print('tasks modifieds'+str(modified_tasks))
                 notify.send(request.user, recipient=grupo,
-                            verb='Foram alteradas algumas tasks no SGIDI Atividades' + modified_tasks_str,
-                            description='atividades-')
-
+                            verb='Foram alteradas algumas tasks no SGIDI Atividades',
+                            description='atividades-' + modified_tasks_str)
+            return HttpResponseRedirect('/interfaces')
         # TODO SEMPRE QUE SE ATUALIZAR A DB, VERIFICAR SE A MODIFIED DATA MUDOU FEITO!!!!
         # TODO SE SIM: MANDAR UM ALERT COM A TASK QUE FOI ALTERADA              FEITO!!!!
 
@@ -402,6 +464,7 @@ def saveprojecttasks(token, id_db, id_asana):
     new_tasks = {}
     modified_tasks = {}
     tasks_db = Tasks.objects.filter(projeto_id=id_asana)
+    print("TASKSES:"+str(tasks_db))
     for task in tasks:
         task_asana = client.tasks.find_by_id(task['id'])
         try:
@@ -412,13 +475,15 @@ def saveprojecttasks(token, id_db, id_asana):
                         section_id = member['section']['id']
         except ValueError:
             print(ValueError)
-        if tasks_db.filter(id_asana=task['id']).exists():
-            data_1 = task_asana['modified_at'][:-1]
-            data_2 = tasks_db.get(id_asana=task['id']).modified_at.strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3]
-            if data_1 != data_2:
-                print("task modificada")
-                modified_final = True
-                modified_tmp = True
+
+        if tasks_db:
+            if tasks_db.filter(id_asana=task['id']).exists():
+                data_1 = task_asana['modified_at'][:-1]
+                data_2 = tasks_db.get(id_asana=task['id']).modified_at.strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3]
+                if data_1 != data_2:
+                    # print("task modificada")
+                    modified_final = True
+                    modified_tmp = True
         task_db, created = Tasks.objects.update_or_create(id_asana=task['id'],
                                                           defaults={'name': task_asana['name'],
                                                                     'notes': task_asana['notes'],
@@ -447,14 +512,16 @@ def saveprojecttasks(token, id_db, id_asana):
             new_tasks_id = new_tasks_id+1
         created_final = created_final | created
         subtasks = client.tasks.subtasks(task=task['id'])
-        for task_db in tasks_db:
-            if task_db.name == task['name']:
-                tasks_db = tasks_db.exclude(name=task['name'])
+        if tasks_db:
+            for task_db_set in tasks_db:
+                if task_db_set.name == task['name']:
+                    tasks_db = tasks_db.exclude(name=task['name'])
         for subtask_compact in subtasks:
             subtask = client.tasks.find_by_id(subtask_compact['id'])
-            for task_db in tasks_db:
-                if task_db.name == subtask['name']:
-                    tasks_db = tasks_db.exclude(name=subtask['name'])
+            if tasks_db:
+                for task_db_set in tasks_db:
+                    if task_db_set.name == subtask['name']:
+                        tasks_db = tasks_db.exclude(name=subtask['name'])
             Tasks.objects.update_or_create(id_asana=subtask['id'],
                                            defaults={'name': subtask['name'],
                                                      'notes': subtask['notes'],
@@ -477,7 +544,11 @@ def saveprojecttasks(token, id_db, id_asana):
                                                      })
     for section in sections:
         Tasks.objects.filter(id_asana=section['id']).update(section=True)
-    tasks_db.delete()
+    if tasks_db:
+        for task_db_set in tasks_db:
+            Tasks.objects.filter(parent_id=task_db_set.id).delete()
+    if tasks_db:
+        tasks_db.delete()
 
     return created_final, new_tasks, modified_final, modified_tasks
 
@@ -510,6 +581,9 @@ class NaoConformidadesView(View):
     def post(self, request):
         if "form1" in request.POST:
             for key, value in request.POST.items():
+                print(key)
+                print(value)
+
                 if key.startswith('nao_conformidades'):
                     x = key[+17:].split('-')[0]
                     y = key[+17:].split('-')[1]

@@ -10,19 +10,56 @@
         <div class="form-group" id="form1">
             <div class="col-md-offset-1">
                 <table id="tabela_nao_conformidades">
+                    <col>
+                    <colgroup span="4"> </colgroup>
+                    <col>
+                    <col>
+                    <col>
+                    <colgroup span="7"> </colgroup>
+                    <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Data</th>
-                        <th>Objetivo</th>
-                        <th>Indicador</th>
-                        <th>Métrica</th>
-                        {% for nao_conformidade in nao_conformidades %}
-                            {% if nao_conformidade.y == 1  %}<tr>{% endif %}
-                        <td {% if nao_conformidade.y == 1 %} width="4%" {% elif nao_conformidades.y == 2 %}  width="15%" {% else %} width="27%" {% endif %}>
-                            <textarea class="tabela_nao_conformidades_inputs" rows="3" maxlength="2000" name="nao_conformidades{{ nao_conformidade.x }}-{{ nao_conformidade.y }}">{{ nao_conformidade.text }}</textarea>
-                        </td>
-                        {% if nao_conformidade.y == 5 %}</tr>{% endif %}
-                        {% endfor %}
+                        <th rowspan="2">Origem</th>
+                        <th colspan="4" scope="colgroup">Relatório ACP</th>
+                        <th scope="colgroup">Constatação NC / Potencial NC)</th>
+                        <th scope="colgroup">Causa(NC / Potencial NC)</th>
+                        <th scope="colgroup">Descrição da Correção, Acão Corretiva / Preventiva</th>
+                        <th colspan="3" scope="colgroup">Implementação</th>
+                        <th colspan="4" scope="colgroup">Eficácia</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Tipo Ação</th>
+                        <th scope="col">Nº Reg.</th>
+                        <th scope="col">Data de Emissão</th>
+                        <th scope="col">Sistema</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                        <th>Resp.</th>
+                        <th>Prazo Previsto</th>
+                        <th>Data Efetiva</th>
+                        <th>Resp.</th>
+                        <th>Prazo Previsto</th>
+                        <th>Data Efetiva</th>
+                        <th>Resultado Eficácia</th>
+                    </tr>
+                    {% for nao_conformidade in nao_conformidades %}
+                        {% if nao_conformidade.y == 1  %}<tr>{% endif %}
+                    <td {% if nao_conformidade.y == 1  %}width="7%"
+                            {% elif nao_conformidade.y == 1%}
+                            {% elif nao_conformidade.y == 1%}
+                            {% elif nao_conformidade.y == 1%}
+                            {% elif nao_conformidade.y == 1%}
+                            {% elif nao_conformidade.y == 1%}
+                       {% endif %}
+                    >
+                        <textarea class="tabela_nao_conformidades_inputs" rows="3" maxlength="2000" name="nao_conformidades{{ nao_conformidade.x }}-{{ nao_conformidade.y }}">{{ nao_conformidade.text }}</textarea>
+                    </td>
+                    {% if nao_conformidade.y == 15 %}</tr>{% endif %}
+                    {% endfor %}
+                    </tbody>
                 </table>
                 <a class="btn add_line"><i class="fa fa-plus-square mediumicon"></i>Nova linha</a>
                 {#                <a class="btn delete_line"><i class="fa fa-minus-square mediumicon">Eliminar linha</i></a>#}

@@ -111,7 +111,7 @@ class Tasks(models.Model):
     section = models.BooleanField(default=False)
     section_id = models.CharField(max_length=20, null=False)
     projeto_id = models.CharField(max_length=20, null=False)
-    parent = models.ForeignKey('self', null=True)
+    parent = models.ForeignKey('self', null=True, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

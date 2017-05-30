@@ -4,3 +4,16 @@
     padding: 20px;
     display: none;
 }
+
+ul {
+    list-style-type: none;
+}
+
+li {
+    list-style-type: none;
+}
+
+.task{
+    border: solid;
+    background-color: #2aabd2;
+}

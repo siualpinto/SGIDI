@@ -7,3 +7,12 @@ $('.name').mouseover(function(e) {
         $that.siblings().show();
     }
 });
+
+$("ul").each(
+  function() {
+    var elem = $(this);
+    if (elem.children().length === 0) {
+      elem.remove();
+    }
+  }
+);

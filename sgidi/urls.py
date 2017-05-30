@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^profile/(?P<username>[a-zA-Z0-9]+)/$', login_required(UserView.as_view()), name='profile'),
     url(r'^profile/postTags/$', login_required(UserView.as_view()), name='profle_subscribe_tags'),
     url(r'^$', login_required(IndexView.as_view()), name='index'),
+    url(r'^search/$', login_required(IndexView.as_view()), name='index_search'),
     url(r'^ideias/$', login_required(IdeiasListView.as_view()), name='ideias_lista'),
     url(r'^ideias/nova/$', login_required(IdeiasView.as_view(template_name='ideias/ideias_nova.html')), name='ideias_nova'),
     url(r'^ideias/postIdeia/$', login_required(IdeiasView.as_view()), name='ideias_post'),

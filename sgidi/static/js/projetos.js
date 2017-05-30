@@ -324,7 +324,7 @@ function reloadDiagramInfo() {
 
 
     var hints = [
-        "Diagrama Disponivel",
+        "Diagrama Disponivel"
     ];
     for(var i=0; i < hints.length; i++){
         setTimeout(
@@ -417,7 +417,7 @@ function reloadDiagramInfo() {
 
             for (var k = 1; k <= gannt_dados.data[gannt_dados.data.length - 1].id; k++) try{
                 var target = gantt.getTask(k);
-                if (target.id_asana == id_target_Asana) {
+                if (target.id_asana === id_target_Asana) {
                     /*console.log("ADDLINK!!! "+idLink);
                      console.log("addlink");
                      console.log("tipo:"+typeAsana);
