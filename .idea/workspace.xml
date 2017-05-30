@@ -2,22 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b6967d17-7b2f-494c-a0f3-94d58749fc71" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources/e40cce8c-0f3a-4df7-bdc6-4400c2b8a9da.xml" afterPath="$PROJECT_DIR$/.idea/dataSources/e40cce8c-0f3a-4df7-bdc6-4400c2b8a9da.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sgidi/models.py" afterPath="$PROJECT_DIR$/sgidi/models.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sgidi/static/css/interfaces.css" afterPath="$PROJECT_DIR$/sgidi/static/css/interfaces.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sgidi/static/css/styles.css" afterPath="$PROJECT_DIR$/sgidi/static/css/styles.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sgidi/static/js/base/base.js" afterPath="$PROJECT_DIR$/sgidi/static/js/base/base.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sgidi/static/js/interfaces.js" afterPath="$PROJECT_DIR$/sgidi/static/js/interfaces.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sgidi/static/js/nao_conformidades.js" afterPath="$PROJECT_DIR$/sgidi/static/js/nao_conformidades.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sgidi/static/js/notificacoes.js" afterPath="$PROJECT_DIR$/sgidi/static/js/notificacoes.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sgidi/static/js/projetos.js" afterPath="$PROJECT_DIR$/sgidi/static/js/projetos.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sgidi/urls.py" afterPath="$PROJECT_DIR$/sgidi/urls.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sgidi/views.py" afterPath="$PROJECT_DIR$/sgidi/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/conhecimento/conhecimentos.html" afterPath="$PROJECT_DIR$/templates/conhecimento/conhecimentos.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/interfaces/interfaces.html" afterPath="$PROJECT_DIR$/templates/interfaces/interfaces.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/nao_conformidades/nao_conformidades.html" afterPath="$PROJECT_DIR$/templates/nao_conformidades/nao_conformidades.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/pattern/base.html" afterPath="$PROJECT_DIR$/templates/pattern/base.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -108,8 +93,8 @@
       <file leaf-file-name="nao_conformidades.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/nao_conformidades/nao_conformidades.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="54" column="35" lean-forward="false" selection-start-line="54" selection-start-column="35" selection-end-line="54" selection-end-column="35" />
+            <state relative-caret-position="252">
+              <caret line="51" column="61" lean-forward="true" selection-start-line="51" selection-start-column="61" selection-end-line="51" selection-end-column="61" />
               <folding />
             </state>
           </provider>
@@ -1080,7 +1065,14 @@
       <option name="project" value="LOCAL" />
       <updated>1496071255875</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="Interfaces v1.4">
+      <created>1496162534905</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1496162534905</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="TodoView">
@@ -1153,7 +1145,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Ideias template v1.6&#10; avaliação de ideias - falta pedido ajax para o estado e backend da avaliação de ideias ✔&#10;" />
     <MESSAGE value="Ideias template v1.7&#10; avaliação de ideias - falta pedido ajax para o estado e backend da avaliação de ideias ✔&#10; 90% frontend done ✔&#10;" />
     <MESSAGE value="Ideias template v1.7&#10; avaliação de ideias - falta pedido ajax para o estado e backend da avaliação de ideias ✔&#10; 95% frontend done ✔&#10;" />
     <MESSAGE value="Ideias template v1.8&#10; avaliação de ideias - falta pedido ajax para o estado e backend da avaliação de ideias ✔&#10;100% frontend done ✔&#10;" />
@@ -1178,7 +1169,8 @@
     <MESSAGE value="Interfaces v1.1" />
     <MESSAGE value="Interfaces v1.2&#10;novas tasks resultam em notificações para o grupo de atividades" />
     <MESSAGE value="Interfaces v1.3" />
-    <option name="LAST_COMMIT_MESSAGE" value="Interfaces v1.3" />
+    <MESSAGE value="Interfaces v1.4" />
+    <option name="LAST_COMMIT_MESSAGE" value="Interfaces v1.4" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1635,8 +1627,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/nao_conformidades/nao_conformidades.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="54" column="35" lean-forward="false" selection-start-line="54" selection-start-column="35" selection-end-line="54" selection-end-column="35" />
+        <state relative-caret-position="252">
+          <caret line="51" column="61" lean-forward="true" selection-start-line="51" selection-start-column="61" selection-end-line="51" selection-end-column="61" />
           <folding />
         </state>
       </provider>
