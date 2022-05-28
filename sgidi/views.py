@@ -12,7 +12,7 @@ from functools import reduce
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.http import JsonResponse
-from django.shortcuts import render, get_object_or_404, render_to_response
+from django.shortcuts import render, get_object_or_404#, render_to_response
 from django.template import RequestContext
 from django.template.defaultfilters import register
 from django.utils.decorators import method_decorator

@@ -23,9 +23,9 @@ from sgidi import views
 urlpatterns = [
     # url(r'^login/$', views.login_user, name='login'),
     url(r'^user/', include('sgidi.urls')),
-    url(r'^login/$', auth_views.login, name='login'),
-    url(r'^logout/$', auth_views.logout, {'template_name': 'registration/logout.html'}, name='logout'),
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^login/$', auth_views.LoginView, name='login'),
+    url(r'^logout/$', auth_views.LogoutView, {'template_name': 'registration/logout.html'}, name='logout'),
+    url(r'^admin/', admin.site.urls),
     url(r'^inbox/notifications/', include(notifications.urls, namespace='notifications')),
     url(r'^', include('sgidi.urls')),
 ]
