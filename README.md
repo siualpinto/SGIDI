@@ -13,4 +13,8 @@ cryptography => 1.7.2
 
 typing-extensions => 4.1.1
 
-urllib3 => 1.26.9
+urllib3 => 1.20
+
+django-model-utils => 2.6.1
+
+database: mysql
