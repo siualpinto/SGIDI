@@ -20,10 +20,10 @@ class Ideias(models.Model):
     data = models.DateTimeField(auto_now_add=True)
     # AVALIACAO
     total = models.DecimalField(max_digits=5, decimal_places=3, null=True)
-    autor_pre_analise = models.ForeignKey(User, null=True, related_name="avaliador1")
+    autor_pre_analise = models.ForeignKey(User, null=True, related_name="avaliador1", on_delete=models.CASCADE)
     data_pre_analise = models.DateTimeField(null=True)
     pre_analise = models.TextField(max_length=1700)
-    autor_analise = models.ForeignKey(User, null=True, related_name="avaliador2")
+    autor_analise = models.ForeignKey(User, null=True, related_name="avaliador2", on_delete=models.CASCADE)
     data_analise = models.DateTimeField(null=True)
     analise = models.TextField(max_length=1700)
 
@@ -32,7 +32,7 @@ class Ideias(models.Model):
 
 
 class Analises(models.Model):
-    ideia = models.ForeignKey(Ideias, unique=False, related_name='avaliacaoes')
+    ideia = models.ForeignKey(Ideias, unique=False, related_name='avaliacaoes', on_delete=models.CASCADE)
     ordem = models.IntegerField(validators=[MaxValueValidator(14), MinValueValidator(0)])
     avaliacao = models.CharField(max_length=110, null=True)
     tipo = models.IntegerField(validators=[MaxValueValidator(5), MinValueValidator(1)], null=True)
