@@ -12,3 +12,5 @@ django-notifications-hq => 1.7.0
 cryptography => 1.7.2
 
 typing-extensions => 4.1.1
+
+urllib3 => 1.26.9
