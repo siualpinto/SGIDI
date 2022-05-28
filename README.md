@@ -16,3 +16,5 @@ typing-extensions => 4.1.1
 urllib3 => 1.20
 
 django-model-utils => 2.6.1
+
+database: mysql
